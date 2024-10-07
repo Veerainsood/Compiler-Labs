@@ -9,34 +9,10 @@
     int eflag = 0;  // Ensure correct comparison with == in Assignments rule
     extern int yylex();
     int yydebug=0;
-
-    typedef struct Node{
-        char* val;
-        struct Node* left;
-        struct Node* right;
-    } node;
-
-    node* nodeMaker(char* op, node*left,node*right)
-    {
-        node* root = (node*)malloc(sizeof(node));
-        root->val = strdup(op);
-        root->left = left;
-        root->right = right;
-        return root;
-    }
-
-    node* PostOrder(node* root)
-    {
-        if(root==NULL) return NULL;
-        PostOrder(root->left);
-        PostOrder(root->right);
-        printf(" %s ",root->val);
-    }
 %}
 
 %union{
     char* str;
-    struct Node* nodee;
 }
 
 %token<str> VAR
@@ -49,11 +25,11 @@
 %token<str> LEQ 
 %token<str> GEQ
 %token<str> DEC 
-%type<nodee> Expr
-%type<nodee> Fact
+%type<str> Expr
+%type<str> Fact
 %left '+' '-'
 %left '*' '/' '%'
-%nonassoc INC DEC  
+%nonassoc INC DEC  /* For handling increment and decrement */
 
 %%
 S:	Assignments S 
@@ -62,21 +38,16 @@ S:	Assignments S
 
 Assignments:    VAR ASSIGN Expr SC 
                 {
-                    if (eflag == 0) 
+                    if (eflag == 0)  // Fix this comparison
                     {
-                        printf("\t\t Accepted!\n\n");
-                        printf("Printing Post Order:\n");
-                        node* left = nodeMaker(strdup($1),NULL,NULL);
-                        node* root = nodeMaker(strdup($2),left,$3);
-                        PostOrder(root);
-                        printf("\n\n");
+                        printf("\t\t Accepted!\n");
                     }
                     else if(eflag==1){
-                        printf("  float not to be used with modulo symbol\n\n");
+                        printf("  float not to be used with modulo symbol\n");
                     }
                     else
                     {
-                        printf("\t\t Operands not found\n\n");
+                        printf("\t\t Operands not found\n");
                     }
                     eflag=0;
                 }
@@ -84,30 +55,29 @@ Assignments:    VAR ASSIGN Expr SC
                 error SC 
                 {
                     yyerror("");
-                    printf("\t\tExpression not assignable...\n\n");
+                    printf("\t\tExpression not assignable...\n");
                     yyerrok;
                     yyclearin;
                 } 
                 ;
 Op: '+'|'-'|'/'|'*'|'%';
-Expr:           Expr '+' Expr { $$ = nodeMaker("+",$1,$3);}
+Expr:           Expr '+' Expr
                 | 
-                Expr '-' Expr { $$ = nodeMaker("-",$1,$3);}
+                Expr '-' Expr
                 |
-                Expr '*' Expr { $$ = nodeMaker("*",$1,$3);}
+                Expr '*' Expr
                 |
-                Expr '/' Expr { $$ = nodeMaker("/",$1,$3);}
+                Expr '/' Expr
                 |
                 Expr '%' Expr
                 {
-                    if(strchr($3->val,'.')==0 || strchr($3->val,'.')==0)
+                    if(strchr($3,'.')==0 || strchr($3,'.')==0)
                     {
                         eflag=1;
                     }
                     else
                     {
                         eflag=0;
-                        $$ = nodeMaker("\%",$1,$3);
                     }
                 }
                 |
@@ -119,45 +89,45 @@ Expr:           Expr '+' Expr { $$ = nodeMaker("+",$1,$3);}
                 Fact
                 ;
 
-Fact:           VAR INC { $$ = nodeMaker(strcat(strdup($1),strdup($2)),NULL,NULL); } /* Postfix increment */
-                | VAR DEC { $$ = nodeMaker(strcat(strdup($1),strdup($2)),NULL,NULL); } /* Postfix decrement */
-                | INC VAR { $$ = nodeMaker(strcat(strdup($1),strdup($2)),NULL,NULL); } /* Prefix increment */
-                | DEC VAR { $$ = nodeMaker(strcat(strdup($1),strdup($2)),NULL,NULL); } /* Prefix decrement */
-                | VAR C { $$ = nodeMaker(strdup($1),NULL,NULL); }
-                | Floats C { $$ = nodeMaker(strdup($1),NULL,NULL); }
+Fact:           VAR INC  /* Postfix increment */
+                | VAR DEC  /* Postfix decrement */
+                | INC VAR  /* Prefix increment */
+                | DEC VAR  /* Prefix decrement */
+                | VAR C
+                | Floats C
                 | Floats INC error
                 {
                 	yyerror("");
-                    printf("\t\tcannot increment a constant\n\n");
+                    printf("\t\tcannot increment a constant\n");
                     yyerrok;
                     yyclearin;
                 }
                 | Floats DEC error
                 {
                 	yyerror("");
-                    printf("\t\tcannot increment a constant\n\n");
+                    printf("\t\tcannot increment a constant\n");
                     yyerrok;
                     yyclearin;
                 }
                 | DEC Floats error
                 {
                 	yyerror("");
-                    printf("\t\tcannot increment a constant\n\n");
+                    printf("\t\tcannot increment a constant\n");
                     yyerrok;
                     yyclearin;
                 }
                 | INC Floats error
                 {
                 	yyerror("");
-                    printf("\t\tcannot increment a constant\n\n");
+                    printf("\t\tcannot increment a constant\n");
                     yyerrok;
                     yyclearin;
                 }
-                | LP Expr RP { $$ = $2; }
+                | LP Expr RP
                 | LP Expr error
                 {
                 	yyerror("");
-                    printf("\t\tno ) detected after (\n\n");
+                    printf("\t\tno ) detected after (\n");
                     yyerrok;
                     yyclearin;
                 }
@@ -165,7 +135,7 @@ Fact:           VAR INC { $$ = nodeMaker(strcat(strdup($1),strdup($2)),NULL,NULL
 C:      VAR error
         {
             yyerror("");
-            printf("\t\t no operators between Operands\n\n");
+            printf("\t\t no operators between Operands\n");
             yyerrok;
             yyclearin;
         }
@@ -173,7 +143,7 @@ C:      VAR error
         Floats error
         {
             yyerror("");
-            printf("\t\t no operators between Operands\n\n");
+            printf("\t\t no operators between Operands\n");
             yyerrok;
             yyclearin;
         }

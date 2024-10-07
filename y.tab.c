@@ -67,20 +67,22 @@
 
 
 /* First part of user prologue.  */
-#line 1 "prob3.y"
+#line 1 "prob4.y"
 
-    #include<stdlib.h>
-    #include<stdio.h>
-    #include<string.h>
+    #include <stdlib.h>
+    #include <stdio.h>
+    #include <string.h>
     #include "y.tab.h"
 
     int yyerror(char*);
     extern FILE* yyin;
-    int eflag = 0;  // Ensure correct comparison with == in Assignments rule
+    int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
-    int yydebug=0;
+    int yydebug = 0;
 
-#line 84 "y.tab.c"
+    int count = 0;  // Counter for temporary variables
+
+#line 86 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -142,11 +144,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 14 "prob3.y"
+#line 16 "prob4.y"
 
     char* str;
 
-#line 150 "y.tab.c"
+#line 152 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -187,10 +189,8 @@ enum yysymbol_kind_t
   YYSYMBOL_YYACCEPT = 18,                  /* $accept  */
   YYSYMBOL_S = 19,                         /* S  */
   YYSYMBOL_Assignments = 20,               /* Assignments  */
-  YYSYMBOL_Op = 21,                        /* Op  */
-  YYSYMBOL_Expr = 22,                      /* Expr  */
-  YYSYMBOL_Fact = 23,                      /* Fact  */
-  YYSYMBOL_C = 24                          /* C  */
+  YYSYMBOL_Expr = 21,                      /* Expr  */
+  YYSYMBOL_Fact = 22                       /* Fact  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -518,16 +518,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  7
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   72
+#define YYLAST   37
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  18
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  7
+#define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  37
+#define YYNRULES  18
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  58
+#define YYNSTATES  33
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   267
@@ -577,10 +577,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    35,    35,    36,    39,    55,    63,    63,    63,    63,
-      63,    64,    66,    68,    70,    72,    84,    89,    92,    93,
-      94,    95,    96,    97,    98,    99,   100,   102,   103,   105,
-     112,   119,   126,   133,   134,   142,   150,   157
+       0,    37,    37,    38,    42,    64,    73,    80,    87,    94,
+     101,   115,   119,   123,   127,   131,   135,   139,   143
 };
 #endif
 
@@ -598,8 +596,7 @@ static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "VAR", "Floats",
   "ASSIGN", "SC", "LP", "RP", "INC", "LEQ", "GEQ", "DEC", "'+'", "'-'",
-  "'*'", "'/'", "'%'", "$accept", "S", "Assignments", "Op", "Expr", "Fact",
-  "C", YY_NULLPTR
+  "'*'", "'/'", "'%'", "$accept", "S", "Assignments", "Expr", "Fact", YY_NULLPTR
 };
 
 static const char *
@@ -623,12 +620,10 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       7,    24,    26,    35,     7,   -12,    25,   -12,   -12,    44,
-      54,    25,     0,     9,     2,    27,   -12,    37,    49,   -12,
-     -12,   -12,    51,    60,   -12,     1,   -12,    61,   -12,    63,
-      56,    16,    33,   -12,    42,    42,    42,    42,    42,   -12,
-     -12,   -12,   -12,   -12,   -12,   -12,   -12,   -12,   -12,   -12,
-     -12,   -12,   -12,    55,    55,   -12,   -12,   -12
+      22,     2,    -1,    24,    22,   -12,    -2,   -12,   -12,    -6,
+     -12,    -2,    31,    32,     3,   -12,   -12,   -12,    13,   -12,
+     -12,   -12,    -2,    -2,    -2,    -2,    -2,   -12,    16,    16,
+     -12,   -12,   -12
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -636,24 +631,22 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     0,     0,     0,     0,     5,     0,     1,     2,    37,
-      37,     0,     0,     0,     0,     0,    17,     0,     0,    18,
-      20,    25,     0,     0,    27,     0,    22,     0,    24,     0,
-      37,    37,     0,     4,     6,     7,     9,     8,    10,    16,
-      35,    36,    29,    30,    34,    33,    32,    31,    19,    21,
-      26,    28,    23,    11,    12,    13,    14,    15
+       0,     0,     0,     0,     0,     5,     0,     1,     2,    16,
+      17,     0,     0,     0,     0,    11,    12,    13,     0,    14,
+      15,     4,     0,     0,     0,     0,     0,    18,     6,     7,
+       8,     9,    10
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -12,    65,   -12,   -12,   -11,   -12,    -9
+     -12,    33,   -12,   -11,   -12
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     3,     4,    39,    15,    16,    21
+       0,     3,     4,    14,    15
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -661,26 +654,18 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      25,    24,    44,    26,    27,    30,    31,    -3,     1,    45,
-       2,    32,    28,    29,    34,    35,    36,    37,    38,    17,
-      18,    50,    51,    53,    54,    55,    56,    57,     9,    10,
-       5,     6,    11,    33,    12,     7,    52,    13,    40,    14,
-      34,    35,    36,    37,    38,     9,    10,    17,    18,    11,
-      41,    12,    42,    19,    13,     0,    20,    17,    18,    17,
-      18,    43,    46,    22,    47,    48,    23,     0,    49,     8,
-      36,    37,    38
+      18,     9,    10,    16,     6,    11,    17,    12,     5,    21,
+      13,    28,    29,    30,    31,    32,    22,    23,    24,    25,
+      26,    27,    -3,     1,     7,     2,    22,    23,    24,    25,
+      26,    24,    25,    26,    19,    20,     0,     8
 };
 
 static const yytype_int8 yycheck[] =
 {
-      11,    10,     1,     3,     4,     3,     4,     0,     1,     8,
-       3,     9,     3,     4,    13,    14,    15,    16,    17,     3,
-       4,    30,    31,    34,    35,    36,    37,    38,     3,     4,
-       6,     5,     7,     6,     9,     0,     3,    12,     1,    14,
-      13,    14,    15,    16,    17,     3,     4,     3,     4,     7,
-       1,     9,     1,     9,    12,    -1,    12,     3,     4,     3,
-       4,     1,     1,     9,     1,     9,    12,    -1,    12,     4,
-      15,    16,    17
+      11,     3,     4,     9,     5,     7,    12,     9,     6,     6,
+      12,    22,    23,    24,    25,    26,    13,    14,    15,    16,
+      17,     8,     0,     1,     0,     3,    13,    14,    15,    16,
+      17,    15,    16,    17,     3,     3,    -1,     4
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -688,29 +673,23 @@ static const yytype_int8 yycheck[] =
 static const yytype_int8 yystos[] =
 {
        0,     1,     3,    19,    20,     6,     5,     0,    19,     3,
-       4,     7,     9,    12,    14,    22,    23,     3,     4,     9,
-      12,    24,     9,    12,    24,    22,     3,     4,     3,     4,
-       3,     4,     9,     6,    13,    14,    15,    16,    17,    21,
-       1,     1,     1,     1,     1,     8,     1,     1,     9,    12,
-      24,    24,     3,    22,    22,    22,    22,    22
+       4,     7,     9,    12,    21,    22,     9,    12,    21,     3,
+       3,     6,    13,    14,    15,    16,    17,     8,    21,    21,
+      21,    21,    21
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    18,    19,    19,    20,    20,    21,    21,    21,    21,
-      21,    22,    22,    22,    22,    22,    22,    22,    23,    23,
-      23,    23,    23,    23,    23,    23,    23,    23,    23,    23,
-      23,    23,    23,    23,    23,    24,    24,    24
+      21,    21,    22,    22,    22,    22,    22,    22,    22
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     2,     0,     4,     2,     1,     1,     1,     1,
-       1,     3,     3,     3,     3,     3,     2,     1,     2,     3,
-       2,     3,     2,     3,     2,     2,     3,     2,     3,     3,
-       3,     3,     3,     3,     3,     2,     2,     0
+       0,     2,     2,     0,     4,     2,     3,     3,     3,     3,
+       3,     1,     2,     2,     2,     2,     1,     1,     3
 };
 
 
@@ -1174,173 +1153,172 @@ yyreduce:
   switch (yyn)
     {
   case 3: /* S: %empty  */
-#line 36 "prob3.y"
+#line 38 "prob4.y"
       { printf("!!Done\n"); }
-#line 1180 "y.tab.c"
+#line 1159 "y.tab.c"
     break;
 
   case 4: /* Assignments: VAR ASSIGN Expr SC  */
-#line 40 "prob3.y"
-                {
-                    if (eflag == 0)  // Fix this comparison
-                    {
-                        printf("\t\t Accepted!\n");
-                    }
-                    else if(eflag==1){
-                        printf("  float not to be used with modulo symbol\n");
-                    }
-                    else
-                    {
-                        printf("\t\t Operands not found\n");
-                    }
-                    eflag=0;
-                }
-#line 1199 "y.tab.c"
+#line 43 "prob4.y"
+    {
+        if (eflag == 0) 
+        {
+            printf("\t\t Accepted!\n\n");
+
+            char ans[100];  // Use a local buffer instead of dynamically creating it
+            // Properly format the TAC output for assignment
+            sprintf(ans, "t%d = %s %s %s;\n", count++, (yyvsp[-3].str), (yyvsp[-2].str), (yyvsp[-1].str));
+            printf("%s", ans);
+        }
+        else if(eflag == 1)
+        {
+            printf("  float not to be used with modulo symbol\n\n");
+        }
+        else
+        {
+            printf("\t\t Operands not found\n\n");
+        }
+        eflag = 0;
+        count = 0;
+    }
+#line 1185 "y.tab.c"
     break;
 
   case 5: /* Assignments: error SC  */
-#line 56 "prob3.y"
-                {
-                    yyerror("");
-                    printf("\t\tExpression not assignable...\n");
-                    yyerrok;
-                    yyclearin;
-                }
-#line 1210 "y.tab.c"
+#line 65 "prob4.y"
+    {
+        yyerror("");
+        printf("\t\tExpression not assignable...\n\n");
+        yyerrok;
+        yyclearin;
+    }
+#line 1196 "y.tab.c"
     break;
 
-  case 15: /* Expr: Expr '%' Expr  */
-#line 73 "prob3.y"
-                {
-                    if(strchr((yyvsp[0].str),'.')==0 || strchr((yyvsp[0].str),'.')==0)
-                    {
-                        eflag=1;
-                    }
-                    else
-                    {
-                        eflag=0;
-                    }
-                }
-#line 1225 "y.tab.c"
+  case 6: /* Expr: Expr '+' Expr  */
+#line 74 "prob4.y"
+    { 
+        char temp[100];
+        // Generate TAC for addition
+        sprintf(temp, "t%d = %s + %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
+        (yyval.str) = strdup(temp);
+    }
+#line 1207 "y.tab.c"
     break;
 
-  case 16: /* Expr: Expr Op  */
-#line 85 "prob3.y"
-                {
-                    eflag=2;
-                }
-#line 1233 "y.tab.c"
+  case 7: /* Expr: Expr '-' Expr  */
+#line 81 "prob4.y"
+    { 
+        char temp[100];
+        // Generate TAC for subtraction
+        sprintf(temp, "t%d = %s - %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
+        (yyval.str) = strdup(temp);
+    }
+#line 1218 "y.tab.c"
     break;
 
-  case 19: /* Fact: '-' VAR INC  */
-#line 93 "prob3.y"
-                            {;}
-#line 1239 "y.tab.c"
+  case 8: /* Expr: Expr '*' Expr  */
+#line 88 "prob4.y"
+    { 
+        char temp[100];
+        // Generate TAC for multiplication
+        printf("t%d = %s * %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
+        (yyval.str) = strdup(temp);
+    }
+#line 1229 "y.tab.c"
     break;
 
-  case 21: /* Fact: '-' VAR DEC  */
-#line 95 "prob3.y"
-                                                      {;}
-#line 1245 "y.tab.c"
+  case 9: /* Expr: Expr '/' Expr  */
+#line 95 "prob4.y"
+    { 
+        char temp[100];
+        // Generate TAC for division
+        printf("t%d = %s / %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
+        (yyval.str) = strdup(temp);
+    }
+#line 1240 "y.tab.c"
     break;
 
-  case 23: /* Fact: '-' INC VAR  */
-#line 97 "prob3.y"
-                                                     {;}
-#line 1251 "y.tab.c"
+  case 10: /* Expr: Expr '%' Expr  */
+#line 102 "prob4.y"
+    {
+        if (strchr((yyvsp[-2].str), '.') == NULL && strchr((yyvsp[0].str), '.') == NULL)
+        {
+            char temp[100];
+            // Generate TAC for modulo
+            printf("t%d = %s %% %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
+            (yyval.str) = strdup(temp);
+        }
+        else
+        {
+            eflag = 1;  // Set error flag if modulo is used with floats
+        }
+    }
+#line 1258 "y.tab.c"
     break;
 
-  case 26: /* Fact: '-' VAR C  */
-#line 101 "prob3.y"
-                {;}
-#line 1257 "y.tab.c"
+  case 12: /* Fact: VAR INC  */
+#line 119 "prob4.y"
+              { 
+        
+        printf("t%d = %s;\n%s = %s + 1;\n", count++, (yyvsp[-1].str), (yyvsp[-1].str), (yyvsp[-1].str)); 
+    }
+#line 1267 "y.tab.c"
     break;
 
-  case 28: /* Fact: '-' Floats C  */
-#line 104 "prob3.y"
-                {;}
-#line 1263 "y.tab.c"
+  case 13: /* Fact: VAR DEC  */
+#line 123 "prob4.y"
+              { 
+        (yyval.str) = (char*) malloc(256);
+        printf("t%d = %s;\n%s = %s - 1;\n", count++, (yyvsp[-1].str), (yyvsp[-1].str), (yyvsp[-1].str)); 
+    }
+#line 1276 "y.tab.c"
     break;
 
-  case 29: /* Fact: Floats INC error  */
-#line 106 "prob3.y"
-                {
-                	yyerror("");
-                    printf("\t\tcannot increment a constant\n");
-                    yyerrok;
-                    yyclearin;
-                }
-#line 1274 "y.tab.c"
-    break;
-
-  case 30: /* Fact: Floats DEC error  */
-#line 113 "prob3.y"
-                {
-                	yyerror("");
-                    printf("\t\tcannot increment a constant\n");
-                    yyerrok;
-                    yyclearin;
-                }
+  case 14: /* Fact: INC VAR  */
+#line 127 "prob4.y"
+              { 
+        (yyval.str) = (char*) malloc(256);
+        printf("%s = %s + 1;\nt%d = %s;\n", (yyvsp[0].str), (yyvsp[0].str), count++, (yyvsp[0].str)); 
+    }
 #line 1285 "y.tab.c"
     break;
 
-  case 31: /* Fact: DEC Floats error  */
-#line 120 "prob3.y"
-                {
-                	yyerror("");
-                    printf("\t\tcannot increment a constant\n");
-                    yyerrok;
-                    yyclearin;
-                }
-#line 1296 "y.tab.c"
+  case 15: /* Fact: DEC VAR  */
+#line 131 "prob4.y"
+              { 
+        (yyval.str) = (char*) malloc(256);
+        printf("%s = %s - 1;\nt%d = %s;\n", (yyvsp[0].str), (yyvsp[0].str), count++, (yyvsp[0].str)); 
+    }
+#line 1294 "y.tab.c"
     break;
 
-  case 32: /* Fact: INC Floats error  */
-#line 127 "prob3.y"
-                {
-                	yyerror("");
-                    printf("\t\tcannot increment a constant\n");
-                    yyerrok;
-                    yyclearin;
-                }
-#line 1307 "y.tab.c"
+  case 16: /* Fact: VAR  */
+#line 135 "prob4.y"
+          { 
+        (yyval.str) = (char*) malloc(256);
+        printf("t%d = %s;\n", count++, (yyvsp[0].str)); 
+    }
+#line 1303 "y.tab.c"
     break;
 
-  case 34: /* Fact: LP Expr error  */
-#line 135 "prob3.y"
-                {
-                	yyerror("");
-                    printf("\t\tno ) detected after (\n");
-                    yyerrok;
-                    yyclearin;
-                }
+  case 17: /* Fact: Floats  */
+#line 139 "prob4.y"
+             { 
+        (yyval.str) = (char*) malloc(256);
+        printf("t%d = %s;\n", count++, (yyvsp[0].str)); 
+    }
+#line 1312 "y.tab.c"
+    break;
+
+  case 18: /* Fact: LP Expr RP  */
+#line 143 "prob4.y"
+                 { ; }
 #line 1318 "y.tab.c"
     break;
 
-  case 35: /* C: VAR error  */
-#line 143 "prob3.y"
-        {
-            yyerror("");
-            printf("\t\t no operators between Operands\n");
-            yyerrok;
-            yyclearin;
-        }
-#line 1329 "y.tab.c"
-    break;
 
-  case 36: /* C: Floats error  */
-#line 151 "prob3.y"
-        {
-            yyerror("");
-            printf("\t\t no operators between Operands\n");
-            yyerrok;
-            yyclearin;
-        }
-#line 1340 "y.tab.c"
-    break;
-
-
-#line 1344 "y.tab.c"
+#line 1322 "y.tab.c"
 
       default: break;
     }
@@ -1533,22 +1511,21 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 159 "prob3.y"
+#line 146 "prob4.y"
 
 int yyerror(char* err) {
     return 0;
 }
 
-int main(int arg, char* files[]) {
-    // yydebug =1;
-    if (arg > 1) {
-        FILE* inp = fopen(files[1], "r");
+int main(int argc, char* argv[]) {
+    if (argc > 1) {
+        FILE* inp = fopen(argv[1], "r");
         if (inp != NULL) {
             yyin = inp;
         }
     }
+
     yyparse();
     fclose(yyin);
     return 0;
 }
-

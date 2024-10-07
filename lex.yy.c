@@ -360,12 +360,12 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[32] =
+static const flex_int16_t yy_accept[33] =
     {   0,
         0,    0,   13,   11,   10,   10,    5,    8,    9,    5,
         5,    5,   11,    5,    6,    7,    4,    3,   10,    4,
-        1,    2,    0,    0,    6,    6,    3,    0,    0,    6,
-        0
+        1,    0,    2,    0,    0,    6,    6,    3,    0,    0,
+        6,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -406,42 +406,42 @@ static const YY_CHAR yy_meta[17] =
         1,    2,    1,    1,    2,    2
     } ;
 
-static const flex_int16_t yy_base[33] =
+static const flex_int16_t yy_base[34] =
     {   0,
-        0,    0,   46,   47,   15,   17,   47,   47,   47,   31,
-       13,   19,   32,   29,   12,   47,   47,    0,   23,   47,
-       47,   47,   30,   20,   22,   25,    0,   27,   29,   28,
-       47,   21
+        0,    0,   48,   49,   15,   17,   49,   49,   49,   33,
+       13,   20,   34,   31,   12,   49,   49,    0,   23,   49,
+       49,   36,   49,   31,   21,   23,   26,    0,   28,   30,
+       29,   49,   21
     } ;
 
-static const flex_int16_t yy_def[33] =
+static const flex_int16_t yy_def[34] =
     {   0,
-       31,    1,   31,   31,   31,   31,   31,   31,   31,   31,
-       31,   31,   31,   31,   31,   31,   31,   32,   31,   31,
-       31,   31,   31,   31,   31,   31,   32,   31,   31,   31,
-        0,   31
+       32,    1,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32,   32,   32,   33,   32,   32,
+       32,   32,   32,   32,   32,   32,   32,   33,   32,   32,
+       32,    0,   32
     } ;
 
-static const flex_int16_t yy_nxt[64] =
+static const flex_int16_t yy_nxt[66] =
     {   0,
         4,    5,    6,    7,    8,    9,   10,   11,   12,   13,
        14,   15,   16,   17,   18,   18,   19,   19,   19,   19,
-       21,   23,   27,   26,   19,   19,   20,   22,   23,   23,
-       24,   24,   20,   25,   23,   29,   26,   28,   30,   30,
-       30,   25,   20,   25,   20,   31,    3,   31,   31,   31,
-       31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
-       31,   31,   31
+       21,   24,   28,   27,   19,   19,   20,   22,   23,   24,
+       24,   25,   25,   20,   26,   24,   30,   27,   29,   31,
+       31,   31,   26,   21,   20,   26,   20,   32,    3,   32,
+       32,   32,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32
     } ;
 
-static const flex_int16_t yy_chk[64] =
+static const flex_int16_t yy_chk[66] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    5,    5,    6,    6,
-       11,   15,   32,   15,   19,   19,   11,   12,   12,   24,
-       12,   24,   12,   25,   26,   28,   26,   25,   28,   30,
-       29,   23,   14,   13,   10,    3,   31,   31,   31,   31,
-       31,   31,   31,   31,   31,   31,   31,   31,   31,   31,
-       31,   31,   31
+       11,   15,   33,   15,   19,   19,   11,   12,   12,   12,
+       25,   12,   25,   12,   26,   27,   29,   27,   26,   29,
+       31,   30,   24,   22,   14,   13,   10,    3,   32,   32,
+       32,   32,   32,   32,   32,   32,   32,   32,   32,   32,
+       32,   32,   32,   32,   32
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -458,8 +458,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "prob3.l"
-#line 2 "prob3.l"
+#line 1 "prob4.l"
+#line 2 "prob4.l"
     #include<stdio.h>
     #include<stdlib.h>
     #include "y.tab.h"
@@ -681,7 +681,7 @@ YY_DECL
 		}
 
 	{
-#line 17 "prob3.l"
+#line 17 "prob4.l"
 
 
 #line 687 "lex.yy.c"
@@ -711,13 +711,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 32 )
+				if ( yy_current_state >= 33 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 47 );
+		while ( yy_base[yy_current_state] != 49 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -743,101 +743,101 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 19 "prob3.l"
+#line 19 "prob4.l"
 { 
         printf("%s ", yytext);
-        yylval.str = strdup(yytext); // Allocate memory for increment token
+        yylval.str = strdup(yytext); 
         return INC;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 25 "prob3.l"
+#line 25 "prob4.l"
 { 
         printf("%s ", yytext);
-        yylval.str = strdup(yytext); // Allocate memory for decrement token
+        yylval.str = strdup(yytext); 
         return DEC;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 31 "prob3.l"
+#line 31 "prob4.l"
 { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // Allocate memory for variable token
+                yylval.str = strdup(yytext); // variable token
                 return VAR;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 36 "prob3.l"
+#line 36 "prob4.l"
 { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // Allocate memory for assignment token
+                yylval.str = strdup(yytext); // assignment token
                 return ASSIGN;
              }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 41 "prob3.l"
+#line 41 "prob4.l"
 { 
                 printf("%s ", yytext);
-                return yytext[0]; // Change to return appropriate token types
+                return yytext[0]; 
              }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 46 "prob3.l"
+#line 46 "prob4.l"
 { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // Allocate memory for float token
+                yylval.str = strdup(yytext); // float token
                 return Floats;
              }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 51 "prob3.l"
+#line 51 "prob4.l"
 { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // Allocate memory for statement terminator
+                yylval.str = strdup(yytext); // statement terminator
                 return SC;
              }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 57 "prob3.l"
+#line 57 "prob4.l"
 { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // Allocate memory for left parenthesis
+                yylval.str = strdup(yytext); // left parenthesis
                 return LP;
              }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 62 "prob3.l"
+#line 62 "prob4.l"
 { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // Allocate memory for right parenthesis
+                yylval.str = strdup(yytext); // right parenthesis
                 return RP;
              }
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 67 "prob3.l"
+#line 67 "prob4.l"
 ;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 68 "prob3.l"
+#line 68 "prob4.l"
 { 
-                fprintf(stderr, "Unrecognized character: %s\n", yytext);
-                return yytext[0]; // You may want to handle errors differently
+                fprintf(stderr, "Unrecognized character: %s \n", yytext);
+                return yytext[0];
              }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 73 "prob3.l"
+#line 73 "prob4.l"
 ECHO;
 	YY_BREAK
 #line 843 "lex.yy.c"
@@ -1137,7 +1137,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 32 )
+			if ( yy_current_state >= 33 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1165,11 +1165,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 32 )
+		if ( yy_current_state >= 33 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 31);
+	yy_is_jam = (yy_current_state == 32);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1845,7 +1845,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 73 "prob3.l"
+#line 73 "prob4.l"
 
 int yywrap() {
     return 1;

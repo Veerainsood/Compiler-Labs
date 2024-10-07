@@ -18,56 +18,56 @@ rightParen  \)
 
 {In} { 
         printf("%s ", yytext);
-        yylval.str = strdup(yytext); 
+        yylval.str = strdup(yytext); // Allocate memory for increment token
         return INC;
 }
 
 {Dc} { 
         printf("%s ", yytext);
-        yylval.str = strdup(yytext); 
+        yylval.str = strdup(yytext); // Allocate memory for decrement token
         return DEC;
 }
 
 {variable}  { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // variable token
+                yylval.str = strdup(yytext); // Allocate memory for variable token
                 return VAR;
 }
 {Assign}    { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // assignment token
+                yylval.str = strdup(yytext); // Allocate memory for assignment token
                 return ASSIGN;
              }
 {operators} { 
                 printf("%s ", yytext);
-                return yytext[0]; 
+                return yytext[0]; // Change to return appropriate token types
              }
 
 {floats}    { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // float token
+                yylval.str = strdup(yytext); // Allocate memory for float token
                 return Floats;
              }
 {SC}        { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // statement terminator
+                yylval.str = strdup(yytext); // Allocate memory for statement terminator
                 return SC;
              }
 
 {leftParen} { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // left parenthesis
+                yylval.str = strdup(yytext); // Allocate memory for left parenthesis
                 return LP;
              }
 {rightParen} { 
                 printf("%s ", yytext);
-                yylval.str = strdup(yytext); // right parenthesis
+                yylval.str = strdup(yytext); // Allocate memory for right parenthesis
                 return RP;
              }
 [\t\n ]+    ;
 .            { 
                 fprintf(stderr, "Unrecognized character: %s \n", yytext);
-                return yytext[0];
+                return yytext[0]; // You may want to handle errors differently
              }
 
 %%

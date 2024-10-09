@@ -73,16 +73,19 @@
     #include <stdio.h>
     #include <string.h>
     #include "y.tab.h"
-
+    #define SIZE 100
     int yyerror(char*);
     extern FILE* yyin;
     int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
     int yydebug = 0;
-
+    
     int count = 0;  // Counter for temporary variables
+    char* finalAssignments[SIZE]; 
+    char* intermediate[SIZE];
+    int count2=0;
 
-#line 86 "y.tab.c"
+#line 89 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -144,11 +147,11 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 16 "prob4.y"
+#line 19 "prob4.y"
 
     char* str;
 
-#line 152 "y.tab.c"
+#line 155 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -577,8 +580,8 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    38,    42,    64,    73,    80,    87,    94,
-     101,   115,   119,   123,   127,   131,   135,   139,   143
+       0,    40,    40,    41,    45,    70,    90,    97,   104,   111,
+     117,   131,   135,   143,   151,   159,   168,   176,   184
 };
 #endif
 
@@ -1153,22 +1156,24 @@ yyreduce:
   switch (yyn)
     {
   case 3: /* S: %empty  */
-#line 38 "prob4.y"
+#line 41 "prob4.y"
       { printf("!!Done\n"); }
-#line 1159 "y.tab.c"
+#line 1162 "y.tab.c"
     break;
 
   case 4: /* Assignments: VAR ASSIGN Expr SC  */
-#line 43 "prob4.y"
+#line 46 "prob4.y"
     {
         if (eflag == 0) 
         {
             printf("\t\t Accepted!\n\n");
-
-            char ans[100];  // Use a local buffer instead of dynamically creating it
-            // Properly format the TAC output for assignment
-            sprintf(ans, "t%d = %s %s %s;\n", count++, (yyvsp[-3].str), (yyvsp[-2].str), (yyvsp[-1].str));
-            printf("%s", ans);
+            for (int i = 0; i <count; i++) {
+                printf("%s",intermediate[i]);
+            }
+            for (int i = 0; i <count2; i++) {
+                printf("%s",finalAssignments[i]);
+            }
+            printf("\nProcessing Next Input\n");
         }
         else if(eflag == 1)
         {
@@ -1178,147 +1183,183 @@ yyreduce:
         {
             printf("\t\t Operands not found\n\n");
         }
-        eflag = 0;
-        count = 0;
+        count=0;
+        count2=0;
+        eflag=0;
     }
-#line 1185 "y.tab.c"
+#line 1191 "y.tab.c"
     break;
 
   case 5: /* Assignments: error SC  */
-#line 65 "prob4.y"
+#line 71 "prob4.y"
     {
         yyerror("");
         printf("\t\tExpression not assignable...\n\n");
         yyerrok;
         yyclearin;
+        for (int i = 0; i < 100; i++) {
+            free(finalAssignments[i]);
+            free(intermediate[i]);
+        }
+        for (int i = 0; i < 100; i++) {
+            finalAssignments[i] = (char*)malloc(SIZE * sizeof(char));  // SIZE depends on how large each string should be
+            intermediate[i] = (char*)malloc(SIZE * sizeof(char));
+        }
+        count=0;
+        count2=0;
+        eflag=0;
     }
-#line 1196 "y.tab.c"
+#line 1213 "y.tab.c"
     break;
 
   case 6: /* Expr: Expr '+' Expr  */
-#line 74 "prob4.y"
+#line 91 "prob4.y"
     { 
-        char temp[100];
         // Generate TAC for addition
-        sprintf(temp, "t%d = %s + %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
-        (yyval.str) = strdup(temp);
+        snprintf(intermediate[count],SIZE,"t%d = t%d + t%d;\n", count, count-2, count-1);
+        sprintf((yyval.str),"%s + %s;\n",(yyvsp[-2].str), (yyvsp[0].str));
+        count++;
     }
-#line 1207 "y.tab.c"
+#line 1224 "y.tab.c"
     break;
 
   case 7: /* Expr: Expr '-' Expr  */
-#line 81 "prob4.y"
+#line 98 "prob4.y"
     { 
-        char temp[100];
         // Generate TAC for subtraction
-        sprintf(temp, "t%d = %s - %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
-        (yyval.str) = strdup(temp);
+        snprintf(intermediate[count],SIZE,"t%d = t%d - t%d;\n", count, count-2, count-1 );
+        sprintf((yyval.str),"%s - %s;\n", (yyvsp[-2].str), (yyvsp[0].str));
+        count++;
     }
-#line 1218 "y.tab.c"
+#line 1235 "y.tab.c"
     break;
 
   case 8: /* Expr: Expr '*' Expr  */
-#line 88 "prob4.y"
+#line 105 "prob4.y"
     { 
-        char temp[100];
         // Generate TAC for multiplication
-        printf("t%d = %s * %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
-        (yyval.str) = strdup(temp);
+        snprintf(intermediate[count],SIZE,"t%d = t%d * t%d;\n", count, count-2, count-1);
+        sprintf((yyval.str),"%s * %s;\n", (yyvsp[-2].str), (yyvsp[0].str));
+        count++;
     }
-#line 1229 "y.tab.c"
+#line 1246 "y.tab.c"
     break;
 
   case 9: /* Expr: Expr '/' Expr  */
-#line 95 "prob4.y"
+#line 112 "prob4.y"
     { 
-        char temp[100];
-        // Generate TAC for division
-        printf("t%d = %s / %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
-        (yyval.str) = strdup(temp);
+        snprintf(intermediate[count],SIZE,"t%d = t%d / t%d;\n", count, count-2, count-1);
+        sprintf((yyval.str),"%s / %s;\n", (yyvsp[-2].str), (yyvsp[0].str));
+        count++;
     }
-#line 1240 "y.tab.c"
+#line 1256 "y.tab.c"
     break;
 
   case 10: /* Expr: Expr '%' Expr  */
-#line 102 "prob4.y"
+#line 118 "prob4.y"
     {
         if (strchr((yyvsp[-2].str), '.') == NULL && strchr((yyvsp[0].str), '.') == NULL)
         {
-            char temp[100];
             // Generate TAC for modulo
-            printf("t%d = %s %% %s;\n", count++, (yyvsp[-2].str), (yyvsp[0].str));
-            (yyval.str) = strdup(temp);
+            snprintf(intermediate[count],SIZE,"t%d = t%d \% t%d;\n", count, count-2, count-1);
+            sprintf((yyval.str),"t%d = %s \% %s;\n",count, (yyvsp[-2].str), (yyvsp[0].str));
+            count++;
         }
         else
         {
             eflag = 1;  // Set error flag if modulo is used with floats
         }
     }
-#line 1258 "y.tab.c"
+#line 1274 "y.tab.c"
     break;
 
   case 12: /* Fact: VAR INC  */
-#line 119 "prob4.y"
+#line 135 "prob4.y"
               { 
-        
-        printf("t%d = %s;\n%s = %s + 1;\n", count++, (yyvsp[-1].str), (yyvsp[-1].str), (yyvsp[-1].str)); 
+        // strcat($1,$2);
+        (yyval.str) = strdup((yyvsp[-1].str));
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, (yyvsp[-1].str), (yyvsp[-1].str), (yyvsp[-1].str)); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", (yyvsp[-1].str), count); 
+        count2++;
+        count++;
     }
-#line 1267 "y.tab.c"
+#line 1287 "y.tab.c"
     break;
 
   case 13: /* Fact: VAR DEC  */
-#line 123 "prob4.y"
+#line 143 "prob4.y"
               { 
-        (yyval.str) = (char*) malloc(256);
-        printf("t%d = %s;\n%s = %s - 1;\n", count++, (yyvsp[-1].str), (yyvsp[-1].str), (yyvsp[-1].str)); 
+        // strcat($1,$2);
+        (yyval.str) = strdup((yyvsp[-1].str));
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, (yyvsp[-1].str), (yyvsp[-1].str), (yyvsp[-1].str)); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d - 1;\n", (yyvsp[-1].str), (yyvsp[-1].str)); 
+        // count2++;
+        count++;
     }
-#line 1276 "y.tab.c"
+#line 1300 "y.tab.c"
     break;
 
   case 14: /* Fact: INC VAR  */
-#line 127 "prob4.y"
+#line 151 "prob4.y"
               { 
-        (yyval.str) = (char*) malloc(256);
-        printf("%s = %s + 1;\nt%d = %s;\n", (yyvsp[0].str), (yyvsp[0].str), count++, (yyvsp[0].str)); 
+        // strcat($1,$2);
+        (yyval.str) = strdup((yyvsp[0].str));
+        snprintf(intermediate[count],SIZE,"t%d = %s + 1;\n", count, (yyvsp[0].str)); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", (yyvsp[0].str), count); 
+        count2++;
+        count++;
     }
-#line 1285 "y.tab.c"
+#line 1313 "y.tab.c"
     break;
 
   case 15: /* Fact: DEC VAR  */
-#line 131 "prob4.y"
+#line 159 "prob4.y"
               { 
-        (yyval.str) = (char*) malloc(256);
-        printf("%s = %s - 1;\nt%d = %s;\n", (yyvsp[0].str), (yyvsp[0].str), count++, (yyvsp[0].str)); 
+        // strcat($1,$2);
+        (yyval.str) = strdup((yyvsp[0].str));
+        // $$ = (char*) malloc(256);
+        snprintf(intermediate[count],SIZE,"t%d = %s - 1;\n", count, (yyvsp[0].str)); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", (yyvsp[0].str), count); 
+        count2++;
+        count++;
     }
-#line 1294 "y.tab.c"
+#line 1327 "y.tab.c"
     break;
 
   case 16: /* Fact: VAR  */
-#line 135 "prob4.y"
+#line 168 "prob4.y"
           { 
-        (yyval.str) = (char*) malloc(256);
-        printf("t%d = %s;\n", count++, (yyvsp[0].str)); 
+        (yyval.str) = strdup((yyvsp[0].str));
+        // $$ = (char*) malloc(256);
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, (yyvsp[0].str)); 
+        // snprintf(finalAssignments[count2],SIZE,"%s = t%d;", $1, count); 
+        // count2++;
+        count++;
     }
-#line 1303 "y.tab.c"
+#line 1340 "y.tab.c"
     break;
 
   case 17: /* Fact: Floats  */
-#line 139 "prob4.y"
+#line 176 "prob4.y"
              { 
-        (yyval.str) = (char*) malloc(256);
-        printf("t%d = %s;\n", count++, (yyvsp[0].str)); 
+        (yyval.str) = strdup((yyvsp[0].str));
+        // $$ = (char*) malloc(256);
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, (yyvsp[0].str)); 
+        // snprintf(finalAssignments[count2],SIZE,"%s = t%d;", $1, count); 
+        // count2++;
+        count++;
     }
-#line 1312 "y.tab.c"
+#line 1353 "y.tab.c"
     break;
 
   case 18: /* Fact: LP Expr RP  */
-#line 143 "prob4.y"
-                 { ; }
-#line 1318 "y.tab.c"
+#line 184 "prob4.y"
+                 { (yyval.str)=strdup((yyvsp[-1].str)); }
+#line 1359 "y.tab.c"
     break;
 
 
-#line 1322 "y.tab.c"
+#line 1363 "y.tab.c"
 
       default: break;
     }
@@ -1511,7 +1552,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 146 "prob4.y"
+#line 187 "prob4.y"
 
 int yyerror(char* err) {
     return 0;
@@ -1524,7 +1565,10 @@ int main(int argc, char* argv[]) {
             yyin = inp;
         }
     }
-
+    for (int i = 0; i < 100; i++) {
+    finalAssignments[i] = (char*)malloc(SIZE * sizeof(char));  // SIZE depends on how large each string should be
+    intermediate[i] = (char*)malloc(SIZE * sizeof(char));
+    }
     yyparse();
     fclose(yyin);
     return 0;

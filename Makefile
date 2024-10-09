@@ -1,5 +1,5 @@
 parser: y.tab.c y.tab.h lex.yy.c
-	gcc -w y.tab.c lex.yy.c -o -ll -o parser
+	gcc  -g -w y.tab.c lex.yy.c -o -ll -o parser
 
 lex.yy.c: ${fname}.l
 	lex ${fname}.l

@@ -3,14 +3,17 @@
     #include <stdio.h>
     #include <string.h>
     #include "y.tab.h"
-
+    #define SIZE 100
     int yyerror(char*);
     extern FILE* yyin;
     int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
     int yydebug = 0;
-
+    
     int count = 0;  // Counter for temporary variables
+    char* finalAssignments[SIZE]; 
+    char* intermediate[SIZE];
+    int count2=0;
 %}
 
 %union {
@@ -44,11 +47,13 @@ Assignments:
         if (eflag == 0) 
         {
             printf("\t\t Accepted!\n\n");
-
-            char ans[100];  // Use a local buffer instead of dynamically creating it
-            // Properly format the TAC output for assignment
-            sprintf(ans, "t%d = %s %s %s;\n", count++, $1, $2, $3);
-            printf("%s", ans);
+            for (int i = 0; i <count; i++) {
+                printf("%s",intermediate[i]);
+            }
+            for (int i = 0; i <count2; i++) {
+                printf("%s",finalAssignments[i]);
+            }
+            printf("\nProcessing Next Input\n");
         }
         else if(eflag == 1)
         {
@@ -58,8 +63,9 @@ Assignments:
         {
             printf("\t\t Operands not found\n\n");
         }
-        eflag = 0;
-        count = 0;
+        count=0;
+        count2=0;
+        eflag=0;
     }
     | error SC 
     {
@@ -67,45 +73,55 @@ Assignments:
         printf("\t\tExpression not assignable...\n\n");
         yyerrok;
         yyclearin;
+        for (int i = 0; i < 100; i++) {
+            free(finalAssignments[i]);
+            free(intermediate[i]);
+        }
+        for (int i = 0; i < 100; i++) {
+            finalAssignments[i] = (char*)malloc(SIZE * sizeof(char));  // SIZE depends on how large each string should be
+            intermediate[i] = (char*)malloc(SIZE * sizeof(char));
+        }
+        count=0;
+        count2=0;
+        eflag=0;
     }
     ;
 
 Expr: Expr '+' Expr 
     { 
-        char temp[100];
         // Generate TAC for addition
-        sprintf(temp, "t%d = %s + %s;\n", count++, $1, $3);
-        $$ = strdup(temp);
+        snprintf(intermediate[count],SIZE,"t%d = t%d + t%d;\n", count, count-2, count-1);
+        sprintf($$,"%s + %s;\n",$1, $3);
+        count++;
     }
     | Expr '-' Expr 
     { 
-        char temp[100];
         // Generate TAC for subtraction
-        sprintf(temp, "t%d = %s - %s;\n", count++, $1, $3);
-        $$ = strdup(temp);
+        snprintf(intermediate[count],SIZE,"t%d = t%d - t%d;\n", count, count-2, count-1 );
+        sprintf($$,"%s - %s;\n", $1, $3);
+        count++;
     }
     | Expr '*' Expr 
     { 
-        char temp[100];
         // Generate TAC for multiplication
-        printf("t%d = %s * %s;\n", count++, $1, $3);
-        $$ = strdup(temp);
+        snprintf(intermediate[count],SIZE,"t%d = t%d * t%d;\n", count, count-2, count-1);
+        sprintf($$,"%s * %s;\n", $1, $3);
+        count++;
     }
     | Expr '/' Expr 
     { 
-        char temp[100];
-        // Generate TAC for division
-        printf("t%d = %s / %s;\n", count++, $1, $3);
-        $$ = strdup(temp);
+        snprintf(intermediate[count],SIZE,"t%d = t%d / t%d;\n", count, count-2, count-1);
+        sprintf($$,"%s / %s;\n", $1, $3);
+        count++;
     }
     | Expr '%' Expr
     {
         if (strchr($1, '.') == NULL && strchr($3, '.') == NULL)
         {
-            char temp[100];
             // Generate TAC for modulo
-            printf("t%d = %s %% %s;\n", count++, $1, $3);
-            $$ = strdup(temp);
+            snprintf(intermediate[count],SIZE,"t%d = t%d \% t%d;\n", count, count-2, count-1);
+            sprintf($$,"t%d = %s \% %s;\n",count, $1, $3);
+            count++;
         }
         else
         {
@@ -117,30 +133,55 @@ Expr: Expr '+' Expr
 
 
 Fact: VAR INC { 
-        
-        printf("t%d = %s;\n%s = %s + 1;\n", count++, $1, $1, $1); 
+        // strcat($1,$2);
+        $$ = strdup($1);
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1, $1, $1); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", $1, count); 
+        count2++;
+        count++;
     } 
     | VAR DEC { 
-        $$ = (char*) malloc(256);
-        printf("t%d = %s;\n%s = %s - 1;\n", count++, $1, $1, $1); 
+        // strcat($1,$2);
+        $$ = strdup($1);
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1, $1, $1); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d - 1;\n", $1, $1); 
+        // count2++;
+        count++;
     } 
     | INC VAR { 
-        $$ = (char*) malloc(256);
-        printf("%s = %s + 1;\nt%d = %s;\n", $2, $2, count++, $2); 
+        // strcat($1,$2);
+        $$ = strdup($2);
+        snprintf(intermediate[count],SIZE,"t%d = %s + 1;\n", count, $2); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", $2, count); 
+        count2++;
+        count++;
     }
     | DEC VAR { 
-        $$ = (char*) malloc(256);
-        printf("%s = %s - 1;\nt%d = %s;\n", $2, $2, count++, $2); 
+        // strcat($1,$2);
+        $$ = strdup($2);
+        // $$ = (char*) malloc(256);
+        snprintf(intermediate[count],SIZE,"t%d = %s - 1;\n", count, $2); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", $2, count); 
+        count2++;
+        count++;
     }
     | VAR { 
-        $$ = (char*) malloc(256);
-        printf("t%d = %s;\n", count++, $1); 
+        $$ = strdup($1);
+        // $$ = (char*) malloc(256);
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1); 
+        // snprintf(finalAssignments[count2],SIZE,"%s = t%d;", $1, count); 
+        // count2++;
+        count++;
     }
     | Floats { 
-        $$ = (char*) malloc(256);
-        printf("t%d = %s;\n", count++, $1); 
+        $$ = strdup($1);
+        // $$ = (char*) malloc(256);
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1); 
+        // snprintf(finalAssignments[count2],SIZE,"%s = t%d;", $1, count); 
+        // count2++;
+        count++;
     }
-    | LP Expr RP { ; }
+    | LP Expr RP { $$=strdup($2); }
     ;
 
 %%
@@ -155,7 +196,10 @@ int main(int argc, char* argv[]) {
             yyin = inp;
         }
     }
-
+    for (int i = 0; i < 100; i++) {
+    finalAssignments[i] = (char*)malloc(SIZE * sizeof(char));  // SIZE depends on how large each string should be
+    intermediate[i] = (char*)malloc(SIZE * sizeof(char));
+    }
     yyparse();
     fclose(yyin);
     return 0;

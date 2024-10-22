@@ -14,7 +14,11 @@
     char* finalAssignments[SIZE]; 
     char* intermediate[SIZE];
     int count2=0;
-	
+	int blockVar =0;
+    int genBlockLabel()
+    {
+        return blockVar++;
+    }
     void handleClear()
     {
         for (int i = 0; i < 100; i++) {
@@ -46,6 +50,7 @@
 %token<str> CR
 %token<str> INC 
 %token<str> RELOP
+%token<str> Else
 %token<str> DEC 
 %token<str> If
 %type<str> Expr
@@ -53,22 +58,22 @@
 %token<str> BoolAnd
 %token<str> BoolOr
 %type<str> BoolExp
-%type<str> GeneralStatements
+%type<str> S
 %type<str> Assignments
 %type<str> IfStatement
 %left BoolOr
 %left BoolAnd
-%left '^'
 %left '|'
+%left '^'
 %left '&'
-%left '<' '>'
+%left  RELOP
 %left '+' '-'
 %left '*' '/' '%'
 %nonassoc INC DEC  
 
 %%
 
-S:  IfStatement SC { 
+S:  IfStatement { 
         if(eflag == 0) 
         {
             printf("\t\t Accepted!\n\n");
@@ -84,93 +89,129 @@ S:  IfStatement SC {
         {
             printf("  float not to be used with modulo symbol\n\n");
         }
-        else
+        else if( eflag==2)
         {
             printf("\t\t Operands not found\n\n");
         }
-    } S 
-    |
-    error SC{
-        yyerror("");
-        printf("\t\tBIBI If Statement issue...\n\n");
-        yyerrok;
-        yyclearin;
-        handleClear();
-    }
+    } S
+    | Assignments S
+    | {printf("\nDone!!\n");}
     ;
 
 IfStatement:
-    If LP BoolExp RP CL GeneralStatements CR 
+    If LP BoolExp RP CL {
+        printf("if %s goto %d\n goto %d", $3, genBlockLabel(), genBlockLabel()); 
+    } S CR {   
+        printf("L%d:\n",blockVar);
+        printf("%s\n",$6);
+    } ElseExpr
+    |
+    If BoolExp error CR
     {
-        
-    }
-    ;
-GeneralStatements: 
-    
-    Assignments GeneralStatements
-    |
-    IfStatement GeneralStatements 
-    | Assignments
-    | IfStatement
-    ;
-
-BoolExp:
-    Expr RELOP Expr
-    |
-    Assignments {}
-    |
-    '!' Expr {}
-    |
-    BoolExp BoolAnd BoolExp 
-    |
-    BoolExp BoolOr BoolExp
-    |
-    error {
         yyerror("");
-        printf("\t\tBABA If Statement issue...\n\n");
+        printf("\t\t error : Expected \'(\' before %s \n\n",$2);
         yyerrok;
         yyclearin;
         handleClear();
+        eflag = 3;
+    }
+    |
+    If LP BoolExp CL error CR
+    {
+        yyerror("");
+        printf("\t\t error : Expected \')\' after %s \n\n",$3);
+        yyerrok;
+        yyclearin;
+        handleClear();
+        eflag = 3;
+    }
+    ;
+
+ElseExpr:
+     Else CL S CR 
+    {   
+
+    }
+    | {}
+    ;
+BoolExp:
+    Expr RELOP Expr {
+
+    }
+    |
+    Assignments {
+
+    }
+    |
+    '!' Expr {
+
+    }
+    |
+    BoolExp BoolAnd BoolExp {
+
+    }
+    |
+    BoolExp BoolOr BoolExp {
+
+    }
+    |
+    error SC{
+        yyerror("");
+        printf("\t\tBoolean Expression Issues\n\n");
+        yyerrok;
+        yyclearin;
+        handleClear();
+        eflag = 3;
     }
     ;
 
 Assignments: 
     VAR ASSIGN Expr SC 
     {
-       
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $3); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", $1, count); 
+        count2++;
+        count++;
     }
     |
     VAR INC SC{ 
-        // strcat($1,$2);
-        // $$ = strdup($1);
-        // snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1); 
-        // snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", $1, count); 
-        // count2++;
-        // count++;
+        strcat($1,$2);
+        $$ = strdup($1);
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", $1, count); 
+        count2++;
+        count++;
     } 
     | VAR DEC SC{ 
-        // strcat($1,$2);
-        // $$ = strdup($1);
-        // snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1); 
-        // snprintf(finalAssignments[count2],SIZE,"%s = t%d - 1;\n", $1, count); 
-        // count2++;
-        // count++;
+        strcat($1,$2);
+        $$ = strdup($1);
+        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d - 1;\n", $1, count); 
+        count2++;
+        count++;
     } 
     | INC VAR SC{ 
-        // strcat($1,$2);
-        // $$ = strdup($2);
-        // snprintf(intermediate[count],SIZE,"t%d = %s + 1;\n", count, $2); 
-        // snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", $2, count); 
-        // count2++;
-        // count++;
+        strcat($1,$2);
+        $$ = strdup($2);
+        snprintf(intermediate[count],SIZE,"t%d = %s + 1;\n", count, $2); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", $2, count); 
+        count2++;
+        count++;
     }
     | DEC VAR SC{ 
-        // strcat($1,$2);
-        // $$ = strdup($2);
-        // snprintf(intermediate[count],SIZE,"t%d = %s - 1;\n", count, $2); 
-        // snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", $2, count); 
-        // count2++;
-        // count++;
+        strcat($1,$2);
+        $$ = strdup($2);
+        snprintf(intermediate[count],SIZE,"t%d = %s - 1;\n", count, $2); 
+        snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", $2, count); 
+        count2++;
+        count++;
+    }
+    | error {
+        yyerror("");
+        printf("Missing \';\' !!");
+        yyerrok;
+        yyclearin;
+        handleClear();
     }
     ;
 
@@ -188,6 +229,27 @@ Expr: Expr '+' Expr
         // Generate TAC for subtraction
         snprintf(intermediate[count],SIZE,"t%d = t%d - t%d;\n", count, count-2, count-1 );
         sprintf($$,"%s - %s;\n", $1, $3);
+        count++;
+    }
+    | Expr '|' Expr 
+    { 
+        // Generate TAC for multiplication
+        snprintf(intermediate[count],SIZE,"t%d = t%d | t%d;\n", count, count-2, count-1);
+        sprintf($$,"%s | %s;\n", $1, $3);
+        count++;
+    }
+    | Expr '&' Expr 
+    { 
+        // Generate TAC for multiplication
+        snprintf(intermediate[count],SIZE,"t%d = t%d & t%d;\n", count, count-2, count-1);
+        sprintf($$,"%s & %s;\n", $1, $3);
+        count++;
+    }
+    | Expr '^' Expr 
+    { 
+        // Generate TAC for multiplication
+        snprintf(intermediate[count],SIZE,"t%d = t%d ^ t%d;\n", count, count-2, count-1);
+        sprintf($$,"%s ^ %s;\n", $1, $3);
         count++;
     }
     | Expr '*' Expr 

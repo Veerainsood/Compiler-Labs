@@ -17,6 +17,7 @@ rightParen  \)
 curlLeft    \{
 curlRight    \}
 IF          "if"
+ELSE        "else"
 RELOP       \<|\>|">="|"<="
 BoolAnd     "&&"
 BoolOr     "||"
@@ -27,7 +28,11 @@ BoolOr     "||"
          yylval.str = strdup(yytext);
          return If;
 }
-
+{ELSE}  {
+         printf("%s ", yytext);
+         yylval.str = strdup(yytext);
+         return Else;
+}
 {In} { 
         printf("%s ", yytext);
         yylval.str = strdup(yytext); 

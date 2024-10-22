@@ -14,7 +14,7 @@
     char* finalAssignments[SIZE]; 
     char* intermediate[SIZE];
     int count2=0;
-
+	
     void handleClear()
     {
         for (int i = 0; i < 100; i++) {
@@ -30,7 +30,7 @@
         eflag=0;
     }
 %}
-
+%name parser
 %union {
     char* str;
 }
@@ -38,28 +38,38 @@
 %token<str> VAR
 %token<str> Floats
 %token<str> ASSIGN
+
 %token<str> SC
 %token<str> LP
 %token<str> RP
+%token<str> CL
+%token<str> CR
 %token<str> INC 
-%token<str> LEQ 
-%token<str> GEQ
+%token<str> RELOP
 %token<str> DEC 
+%token<str> If
 %type<str> Expr
 %type<str> Fact
+%token<str> BoolAnd
+%token<str> BoolOr
+%type<str> BoolExp
+%type<str> GeneralStatements
+%type<str> Assignments
+%type<str> IfStatement
+%left BoolOr
+%left BoolAnd
+%left '^'
+%left '|'
+%left '&'
+%left '<' '>'
 %left '+' '-'
 %left '*' '/' '%'
 %nonassoc INC DEC  
 
 %%
-S: Assignments S
-    | { printf("!!Done\n"); }
-    ;
 
-Assignments: 
-    VAR ASSIGN Expr SC 
-    {
-        if (eflag == 0) 
+S:  IfStatement SC { 
+        if(eflag == 0) 
         {
             printf("\t\t Accepted!\n\n");
             for (int i = 0; i <count; i++) {
@@ -78,18 +88,94 @@ Assignments:
         {
             printf("\t\t Operands not found\n\n");
         }
-        handleClear();
-    }
-    | error SC 
-    {
+    } S 
+    |
+    error SC{
         yyerror("");
-        printf("\t\tExpression not assignable...\n\n");
+        printf("\t\tBIBI If Statement issue...\n\n");
         yyerrok;
         yyclearin;
         handleClear();
     }
     ;
-Op: '+'|'-'|'/'|'*'|'%';
+
+IfStatement:
+    If LP BoolExp RP CL GeneralStatements CR 
+    {
+        
+    }
+    ;
+GeneralStatements: 
+    
+    Assignments GeneralStatements
+    |
+    IfStatement GeneralStatements 
+    | Assignments
+    | IfStatement
+    ;
+
+BoolExp:
+    Expr RELOP Expr
+    |
+    Assignments {}
+    |
+    '!' Expr {}
+    |
+    BoolExp BoolAnd BoolExp 
+    |
+    BoolExp BoolOr BoolExp
+    |
+    error {
+        yyerror("");
+        printf("\t\tBABA If Statement issue...\n\n");
+        yyerrok;
+        yyclearin;
+        handleClear();
+    }
+    ;
+
+Assignments: 
+    VAR ASSIGN Expr SC 
+    {
+       
+    }
+    |
+    VAR INC SC{ 
+        // strcat($1,$2);
+        // $$ = strdup($1);
+        // snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1); 
+        // snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", $1, count); 
+        // count2++;
+        // count++;
+    } 
+    | VAR DEC SC{ 
+        // strcat($1,$2);
+        // $$ = strdup($1);
+        // snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, $1); 
+        // snprintf(finalAssignments[count2],SIZE,"%s = t%d - 1;\n", $1, count); 
+        // count2++;
+        // count++;
+    } 
+    | INC VAR SC{ 
+        // strcat($1,$2);
+        // $$ = strdup($2);
+        // snprintf(intermediate[count],SIZE,"t%d = %s + 1;\n", count, $2); 
+        // snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", $2, count); 
+        // count2++;
+        // count++;
+    }
+    | DEC VAR SC{ 
+        // strcat($1,$2);
+        // $$ = strdup($2);
+        // snprintf(intermediate[count],SIZE,"t%d = %s - 1;\n", count, $2); 
+        // snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", $2, count); 
+        // count2++;
+        // count++;
+    }
+    ;
+
+Op: '+'|'-'|'/'|'%'|'*';
+
 Expr: Expr '+' Expr 
     { 
         // Generate TAC for addition
@@ -245,6 +331,7 @@ int yyerror(char* err) {
 }
 
 int main(int argc, char* argv[]) {
+    int yydebug=1;
     if (argc > 1) {
         FILE* inp = fopen(argv[1], "r");
         if (inp != NULL) {

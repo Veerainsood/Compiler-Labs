@@ -2,19 +2,31 @@
     #include<stdio.h>
     #include<stdlib.h>
     #include "y.tab.h"
+    //
 %}
 
 variable    [a-zA-Z_][a-zA-Z_0-9]*
-operators   [+\-/*%]
+operators   [+\-/*%\&\|\^]
 floats      -?([0-9]+)?\.[0-9]+(E[-]?[0-9]+)?|[0-9]+
-SC          \;
+SC          ";"
 Assign      "="|"+="|"-="|"/="|"*="
-In	    [-]?\+\+   
-Dc	    \-\-   
-leftParen   \(
+In	         [-]?\+\+   
+Dc	         \-\-   
+leftParen   "("
 rightParen  \)
-
+curlLeft    \{
+curlRight    \}
+IF          "if"
+RELOP       \<|\>|">="|"<="
+BoolAnd     "&&"
+BoolOr     "||"
 %%
+
+{IF}  {
+         printf("%s ", yytext);
+         yylval.str = strdup(yytext);
+         return If;
+}
 
 {In} { 
         printf("%s ", yytext);
@@ -38,9 +50,22 @@ rightParen  \)
                 yylval.str = strdup(yytext); // assignment token
                 return ASSIGN;
              }
-{operators} { 
+{operators}    { 
                 printf("%s ", yytext);
                 return yytext[0]; 
+             }
+{RELOP}      { 
+                printf("%s ", yytext);
+                yylval.str = strdup(yytext);
+                return RELOP; 
+             }
+{BoolAnd}   { 
+               printf("%s ", yytext);
+               return yytext[0]; 
+             }
+{BoolOr}    { 
+               printf("%s ", yytext);
+               return yytext[0]; 
              }
 
 {floats}    { 
@@ -63,6 +88,16 @@ rightParen  \)
                 printf("%s ", yytext);
                 yylval.str = strdup(yytext); // right parenthesis
                 return RP;
+             }
+{curlLeft} { 
+                printf("%s ", yytext);
+                yylval.str = strdup(yytext); // left parenthesis
+                return CL;
+             }
+{curlRight} { 
+                printf("%s ", yytext);
+                yylval.str = strdup(yytext); // right parenthesis
+                return CR;
              }
 [\t\n ]+    ;
 .            { 

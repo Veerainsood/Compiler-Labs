@@ -9,21 +9,30 @@
     int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
     int yydebug = 0;
-    char str[2000];
+    char* string;
     int blockVar =0;
+    int IFCOUNTER=0;
     int tempVar=0;
     int ifStmntPtr=0;
-    int genBlockLabel()
-    {
-        return blockVar++;
-    }
     char* getLabels()
     {
         char* tVar = (char*)malloc(10*sizeof(char));
         snprintf(tVar,10,"t%d",tempVar++);
         return tVar;
     }
-    // void //handleClear();
+    void handleClear(int val)
+    {
+        for(int i=0;i<3000;i++)
+        {
+            string[i] = '\0';
+        }
+        ifStmntPtr=0;
+        if(val)
+        {
+            tempVar=0;
+            blockVar=0;
+        }
+    }
 %}
 %name parser
 %union {
@@ -70,33 +79,59 @@
 S:  IfStatement { 
         if(eflag == 0) 
         {
-            printf("\t\t Accepted!\n\n");
-            printf("\nProcessing Next Input\n");
+            if(IFCOUNTER==1)
+            {
+                printf("\t\t Accepted!\n\n");
+                printf("\nProcessing Next Input\n");
+                tempVar=0;
+                blockVar=0;
+            }
+            else
+            {
+                blockVar-=2;
+            }
+            IFCOUNTER--;
         }
         else if(eflag == 1)
         {
             printf("  float not to be used with modulo symbol\n\n");
+            handleClear(1);
         }
         else if( eflag==2)
         {
             printf("\t\t Operands not found\n\n");
+            handleClear(1);
         }
 
     } S
     | Assignments {
+        printf("%s\n",$1);
+        $$ = strdup($1);
     } S
     | { }
     ;
 
 IfStatement:
-    If LP BoolExp RP CL S CR ElseExpr {   
-        printf("if %s goto L%d\n goto L%d\n", getLabels(), genBlockLabel(), genBlockLabel()); 
-        printf("L%d",blockVar-2);
-        // for(int i=0;i<2000;i++)
-        // {
-        //     printf("%c",str[i]);
-        // }
-    }  
+    If LP BoolExp RP CL {
+        for(int i=0;i<ifStmntPtr;i++)
+        {
+            printf("%c",string[i]);
+        }
+        printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
+        printf("L%d:\n",blockVar);
+        blockVar+=2;
+        IFCOUNTER++;
+        handleClear(0);
+    } S CR {   
+        
+        for(int i=0;i<ifStmntPtr;i++)
+        {
+            printf("%c",string[i]);
+        }
+        
+        printf("L%d:\n",blockVar-1);
+        handleClear(0);
+    }  ElseExpr
     |
     If BoolExp error CR
     {
@@ -104,7 +139,7 @@ IfStatement:
         printf("\t\t error : Expected \'(\' before %s \n\n",$2);
         yyerrok;
         yyclearin;
-        // //handleClear();
+        handleClear(1);
         eflag = 3;
     }
     |
@@ -114,7 +149,7 @@ IfStatement:
         printf("\t\t error : Expected \')\' after %s \n\n",$3);
         yyerrok;
         yyclearin;
-        //handleClear();
+        handleClear(1);
         eflag = 3;
     }
     ;
@@ -122,145 +157,118 @@ IfStatement:
 ElseExpr:
     Else CL S CR 
     {   
-        printf("L%d:\n",blockVar-1);
+        for(int i=0;i<ifStmntPtr;i++)
+        {
+            printf("%c",string[i]);
+        }
     }
     | {}
     ;
 BoolExp:
     Expr RELOP Expr {
         char* Label = getLabels();
-        strcat(str,Label);
-        // ifStmntPtr+= strlen(Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,$2);
-        strcat(str,$3);
-        printf("%s;\n",str);
+        $$ = Label;
+        strcat(string,Label);
+        ifStmntPtr+=(strlen(Label));
+        strcat(string,"=");
+        ifStmntPtr++;
+        strcat(string,$1);
+        ifStmntPtr+=(strlen($1));
+        strcat(string,$2);
+        ifStmntPtr+=(strlen($2));
+        strcat(string,$3);
+        ifStmntPtr+=(strlen($3));
+        strcat(string,"\n");
+        ifStmntPtr++;
     }
     |
     Assignments
     {
         $$ = strdup($1);
+        strcat(string,$1);
+        ifStmntPtr+=(strlen($1));
+        strcat(string,"\n");
+        ifStmntPtr++;
     }
     |
     '!' Expr {
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,"!");
-        strcat(str,$2);
-        printf("%s;\n",str);
+        strcat($$,Label);
+        strcat(string,Label);
+        ifStmntPtr+=(strlen(Label));
+        strcat(string,"!");
+        ifStmntPtr++;
+        strcat(string,$2);
+        ifStmntPtr+=(strlen($2));
+        strcat(string,"\n");
+        ifStmntPtr++;
     }
     |
-    BoolExp BoolAnd BoolExp {
-        char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,$2);
-        strcat(str,$3);
-        printf("%s;\n",str);
-    }
+    BoolExp BoolAnd {
+        strcat(string,"&&");
+        ifStmntPtr+=2;
+    } BoolExp
     |
-    BoolExp BoolOr BoolExp {
-        char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,$2);
-        strcat(str,$3);
-        printf("%s;\n",str);
-    }
+    BoolExp BoolOr  {
+        strcat(string,"||");
+        ifStmntPtr+=2;
+    } BoolExp
     |
     error SC{
         yyerror("");
         printf("\t\tBoolean Expression Issues\n\n");
         yyerrok;
         yyclearin;
-        //handleClear();
         eflag = 3;
+        handleClear(1);
     }
     ;
 
 Assignments: 
     VAR ASSIGN Expr SC 
-    {
+    {   
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$1);
-        strcat(str,"=");
-        strcat(str,$3);
-        strcat(str,";\n");
-        strcat(str,Label);
-        strcat(str,"=");
-        strcat(str,$1);
-        printf("%s;\n",str);
+        char* tempStr = (char*)malloc(sizeof(char)*1000);
+        strcpy(tempStr,$1);
+        strcat(tempStr,"=");
+        strcat(tempStr,$3);
+        strcat(tempStr,";\n");
+        strcat(tempStr,Label);
+        strcat(tempStr,"=");
+        strcat(tempStr,$1);
+        $$ = tempStr;
     }
     |
     VAR INC SC { 
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"\n");
-        strcat(str,$1);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"+");
-        strcat(str,$1);
-        printf("%s;\n",str);
+        printf("%s = %s\n",Label, $1);
+        printf("%s = %s + 1\n",$1, $1);
+        $$ = Label;
     } 
     | VAR DEC SC{ 
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"\n");
-        strcat(str,$1);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"-");
-        strcat(str,$1);
-        printf("%s;\n",str);
+        printf("%s = %s\n",Label, $1);
+        printf("%s = %s - 1\n",$1, $1);
+        $$ = Label;
     } 
     | INC VAR SC{ 
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$1);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"+");
-        strcat(str,$1);
-        strcat(str,Label);
-        strcat(str,"=");
-        strcat(str,$1);
-        printf("%s;\n",str);
+        printf("%s = %s + 1\n",$1, $1);
+        printf("%s = %s\n",Label, $1);
+        $$ = Label;
     }
     | DEC VAR SC{ 
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$1);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"-");
-        strcat(str,$1);
-        strcat(str,Label);
-        strcat(str,"=");
-        strcat(str,$1);
-        printf("%s;\n",str);
+        printf("%s = %s - 1\n",$1, $1);
+        printf("%s = %s\n",Label, $1);
+        $$ = Label;
     }
     | error {
         yyerror("");
         printf("Missing \';\' !!");
         yyerrok;
         yyclearin;
-        //handleClear();
+        handleClear(1);
     }
     ;
 
@@ -270,98 +278,58 @@ Expr: Expr '+' Expr
     { 
         // Generate TAC for addition
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"+");
-        strcat(str,$3);
-        printf("%s\n", str);
+        printf("%s = %s + %s\n",Label, $1, $3);
+        $$ = Label;
     }
     | Expr '-' Expr 
     { 
         // Generate TAC for subtraction
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"-");
-        strcat(str,$3);
-        printf("%s\n", str);
+        printf("%s = %s - %s\n",Label, $1, $3);
+        $$ = Label;
     }
     | Expr '|' Expr 
     { 
         // Generate TAC for multiplication
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"|");
-        strcat(str,$3);
-        printf("%s\n", str);
+        printf("%s = %s | %s\n",Label, $1, $3);
+        $$ = Label;
     }
     | Expr '&' Expr 
     { 
         // Generate TAC for and
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"&");
-        strcat(str,$3);
-        printf("%s\n", str);
+        printf("%s = %s & %s\n",Label, $1, $3);
+        $$ = Label;
     }
     | Expr '^' Expr 
     { 
         // Generate TAC for or
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"^");
-        strcat(str,$3);
-        printf("%s\n", str);
+        printf("%s = %s ^ %s\n",Label, $1, $3);
+        $$ = Label;
     }
     | Expr '*' Expr 
     { 
         // Generate TAC for multiplication
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"*");
-        strcat(str,$3);
-        printf("%s\n", str);
+        printf("%s = %s * %s\n",Label, $1, $3);
+        $$ = Label;
     }
     | Expr '/' Expr 
     {   
         // Generate TAC for division
         char* Label = getLabels();
-        strcpy($$,Label);
-        strcat(str,$$);
-        strcat(str,"=");
-        strcat(str,$1);
-        strcat(str,"/");
-        strcat(str,$3);
-        printf("%s\n", str);
+        printf("%s = %s / %s\n",Label, $1, $3);
+        $$ = Label;
     }
     | Expr '%' Expr
     {
         if (strchr($1, '.') == NULL && strchr($3, '.') == NULL)
         {
             char* Label = getLabels();
-            strcpy($$,Label);
-            strcat(str,$$);
-            strcat(str,"=");
-            strcat(str,$1);
-            strcat(str,"\%");
-            strcat(str,$3);
-            printf("%s\n", str);
+            printf("%s = %s \% %s\n",Label, $1, $3);
+            $$ = Label;
         }
         else
         {
@@ -382,51 +350,37 @@ Expr: Expr '+' Expr
 
 Fact: VAR INC { 
             char* Label = getLabels();
-            strcpy($$,Label);
-            strcpy(str,$$);
-            strcpy(str,"=");
-            strcpy(str,$1);
-            strcpy(str,"+");
-            strcpy(str,$1);
-            printf("%s", str);
+            printf("%s = %s\n",Label, $1);
+            printf("%s = %s + 1\n",$1, $1);
+            $$ = Label;
         } 
         | VAR DEC { 
-            
             char* Label = getLabels();
-            strcpy($$,Label);
-            strcpy(str,$$);
-            strcpy(str,"=");
-            strcpy(str,$1);
-            strcpy(str,"-");
-            strcpy(str,$1);
-            printf("%s", str);
+            printf("%s = %s\n",Label, $1);
+            printf("%s = %s - 1\n",$1, $1);
+            $$ = Label;
         } 
         | INC VAR { 
             char* Label = getLabels();
-            strcpy(str,$1);
-            strcpy(str,"=");
-            strcpy(str,$1);
-            strcpy(str,"+");
-            strcpy(str,$1);
-            strcpy($$,Label);
-            
-            printf("%s", str);
+            printf("%s = %s + 1\n",$1, $1);
+            printf("%s = %s\n",Label, $1);
+            $$ = Label;
         }
         | DEC VAR { 
             char* Label = getLabels();
-            strcpy($$,Label);
-            printf("%s = %s - 1;\n", $2,$2);
-            printf("%s = %s;\n",Label,$2); 
+            printf("%s = %s - 1\n",$1, $1);
+            printf("%s = %s\n",Label, $1);
+            $$ = Label;
         }
         | VAR C { 
             char* Label = getLabels();
-            strcpy($$,Label);
             printf("%s = %s;\n",Label,$1); 
+            $$ = Label;
         }
         | Floats C { 
             char* Label = getLabels();
-            strcpy($$,Label);
             printf("%s = %s;\n",Label,$1); 
+            $$ = Label;
         }
         | Floats INC error
         {
@@ -434,6 +388,7 @@ Fact: VAR INC {
             printf("\t\tcannot increment a constant\n\n");
             yyerrok;
             yyclearin;
+            handleClear(1);
         }
         | Floats DEC error
         {
@@ -441,6 +396,7 @@ Fact: VAR INC {
             printf("\t\tcannot increment a constant\n\n");
             yyerrok;
             yyclearin;
+            handleClear(1);
         }
         | DEC Floats error
         {
@@ -448,6 +404,7 @@ Fact: VAR INC {
             printf("\t\tcannot increment a constant\n\n");
             yyerrok;
             yyclearin;
+            handleClear(1);
         }
         | INC Floats error
         {
@@ -455,14 +412,19 @@ Fact: VAR INC {
             printf("\t\tcannot increment a constant\n\n");
             yyerrok;
             yyclearin;
+            handleClear(1);
         }
-        | LP Expr RP { $$ = strdup($2); }
+        | LP Expr RP 
+        { 
+            $$ = strdup($2); 
+        }
         | LP Expr error
         {
             yyerror("");
             printf("\t\tno ) detected after (\n\n");
             yyerrok;
             yyclearin;
+            handleClear(1);
         }
         ;
 C:      VAR error
@@ -471,6 +433,7 @@ C:      VAR error
             printf("\t\t no operators between Operands\n\n");
             yyerrok;
             yyclearin;
+            handleClear(1);
         }
         |
         Floats error
@@ -479,6 +442,7 @@ C:      VAR error
             printf("\t\t no operators between Operands\n\n");
             yyerrok;
             yyclearin;
+            handleClear(1);
         }
         |;
 %%
@@ -488,17 +452,8 @@ int yyerror(char* err) {
 
 int main(int argc, char* argv[]) {
     int yydebug = 1;
-
-    // Initialize finalAssignments
-    // for (int i = 0; i < SIZE; i++) {
-    //     finalAssignments[i] = (char*)malloc(SIZE * sizeof(char));
-    //     if (finalAssignments[i] == NULL) {
-    //         fprintf(stderr, "Memory allocation failed\n");
-    //         return 1; // Exit if memory allocation fails
-    //     }
-    //     finalAssignments[i][0] = '\0'; // Initialize with empty string
-    // }
-
+    string = (char*)malloc(3000*sizeof(char));
+    handleClear(1);
     // Rest of the main function
     if (argc > 1) {
         FILE* inp = fopen(argv[1], "r");
@@ -512,7 +467,7 @@ int main(int argc, char* argv[]) {
     yyparse();
     fclose(yyin);
 
-    //handleClear(); // Clean up before exiting
+    //handleClear(1); // Clean up before exiting
     return 0;
 }
 

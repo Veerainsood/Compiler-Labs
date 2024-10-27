@@ -13,7 +13,7 @@
 
  #line 8 "/usr/share/bison++/bison.h"
 
-#line 28 "prob.y"
+#line 38 "prob.y"
 typedef union {
     char* str;
 } yy_parser_stype;

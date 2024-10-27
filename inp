@@ -1,13 +1,7 @@
 if ( (x+y-z*15) < 100 ) {
     a++;
-    result = a + b;
-    nine = (eight - one) + two;
-    finalResult=a*b+c;
-    result = (++p - q++) * (a + b);
-    k = --l - m++ * --n;
-    f = (a/b + c) * d + e;
 } else {
-
+    result = a + b;
 }
 y = a;
 if ( abc < 100  {
@@ -17,5 +11,3 @@ if ( abc < 100  {
 if  baba < 100  {
     result = a + b;
 }
-
-

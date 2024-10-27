@@ -110,32 +110,22 @@ Maintained by Magnus Ekdahl <magnus@debian.org>
     int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
     int yydebug = 0;
-    
-    int count = 0;  // Counter for temporary variables
-    char* finalAssignments[SIZE]; 
-    char* intermediate[SIZE];
-    int count2=0;
-	int blockVar =0;
+    char str[2000];
+    int blockVar =0;
+    int tempVar=0;
     int genBlockLabel()
     {
         return blockVar++;
     }
-    void handleClear()
+    char* getLabels()
     {
-        for (int i = 0; i < 100; i++) {
-            free(finalAssignments[i]);
-            free(intermediate[i]);
-        }
-        for (int i = 0; i < 100; i++) {
-            finalAssignments[i] = (char*)malloc(SIZE * sizeof(char));  // SIZE depends on how large each string should be
-            intermediate[i] = (char*)malloc(SIZE * sizeof(char));
-        }
-        count=0;
-        count2=0;
-        eflag=0;
+        char* tVar = (char*)malloc(10*sizeof(char));
+        snprintf(tVar,10,"t%d",tempVar++);
+        return tVar;
     }
+    // void //handleClear();
 
-#line 38 "prob.y"
+#line 28 "prob.y"
 typedef union {
     char* str;
 } yy_parser_stype;
@@ -510,11 +500,11 @@ YY_parser_CONSTRUCTOR_CODE;
  #line 352 "/usr/share/bison++/bison.cc"
 
 
-#define	YYFINAL		107
+#define	YYFINAL		106
 #define	YYFLAG		-32768
 #define	YYNTBASE	27
 
-#define YYTRANSLATE(x) ((unsigned)(x) <= 272 ? yytranslate[x] : 39)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 272 ? yytranslate[x] : 38)
 
 static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -549,158 +539,156 @@ static const char yytranslate[] = {     0,
 
 #if YY_parser_DEBUG != 0
 static const short yyprhs[] = {     0,
-     0,     1,     5,     8,     9,    10,    11,    22,    27,    34,
-    39,    40,    44,    46,    49,    53,    57,    60,    65,    69,
-    73,    77,    81,    83,    85,    87,    89,    91,    93,    97,
-   101,   105,   109,   113,   117,   121,   125,   128,   130,   133,
-   136,   139,   142,   145,   148,   152,   156,   160,   164,   168,
-   172,   175,   178
+     0,     1,     5,     6,    10,    11,    20,    25,    32,    37,
+    38,    42,    44,    47,    51,    55,    58,    63,    67,    71,
+    75,    79,    81,    83,    85,    87,    89,    91,    95,    99,
+   103,   107,   111,   115,   119,   123,   126,   128,   131,   134,
+   137,   140,   143,   146,   150,   154,   158,   162,   166,   170,
+   173,   176
 };
 
 static const short yyrhs[] = {    -1,
-    29,    28,    27,     0,    34,    27,     0,     0,     0,     0,
-    15,     7,    33,     8,     9,    30,    27,    10,    31,    32,
-     0,    15,    33,     1,    10,     0,    15,     7,    33,     9,
-     1,    10,     0,    13,     9,    27,    10,     0,     0,    36,
-    12,    36,     0,    34,     0,    26,    36,     0,    33,    16,
-    33,     0,    33,    17,    33,     0,     1,     6,     0,     3,
-     5,    36,     6,     0,     3,    11,     6,     0,     3,    14,
-     6,     0,    11,     3,     6,     0,    14,     3,     6,     0,
-     1,     0,    21,     0,    22,     0,    24,     0,    25,     0,
-    23,     0,    36,    21,    36,     0,    36,    22,    36,     0,
-    36,    18,    36,     0,    36,    20,    36,     0,    36,    19,
-    36,     0,    36,    23,    36,     0,    36,    24,    36,     0,
-    36,    25,    36,     0,    36,    35,     0,    37,     0,     3,
-    11,     0,     3,    14,     0,    11,     3,     0,    14,     3,
-     0,     3,    38,     0,     4,    38,     0,     4,    11,     1,
-     0,     4,    14,     1,     0,    14,     4,     1,     0,    11,
-     4,     1,     0,     7,    36,     8,     0,     7,    36,     1,
-     0,     3,     1,     0,     4,     1,     0,     0
+    30,    28,    27,     0,     0,    33,    29,    27,     0,     0,
+    15,     7,    32,     8,     9,    27,    10,    31,     0,    15,
+    32,     1,    10,     0,    15,     7,    32,     9,     1,    10,
+     0,    13,     9,    27,    10,     0,     0,    35,    12,    35,
+     0,    33,     0,    26,    35,     0,    32,    16,    32,     0,
+    32,    17,    32,     0,     1,     6,     0,     3,     5,    35,
+     6,     0,     3,    11,     6,     0,     3,    14,     6,     0,
+    11,     3,     6,     0,    14,     3,     6,     0,     1,     0,
+    21,     0,    22,     0,    24,     0,    25,     0,    23,     0,
+    35,    21,    35,     0,    35,    22,    35,     0,    35,    18,
+    35,     0,    35,    20,    35,     0,    35,    19,    35,     0,
+    35,    23,    35,     0,    35,    24,    35,     0,    35,    25,
+    35,     0,    35,    34,     0,    36,     0,     3,    11,     0,
+     3,    14,     0,    11,     3,     0,    14,     3,     0,     3,
+    37,     0,     4,    37,     0,     4,    11,     1,     0,     4,
+    14,     1,     0,    14,     4,     1,     0,    11,     4,     1,
+     0,     7,    35,     8,     0,     7,    35,     1,     0,     3,
+     1,     0,     4,     1,     0,     0
 };
 
 #endif
 
 #if (YY_parser_DEBUG != 0) || defined(YY_parser_ERROR_VERBOSE) 
 static const short yyrline[] = { 0,
-    76,    97,    97,    98,   101,   104,   108,   108,   118,   130,
-   135,   137,   141,   145,   149,   153,   157,   168,   176,   185,
-   193,   201,   209,   218,   218,   218,   218,   218,   220,   227,
-   234,   241,   248,   255,   262,   269,   282,   287,   291,   299,
-   307,   315,   323,   330,   337,   344,   351,   358,   365,   366,
-   374,   381,   389
+    69,    86,    86,    88,    88,    91,    96,   106,   118,   123,
+   125,   136,   141,   151,   162,   173,   184,   198,   213,   227,
+   240,   253,   262,   262,   262,   262,   262,   264,   276,   288,
+   300,   312,   324,   336,   348,   366,   371,   378,   388,   399,
+   410,   416,   421,   426,   433,   440,   447,   454,   455,   463,
+   470,   478
 };
 
 static const char * const yytname[] = {   "$","error","$illegal.","VAR","Floats",
 "ASSIGN","SC","LP","RP","CL","CR","INC","RELOP","Else","DEC","If","BoolAnd",
-"BoolOr","'|'","'^'","'&'","'+'","'-'","'*'","'/'","'%'","'!'","S","@1","IfStatement",
-"@2","@3","ElseExpr","BoolExp","Assignments","Op","Expr","Fact","C",""
+"BoolOr","'|'","'^'","'&'","'+'","'-'","'*'","'/'","'%'","'!'","S","@1","@2",
+"IfStatement","ElseExpr","BoolExp","Assignments","Op","Expr","Fact","C",""
 };
 #endif
 
 static const short yyr1[] = {     0,
-    28,    27,    27,    27,    30,    31,    29,    29,    29,    32,
-    32,    33,    33,    33,    33,    33,    33,    34,    34,    34,
-    34,    34,    34,    35,    35,    35,    35,    35,    36,    36,
-    36,    36,    36,    36,    36,    36,    36,    36,    37,    37,
-    37,    37,    37,    37,    37,    37,    37,    37,    37,    37,
-    38,    38,    38
+    28,    27,    29,    27,    27,    30,    30,    30,    31,    31,
+    32,    32,    32,    32,    32,    32,    33,    33,    33,    33,
+    33,    33,    34,    34,    34,    34,    34,    35,    35,    35,
+    35,    35,    35,    35,    35,    35,    35,    36,    36,    36,
+    36,    36,    36,    36,    36,    36,    36,    36,    36,    37,
+    37,    37
 };
 
 static const short yyr2[] = {     0,
-     0,     3,     2,     0,     0,     0,    10,     4,     6,     4,
-     0,     3,     1,     2,     3,     3,     2,     4,     3,     3,
-     3,     3,     1,     1,     1,     1,     1,     1,     3,     3,
-     3,     3,     3,     3,     3,     3,     2,     1,     2,     2,
-     2,     2,     2,     2,     3,     3,     3,     3,     3,     3,
-     2,     2,     0
+     0,     3,     0,     3,     0,     8,     4,     6,     4,     0,
+     3,     1,     2,     3,     3,     2,     4,     3,     3,     3,
+     3,     1,     1,     1,     1,     1,     1,     3,     3,     3,
+     3,     3,     3,     3,     3,     2,     1,     2,     2,     2,
+     2,     2,     2,     3,     3,     3,     3,     3,     3,     2,
+     2,     0
 };
 
 static const short yydefact[] = {     0,
-    23,     0,     0,     0,     0,     1,     0,     0,     0,     0,
-     0,     0,    23,    53,    53,     0,     0,     0,     0,     0,
-    13,     0,    38,     0,     3,    53,     0,     0,     0,     0,
-    19,    20,    21,    22,    17,     0,     0,    39,    40,    43,
-     0,     0,    44,     0,     0,    41,     0,    42,     0,    14,
-     0,     0,     0,     0,     0,     0,     0,    24,    25,    28,
-    26,    27,    37,     2,    39,    40,     0,    41,    42,    18,
-    51,    52,    45,    46,     0,     0,    50,    49,    48,    47,
-     8,    15,    16,    12,    31,    33,    32,    29,    30,    34,
-    35,    36,     5,     0,     0,     9,     0,     6,    11,     0,
-     7,     0,     0,    10,     0,     0,     0
+    22,     0,     0,     0,     0,     1,     3,     0,     0,     0,
+     0,     0,    22,    52,    52,     0,     0,     0,     0,     0,
+    12,     0,    37,     0,     0,    52,     0,     0,     0,     0,
+    18,    19,    20,    21,    16,     0,     0,    38,    39,    42,
+     0,     0,    43,     0,     0,    40,     0,    41,     0,    13,
+     0,     0,     0,     0,     0,     0,     0,    23,    24,    27,
+    25,    26,    36,     2,     4,    38,    39,     0,    40,    41,
+    17,    50,    51,    44,    45,     0,     0,    49,    48,    47,
+    46,     7,    14,    15,    11,    30,    32,    31,    28,    29,
+    33,    34,    35,     0,     0,     0,     8,    10,     0,     6,
+     0,     0,     9,     0,     0,     0
 };
 
-static const short yydefgoto[] = {    25,
-    24,     6,    95,    99,   101,    20,     7,    63,    22,    23,
-    40
+static const short yydefgoto[] = {    64,
+    24,    25,     6,   100,    20,     7,    63,    22,    23,    40
 };
 
 static const short yypact[] = {   117,
--32768,    11,     1,     3,     4,-32768,   112,    57,    -3,     8,
-    13,    17,    26,   156,    32,    30,    23,    59,    57,    12,
--32768,   133,-32768,   112,-32768,   126,    57,    69,    90,    86,
--32768,-32768,-32768,-32768,-32768,    16,    39,    -3,     8,-32768,
-    41,    44,-32768,   155,    58,    13,    64,    17,    68,   157,
-    65,    30,    30,    57,    57,    57,    57,    57,    57,    57,
-    57,    57,-32768,-32768,-32768,-32768,    66,-32768,-32768,-32768,
--32768,-32768,-32768,-32768,    94,   113,-32768,-32768,-32768,-32768,
--32768,-32768,   100,   157,   164,    76,   169,   125,   125,-32768,
--32768,-32768,-32768,   109,   132,-32768,   111,-32768,   121,   115,
--32768,   132,   128,-32768,   136,   139,-32768
+-32768,    88,     1,     3,     4,-32768,-32768,    57,    -3,     8,
+    20,    26,    34,   156,    13,    30,    19,    59,    57,    12,
+-32768,   133,-32768,   112,   112,    32,    57,    69,   136,    86,
+-32768,-32768,-32768,-32768,-32768,    18,    41,    -3,     8,-32768,
+    44,    64,-32768,   121,    58,    20,    68,    26,    74,   153,
+    90,    30,    30,    57,    57,    57,    57,    57,    57,    57,
+    57,    57,-32768,-32768,-32768,-32768,-32768,    66,-32768,-32768,
+-32768,-32768,-32768,-32768,-32768,    89,   102,-32768,-32768,-32768,
+-32768,-32768,-32768,    98,   153,   160,   166,   141,    72,    72,
+-32768,-32768,-32768,   132,   106,   109,-32768,   108,   115,-32768,
+   132,   124,-32768,   125,   144,-32768
 };
 
 static const short yypgoto[] = {     0,
--32768,-32768,-32768,-32768,-32768,   -14,     5,-32768,    -7,-32768,
-   110
+-32768,-32768,-32768,-32768,   -14,     5,-32768,    -7,-32768,   126
 };
 
 
-#define	YYLAST		194
+#define	YYLAST		191
 
 
-static const short yytable[] = {   105,
+static const short yytable[] = {   104,
     30,    44,    31,    11,    13,    12,    14,    15,    45,    21,
-    16,    50,    51,    32,    17,     8,    71,    18,    33,    67,
-    21,     9,    34,    64,    10,    46,    47,    52,    53,    19,
-    13,    35,    14,    15,    36,    37,    27,    82,    83,    72,
-    17,    73,    41,    18,    74,    42,    84,    85,    86,    87,
-    88,    89,    90,    91,    92,    19,    21,    21,    77,    26,
-    15,    48,    49,    27,    79,    78,    77,    28,    80,    54,
-    29,    68,    47,    78,    81,    55,    56,    57,    58,    59,
+    16,    50,    51,    32,    17,    36,    37,    18,    72,    68,
+    21,    46,    47,    41,    65,    33,    42,    52,    53,    19,
+    13,    34,    14,    15,    36,    37,    27,    83,    84,    35,
+    17,    73,    66,    18,    74,    67,    85,    86,    87,    88,
+    89,    90,    91,    92,    93,    19,    21,    21,    78,    26,
+    15,    48,    49,    27,    75,    79,    78,    28,    80,    54,
+    29,    69,    47,    79,    81,    55,    56,    57,    58,    59,
     60,    61,    62,    55,    56,    57,    58,    59,    60,    61,
-    62,    70,    69,    49,    97,    57,    58,    59,    60,    61,
-    62,   103,    93,    55,    56,    57,    58,    59,    60,    61,
-    62,    -4,     1,    94,     2,    52,    -4,     1,    96,     2,
-    98,    -4,     3,   102,    43,     4,     5,     3,    36,    37,
-     4,     5,     1,   100,     2,   106,    65,   104,   107,    66,
-     0,    -4,     3,     0,    54,     4,     5,    60,    61,    62,
+    62,    71,     8,    96,    60,    61,    62,    94,     9,    82,
+   102,    10,    95,    55,    56,    57,    58,    59,    60,    61,
+    62,    -5,     1,    52,     2,    97,    -5,     1,    98,     2,
+    99,    -5,     3,   101,   105,     4,     5,     3,    76,    77,
+     4,     5,     1,   103,     2,     0,    52,    53,    70,    49,
+    43,    -5,     3,   106,    54,     4,     5,     0,     0,     0,
     55,    56,    57,    58,    59,    60,    61,    62,    36,    37,
-     8,     0,    75,    76,     0,     0,    38,     0,     0,    39,
-    52,    53,     0,     0,    55,    56,    57,    58,    59,    60,
-    61,    62,    56,    57,    58,    59,    60,    61,    62,    58,
-    59,    60,    61,    62
+     8,    58,    59,    60,    61,    62,    38,     0,     0,    39,
+    55,    56,    57,    58,    59,    60,    61,    62,    56,    57,
+    58,    59,    60,    61,    62,    57,    58,    59,    60,    61,
+    62
 };
 
 static const short yycheck[] = {     0,
      8,    16,     6,     3,     1,     3,     3,     4,    16,     5,
-     7,    19,     1,     6,    11,     5,     1,    14,     6,    27,
-    16,    11,     6,    24,    14,     3,     4,    16,    17,    26,
-     1,     6,     3,     4,     3,     4,     7,    52,    53,     1,
+     7,    19,     1,     6,    11,     3,     4,    14,     1,    27,
+    16,     3,     4,    11,    25,     6,    14,    16,    17,    26,
+     1,     6,     3,     4,     3,     4,     7,    52,    53,     6,
     11,     1,    11,    14,     1,    14,    54,    55,    56,    57,
     58,    59,    60,    61,    62,    26,    52,    53,     1,     3,
      4,     3,     4,     7,     1,     8,     1,    11,     1,    12,
-    14,     3,     4,     8,    10,    18,    19,    20,    21,    22,
+    14,     3,     4,     8,     1,    18,    19,    20,    21,    22,
     23,    24,    25,    18,    19,    20,    21,    22,    23,    24,
-    25,     6,     3,     4,    95,    20,    21,    22,    23,    24,
-    25,   102,     9,    18,    19,    20,    21,    22,    23,    24,
-    25,     0,     1,     1,     3,    16,     0,     1,    10,     3,
-    10,    10,    11,     9,    15,    14,    15,    11,     3,     4,
-    14,    15,     1,    13,     3,     0,    11,    10,     0,    14,
-    -1,    10,    11,    -1,    12,    14,    15,    23,    24,    25,
+    25,     6,     5,    94,    23,    24,    25,     9,    11,    10,
+   101,    14,     1,    18,    19,    20,    21,    22,    23,    24,
+    25,     0,     1,    16,     3,    10,     0,     1,    10,     3,
+    13,    10,    11,     9,     0,    14,    15,    11,     8,     9,
+    14,    15,     1,    10,     3,    -1,    16,    17,     3,     4,
+    15,    10,    11,     0,    12,    14,    15,    -1,    -1,    -1,
     18,    19,    20,    21,    22,    23,    24,    25,     3,     4,
-     5,    -1,     8,     9,    -1,    -1,    11,    -1,    -1,    14,
-    16,    17,    -1,    -1,    18,    19,    20,    21,    22,    23,
-    24,    25,    19,    20,    21,    22,    23,    24,    25,    21,
-    22,    23,    24,    25
+     5,    21,    22,    23,    24,    25,    11,    -1,    -1,    14,
+    18,    19,    20,    21,    22,    23,    24,    25,    19,    20,
+    21,    22,    23,    24,    25,    20,    21,    22,    23,    24,
+    25
 };
 
 #line 352 "/usr/share/bison++/bison.cc"
@@ -1197,17 +1185,12 @@ YYLABEL(yyreduce)
   switch (yyn) {
 
 case 1:
-#line 76 "prob.y"
+#line 69 "prob.y"
 { 
         if(eflag == 0) 
         {
             printf("\t\t Accepted!\n\n");
-            for (int i = 0; i <count; i++) {
-                printf("%s",intermediate[i]);
-            }
-            for (int i = 0; i <count2; i++) {
-                printf("%s",finalAssignments[i]);
-            }
+            // //handleClear();
             printf("\nProcessing Next Input\n");
         }
         else if(eflag == 1)
@@ -1218,232 +1201,327 @@ case 1:
         {
             printf("\t\t Operands not found\n\n");
         }
+
     ;
     break;}
-case 4:
-#line 98 "prob.y"
-{printf("\nDone!!\n");;
+case 3:
+#line 86 "prob.y"
+{
+    ;
     break;}
 case 5:
-#line 102 "prob.y"
-{
-        printf("if %s goto %d\n goto %d", yyvsp[-2].str, genBlockLabel(), genBlockLabel()); 
-    ;
+#line 88 "prob.y"
+{ ;
     break;}
 case 6:
-#line 104 "prob.y"
+#line 92 "prob.y"
 {   
-        printf("L%d:\n",blockVar);
-        printf("%s\n",yyvsp[-2]);
+        printf("if %s goto L%d\n goto L%d\n", getLabels(), genBlockLabel(), genBlockLabel()); 
+        printf("L%d",blockVar-2);
     ;
     break;}
-case 8:
-#line 110 "prob.y"
+case 7:
+#line 98 "prob.y"
 {
         yyerror("");
         printf("\t\t error : Expected \'(\' before %s \n\n",yyvsp[-2].str);
         yyerrok;
         yyclearin;
-        handleClear();
+        // //handleClear();
         eflag = 3;
     ;
     break;}
-case 9:
-#line 120 "prob.y"
+case 8:
+#line 108 "prob.y"
 {
         yyerror("");
         printf("\t\t error : Expected \')\' after %s \n\n",yyvsp[-3].str);
         yyerrok;
         yyclearin;
-        handleClear();
+        //handleClear();
         eflag = 3;
     ;
     break;}
-case 10:
-#line 132 "prob.y"
+case 9:
+#line 120 "prob.y"
 {   
-
+        printf("L%d:\n",blockVar-1);
     ;
     break;}
-case 11:
-#line 135 "prob.y"
+case 10:
+#line 123 "prob.y"
 {;
+    break;}
+case 11:
+#line 126 "prob.y"
+{
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,yyvsp[-1].str);
+        strcat(str,yyvsp[0].str);
+        printf("%s;\n",str);
+    ;
     break;}
 case 12:
 #line 138 "prob.y"
 {
-
+        yyval.str = strdup(yyvsp[0].str);
     ;
     break;}
 case 13:
 #line 142 "prob.y"
 {
-
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,"!");
+        strcat(str,yyvsp[0].str);
+        printf("%s;\n",str);
     ;
     break;}
 case 14:
-#line 146 "prob.y"
+#line 152 "prob.y"
 {
-
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,yyvsp[-1].str);
+        strcat(str,yyvsp[0].str);
+        printf("%s;\n",str);
     ;
     break;}
 case 15:
-#line 150 "prob.y"
+#line 163 "prob.y"
 {
-
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,yyvsp[-1].str);
+        strcat(str,yyvsp[0].str);
+        printf("%s;\n",str);
     ;
     break;}
 case 16:
-#line 154 "prob.y"
-{
-
-    ;
-    break;}
-case 17:
-#line 158 "prob.y"
+#line 174 "prob.y"
 {
         yyerror("");
         printf("\t\tBoolean Expression Issues\n\n");
         yyerrok;
         yyclearin;
-        handleClear();
+        //handleClear();
         eflag = 3;
     ;
     break;}
-case 18:
-#line 170 "prob.y"
+case 17:
+#line 186 "prob.y"
 {
-        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, yyvsp[-1].str); 
-        snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", yyvsp[-3].str, count); 
-        count2++;
-        count++;
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyvsp[-3].str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-1].str);
+        strcat(str,";\n");
+        strcat(str,Label);
+        strcat(str,"=");
+        strcat(str,yyvsp[-3].str);
+        printf("%s;\n",str);
+    ;
+    break;}
+case 18:
+#line 199 "prob.y"
+{ 
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"\n");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"+");
+        strcat(str,yyvsp[-2].str);
+        printf("%s;\n",str);
     ;
     break;}
 case 19:
-#line 177 "prob.y"
+#line 213 "prob.y"
 { 
-        strcat(yyvsp[-2].str,yyvsp[-1].str);
-        yyval.str = strdup(yyvsp[-2].str);
-        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, yyvsp[-2].str); 
-        snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", yyvsp[-2].str, count); 
-        count2++;
-        count++;
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"\n");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"-");
+        strcat(str,yyvsp[-2].str);
+        printf("%s;\n",str);
     ;
     break;}
 case 20:
-#line 185 "prob.y"
+#line 227 "prob.y"
 { 
-        strcat(yyvsp[-2].str,yyvsp[-1].str);
-        yyval.str = strdup(yyvsp[-2].str);
-        snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, yyvsp[-2].str); 
-        snprintf(finalAssignments[count2],SIZE,"%s = t%d - 1;\n", yyvsp[-2].str, count); 
-        count2++;
-        count++;
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"+");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,Label);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        printf("%s;\n",str);
     ;
     break;}
 case 21:
-#line 193 "prob.y"
+#line 240 "prob.y"
 { 
-        strcat(yyvsp[-2].str,yyvsp[-1].str);
-        yyval.str = strdup(yyvsp[-1].str);
-        snprintf(intermediate[count],SIZE,"t%d = %s + 1;\n", count, yyvsp[-1].str); 
-        snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", yyvsp[-1].str, count); 
-        count2++;
-        count++;
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"-");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,Label);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        printf("%s;\n",str);
     ;
     break;}
 case 22:
-#line 201 "prob.y"
-{ 
-        strcat(yyvsp[-2].str,yyvsp[-1].str);
-        yyval.str = strdup(yyvsp[-1].str);
-        snprintf(intermediate[count],SIZE,"t%d = %s - 1;\n", count, yyvsp[-1].str); 
-        snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", yyvsp[-1].str, count); 
-        count2++;
-        count++;
-    ;
-    break;}
-case 23:
-#line 209 "prob.y"
+#line 253 "prob.y"
 {
         yyerror("");
         printf("Missing \';\' !!");
         yyerrok;
         yyclearin;
-        handleClear();
+        //handleClear();
+    ;
+    break;}
+case 28:
+#line 265 "prob.y"
+{ 
+        // Generate TAC for addition
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"+");
+        strcat(str,yyvsp[0].str);
+        printf("%s\n", str);
     ;
     break;}
 case 29:
-#line 221 "prob.y"
+#line 277 "prob.y"
 { 
-        // Generate TAC for addition
-        snprintf(intermediate[count],SIZE,"t%d = t%d + t%d;\n", count, count-2, count-1);
-        sprintf(yyval.str,"%s + %s;\n",yyvsp[-2].str, yyvsp[0].str);
-        count++;
+        // Generate TAC for subtraction
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"-");
+        strcat(str,yyvsp[0].str);
+        printf("%s\n", str);
     ;
     break;}
 case 30:
-#line 228 "prob.y"
+#line 289 "prob.y"
 { 
-        // Generate TAC for subtraction
-        snprintf(intermediate[count],SIZE,"t%d = t%d - t%d;\n", count, count-2, count-1 );
-        sprintf(yyval.str,"%s - %s;\n", yyvsp[-2].str, yyvsp[0].str);
-        count++;
+        // Generate TAC for multiplication
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"|");
+        strcat(str,yyvsp[0].str);
+        printf("%s\n", str);
     ;
     break;}
 case 31:
-#line 235 "prob.y"
+#line 301 "prob.y"
 { 
-        // Generate TAC for multiplication
-        snprintf(intermediate[count],SIZE,"t%d = t%d | t%d;\n", count, count-2, count-1);
-        sprintf(yyval.str,"%s | %s;\n", yyvsp[-2].str, yyvsp[0].str);
-        count++;
+        // Generate TAC for and
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"&");
+        strcat(str,yyvsp[0].str);
+        printf("%s\n", str);
     ;
     break;}
 case 32:
-#line 242 "prob.y"
+#line 313 "prob.y"
 { 
-        // Generate TAC for multiplication
-        snprintf(intermediate[count],SIZE,"t%d = t%d & t%d;\n", count, count-2, count-1);
-        sprintf(yyval.str,"%s & %s;\n", yyvsp[-2].str, yyvsp[0].str);
-        count++;
+        // Generate TAC for or
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"^");
+        strcat(str,yyvsp[0].str);
+        printf("%s\n", str);
     ;
     break;}
 case 33:
-#line 249 "prob.y"
+#line 325 "prob.y"
 { 
         // Generate TAC for multiplication
-        snprintf(intermediate[count],SIZE,"t%d = t%d ^ t%d;\n", count, count-2, count-1);
-        sprintf(yyval.str,"%s ^ %s;\n", yyvsp[-2].str, yyvsp[0].str);
-        count++;
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"*");
+        strcat(str,yyvsp[0].str);
+        printf("%s\n", str);
     ;
     break;}
 case 34:
-#line 256 "prob.y"
-{ 
-        // Generate TAC for multiplication
-        snprintf(intermediate[count],SIZE,"t%d = t%d * t%d;\n", count, count-2, count-1);
-        sprintf(yyval.str,"%s * %s;\n", yyvsp[-2].str, yyvsp[0].str);
-        count++;
+#line 337 "prob.y"
+{   
+        // Generate TAC for division
+        char* Label = getLabels();
+        strcpy(yyval.str,Label);
+        strcat(str,yyval.str);
+        strcat(str,"=");
+        strcat(str,yyvsp[-2].str);
+        strcat(str,"/");
+        strcat(str,yyvsp[0].str);
+        printf("%s\n", str);
     ;
     break;}
 case 35:
-#line 263 "prob.y"
-{   
-        // Generate TAC for division
-        snprintf(intermediate[count],SIZE,"t%d = t%d / t%d;\n", count, count-2, count-1);
-        sprintf(yyval.str,"%s / %s;\n", yyvsp[-2].str, yyvsp[0].str);
-        count++;
-    ;
-    break;}
-case 36:
-#line 270 "prob.y"
+#line 349 "prob.y"
 {
         if (strchr(yyvsp[-2].str, '.') == NULL && strchr(yyvsp[0].str, '.') == NULL)
         {
-            snprintf(intermediate[count],SIZE,"t%d = t%d \% t%d;\n", count, count-2, count-1);
-            sprintf(yyval.str,"t%d = %s \% %s;\n",count, yyvsp[-2].str, yyvsp[0].str);
-            count++;
+            char* Label = getLabels();
+            strcpy(yyval.str,Label);
+            strcat(str,yyval.str);
+            strcat(str,"=");
+            strcat(str,yyvsp[-2].str);
+            strcat(str,"\%");
+            strcat(str,yyvsp[0].str);
+            printf("%s\n", str);
         }
         else
         {
@@ -1451,78 +1529,95 @@ case 36:
         }
     ;
     break;}
-case 37:
-#line 284 "prob.y"
+case 36:
+#line 368 "prob.y"
 {
         eflag=2;
     ;
     break;}
-case 39:
-#line 291 "prob.y"
+case 37:
+#line 372 "prob.y"
+{
+        yyval.str = strdup(yyvsp[0].str);
+    ;
+    break;}
+case 38:
+#line 378 "prob.y"
 { 
-        // strcat($1,$2);
-            yyval.str = strdup(yyvsp[-1].str);
-            snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, yyvsp[-1].str); 
-            snprintf(finalAssignments[count2],SIZE,"%s = t%d + 1;\n", yyvsp[-1].str, count); 
-            count2++;
-            count++;
+            char* Label = getLabels();
+            strcpy(yyval.str,Label);
+            strcpy(str,yyval.str);
+            strcpy(str,"=");
+            strcpy(str,yyvsp[-1].str);
+            strcpy(str,"+");
+            strcpy(str,yyvsp[-1].str);
+            printf("%s", str);
+        ;
+    break;}
+case 39:
+#line 388 "prob.y"
+{ 
+            
+            char* Label = getLabels();
+            strcpy(yyval.str,Label);
+            strcpy(str,yyval.str);
+            strcpy(str,"=");
+            strcpy(str,yyvsp[-1].str);
+            strcpy(str,"-");
+            strcpy(str,yyvsp[-1].str);
+            printf("%s", str);
         ;
     break;}
 case 40:
-#line 299 "prob.y"
+#line 399 "prob.y"
 { 
-            // strcat($1,$2);
-            yyval.str = strdup(yyvsp[-1].str);
-            snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, yyvsp[-1].str); 
-            snprintf(finalAssignments[count2],SIZE,"%s = t%d - 1;\n", yyvsp[-1].str, count); 
-            count2++;
-            count++;
+            char* Label = getLabels();
+            strcpy(str,yyvsp[-1].str);
+            strcpy(str,"=");
+            strcpy(str,yyvsp[-1].str);
+            strcpy(str,"+");
+            strcpy(str,yyvsp[-1].str);
+            strcpy(yyval.str,Label);
+            
+            printf("%s", str);
         ;
     break;}
 case 41:
-#line 307 "prob.y"
+#line 410 "prob.y"
 { 
-            // strcat($1,$2);
-            yyval.str = strdup(yyvsp[0].str);
-            snprintf(intermediate[count],SIZE,"t%d = %s + 1;\n", count, yyvsp[0].str); 
-            snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", yyvsp[0].str, count); 
-            count2++;
-            count++;
+            char* Label = getLabels();
+            strcpy(yyval.str,Label);
+            printf("%s = %s - 1;\n", yyvsp[0].str,yyvsp[0].str);
+            printf("%s = %s;\n",Label,yyvsp[0].str); 
         ;
     break;}
 case 42:
-#line 315 "prob.y"
+#line 416 "prob.y"
 { 
-            // strcat($1,$2);
-            yyval.str = strdup(yyvsp[0].str);
-            snprintf(intermediate[count],SIZE,"t%d = %s - 1;\n", count, yyvsp[0].str); 
-            snprintf(finalAssignments[count2],SIZE,"%s = t%d;\n", yyvsp[0].str, count); 
-            count2++;
-            count++;
+            char* Label = getLabels();
+            strcpy(yyval.str,Label);
+            printf("%s = %s;\n",Label,yyvsp[-1].str); 
         ;
     break;}
 case 43:
-#line 323 "prob.y"
+#line 421 "prob.y"
 { 
-            yyval.str = strdup(yyvsp[-1].str);
-            snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, yyvsp[-1].str); 
-            // snprintf(finalAssignments[count2],SIZE,"%s = t%d;", $1, count); 
-            // count2++;
-            count++;
+            char* Label = getLabels();
+            strcpy(yyval.str,Label);
+            printf("%s = %s;\n",Label,yyvsp[-1].str); 
         ;
     break;}
 case 44:
-#line 330 "prob.y"
-{ 
-            yyval.str = strdup(yyvsp[-1].str);
-            snprintf(intermediate[count],SIZE,"t%d = %s;\n", count, yyvsp[-1].str); 
-            // snprintf(finalAssignments[count2],SIZE,"%s = t%d;", $1, count); 
-            // count2++;
-            count++;
+#line 427 "prob.y"
+{
+            yyerror("");
+            printf("\t\tcannot increment a constant\n\n");
+            yyerrok;
+            yyclearin;
         ;
     break;}
 case 45:
-#line 338 "prob.y"
+#line 434 "prob.y"
 {
             yyerror("");
             printf("\t\tcannot increment a constant\n\n");
@@ -1531,7 +1626,7 @@ case 45:
         ;
     break;}
 case 46:
-#line 345 "prob.y"
+#line 441 "prob.y"
 {
             yyerror("");
             printf("\t\tcannot increment a constant\n\n");
@@ -1540,7 +1635,7 @@ case 46:
         ;
     break;}
 case 47:
-#line 352 "prob.y"
+#line 448 "prob.y"
 {
             yyerror("");
             printf("\t\tcannot increment a constant\n\n");
@@ -1549,20 +1644,11 @@ case 47:
         ;
     break;}
 case 48:
-#line 359 "prob.y"
-{
-            yyerror("");
-            printf("\t\tcannot increment a constant\n\n");
-            yyerrok;
-            yyclearin;
-        ;
-    break;}
-case 49:
-#line 365 "prob.y"
+#line 454 "prob.y"
 { yyval.str = strdup(yyvsp[-1].str); ;
     break;}
-case 50:
-#line 367 "prob.y"
+case 49:
+#line 456 "prob.y"
 {
             yyerror("");
             printf("\t\tno ) detected after (\n\n");
@@ -1570,8 +1656,8 @@ case 50:
             yyclearin;
         ;
     break;}
-case 51:
-#line 375 "prob.y"
+case 50:
+#line 464 "prob.y"
 {
             yyerror("");
             printf("\t\t no operators between Operands\n\n");
@@ -1579,8 +1665,8 @@ case 51:
             yyclearin;
         ;
     break;}
-case 52:
-#line 383 "prob.y"
+case 51:
+#line 472 "prob.y"
 {
             yyerror("");
             printf("\t\t no operators between Operands\n\n");
@@ -1792,25 +1878,50 @@ YYLABEL(yyerrhandle)
 /* END */
 
  #line 1038 "/usr/share/bison++/bison.cc"
-#line 390 "prob.y"
+#line 479 "prob.y"
 
 int yyerror(char* err) {
     return 0;
 }
 
 int main(int argc, char* argv[]) {
-    int yydebug=1;
+    int yydebug = 1;
+
+    // Initialize finalAssignments
+    // for (int i = 0; i < SIZE; i++) {
+    //     finalAssignments[i] = (char*)malloc(SIZE * sizeof(char));
+    //     if (finalAssignments[i] == NULL) {
+    //         fprintf(stderr, "Memory allocation failed\n");
+    //         return 1; // Exit if memory allocation fails
+    //     }
+    //     finalAssignments[i][0] = '\0'; // Initialize with empty string
+    // }
+
+    // Rest of the main function
     if (argc > 1) {
         FILE* inp = fopen(argv[1], "r");
         if (inp != NULL) {
             yyin = inp;
+        } else {
+            fprintf(stderr, "Failed to open file: %s\n", argv[1]);
+            return 1;
         }
-    }
-    for (int i = 0; i < 100; i++) {
-        finalAssignments[i] = (char*)malloc(SIZE * sizeof(char)); 
-        intermediate[i] = (char*)malloc(SIZE * sizeof(char));
     }
     yyparse();
     fclose(yyin);
+
+    //handleClear(); // Clean up before exiting
     return 0;
 }
+
+// void handleClear() {
+//     for (int i = 0; i < SIZE; i++) {
+//         free(finalAssignments[i]); // Free allocated memory
+//         finalAssignments[i] = NULL; // Avoid dangling pointers
+//     }
+//     // Reset count variables
+//     count = 0;
+//     count2 = 0;
+//     blockVar = 0;
+//     eflag = 0;
+// }

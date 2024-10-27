@@ -758,7 +758,7 @@ case 1:
 YY_RULE_SETUP
 #line 26 "prob.l"
 {
-         printf("%s ", yytext);
+         // printf("%s ", yytext);
          yylval.str = strdup(yytext);
          return If;
 }
@@ -767,7 +767,7 @@ case 2:
 YY_RULE_SETUP
 #line 31 "prob.l"
 {
-         printf("%s ", yytext);
+         // printf("%s ", yytext);
          yylval.str = strdup(yytext);
          return Else;
 }
@@ -776,7 +776,7 @@ case 3:
 YY_RULE_SETUP
 #line 36 "prob.l"
 { 
-        printf("%s ", yytext);
+      //   printf("%s ", yytext);
         yylval.str = strdup(yytext); 
         return INC;
 }
@@ -785,7 +785,7 @@ case 4:
 YY_RULE_SETUP
 #line 42 "prob.l"
 { 
-        printf("%s ", yytext);
+      //   printf("%s ", yytext);
         yylval.str = strdup(yytext); 
         return DEC;
 }
@@ -794,7 +794,7 @@ case 5:
 YY_RULE_SETUP
 #line 48 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // variable token
                 return VAR;
 }
@@ -803,7 +803,7 @@ case 6:
 YY_RULE_SETUP
 #line 53 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // assignment token
                 return ASSIGN;
              }
@@ -812,7 +812,7 @@ case 7:
 YY_RULE_SETUP
 #line 58 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 return yytext[0]; 
              }
 	YY_BREAK
@@ -820,7 +820,7 @@ case 8:
 YY_RULE_SETUP
 #line 62 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext);
                 return RELOP; 
              }
@@ -829,7 +829,7 @@ case 9:
 YY_RULE_SETUP
 #line 67 "prob.l"
 { 
-               printf("%s ", yytext);
+               // printf("%s ", yytext);
                return yytext[0]; 
              }
 	YY_BREAK
@@ -837,7 +837,7 @@ case 10:
 YY_RULE_SETUP
 #line 71 "prob.l"
 { 
-               printf("%s ", yytext);
+               // printf("%s ", yytext);
                return yytext[0]; 
              }
 	YY_BREAK
@@ -845,7 +845,7 @@ case 11:
 YY_RULE_SETUP
 #line 76 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // float token
                 return Floats;
              }
@@ -854,7 +854,7 @@ case 12:
 YY_RULE_SETUP
 #line 81 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // statement terminator
                 return SC;
              }
@@ -863,7 +863,7 @@ case 13:
 YY_RULE_SETUP
 #line 87 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // left parenthesis
                 return LP;
              }
@@ -872,7 +872,7 @@ case 14:
 YY_RULE_SETUP
 #line 92 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // right parenthesis
                 return RP;
              }
@@ -881,7 +881,7 @@ case 15:
 YY_RULE_SETUP
 #line 97 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // left parenthesis
                 return CL;
              }
@@ -890,7 +890,7 @@ case 16:
 YY_RULE_SETUP
 #line 102 "prob.l"
 { 
-                printf("%s ", yytext);
+               //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // right parenthesis
                 return CR;
              }

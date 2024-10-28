@@ -105,7 +105,6 @@ S:  IfStatement {
 
     } S
     | Assignments {
-        printf("%s\n",$1);
         $$ = strdup($1);
     } S
     | { }
@@ -113,22 +112,12 @@ S:  IfStatement {
 
 IfStatement:
     If LP BoolExp RP CL {
-        for(int i=0;i<ifStmntPtr;i++)
-        {
-            printf("%c",string[i]);
-        }
         printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
         printf("L%d:\n",blockVar);
         blockVar+=2;
         IFCOUNTER++;
         handleClear(0);
     } S CR {   
-        
-        for(int i=0;i<ifStmntPtr;i++)
-        {
-            printf("%c",string[i]);
-        }
-        
         printf("L%d:\n",blockVar-1);
         handleClear(0);
     }  ElseExpr
@@ -167,52 +156,29 @@ ElseExpr:
 BoolExp:
     Expr RELOP Expr {
         char* Label = getLabels();
+        printf("%s = %s %s %s;\n",Label,$1,$2,$3);
         $$ = Label;
-        strcat(string,Label);
-        ifStmntPtr+=(strlen(Label));
-        strcat(string,"=");
-        ifStmntPtr++;
-        strcat(string,$1);
-        ifStmntPtr+=(strlen($1));
-        strcat(string,$2);
-        ifStmntPtr+=(strlen($2));
-        strcat(string,$3);
-        ifStmntPtr+=(strlen($3));
-        strcat(string,"\n");
-        ifStmntPtr++;
     }
     |
-    Assignments
-    {
-        $$ = strdup($1);
-        strcat(string,$1);
-        ifStmntPtr+=(strlen($1));
-        strcat(string,"\n");
-        ifStmntPtr++;
-    }
+    Assignments {}
     |
     '!' Expr {
         char* Label = getLabels();
-        strcat($$,Label);
-        strcat(string,Label);
-        ifStmntPtr+=(strlen(Label));
-        strcat(string,"!");
-        ifStmntPtr++;
-        strcat(string,$2);
-        ifStmntPtr+=(strlen($2));
-        strcat(string,"\n");
-        ifStmntPtr++;
+        printf("%s = ! ( %s );\n",Label,$2);
+        $$ = Label;
     }
     |
-    BoolExp BoolAnd {
-        strcat(string,"&&");
-        ifStmntPtr+=2;
-    } BoolExp
+    BoolExp BoolAnd BoolExp{
+        char* Label = getLabels();
+        printf("%s =  %s && %s;\n",Label,$1,$3);
+        $$ = Label;
+    } 
     |
-    BoolExp BoolOr  {
-        strcat(string,"||");
-        ifStmntPtr+=2;
-    } BoolExp
+    BoolExp BoolOr BoolExp  {
+        char* Label = getLabels();
+        printf("%s =  %s || %s;\n",Label,$1,$3);
+        $$ = Label;
+    } 
     |
     error SC{
         yyerror("");
@@ -228,15 +194,9 @@ Assignments:
     VAR ASSIGN Expr SC 
     {   
         char* Label = getLabels();
-        char* tempStr = (char*)malloc(sizeof(char)*1000);
-        strcpy(tempStr,$1);
-        strcat(tempStr,"=");
-        strcat(tempStr,$3);
-        strcat(tempStr,";\n");
-        strcat(tempStr,Label);
-        strcat(tempStr,"=");
-        strcat(tempStr,$1);
-        $$ = tempStr;
+        printf("%s %s %s;\n",$1,$2,$3);
+        printf("%s = %s;\n",Label,$1);
+        $$ = Label;
     }
     |
     VAR INC SC { 
@@ -286,20 +246,6 @@ Expr: Expr '+' Expr
         // Generate TAC for subtraction
         char* Label = getLabels();
         printf("%s = %s - %s\n",Label, $1, $3);
-        $$ = Label;
-    }
-    | Expr '|' Expr 
-    { 
-        // Generate TAC for multiplication
-        char* Label = getLabels();
-        printf("%s = %s | %s\n",Label, $1, $3);
-        $$ = Label;
-    }
-    | Expr '&' Expr 
-    { 
-        // Generate TAC for and
-        char* Label = getLabels();
-        printf("%s = %s & %s\n",Label, $1, $3);
         $$ = Label;
     }
     | Expr '^' Expr 
@@ -470,15 +416,3 @@ int main(int argc, char* argv[]) {
     //handleClear(1); // Clean up before exiting
     return 0;
 }
-
-// void handleClear() {
-//     for (int i = 0; i < SIZE; i++) {
-//         free(finalAssignments[i]); // Free allocated memory
-//         finalAssignments[i] = NULL; // Avoid dangling pointers
-//     }
-//     // Reset count variables
-//     count = 0;
-//     count2 = 0;
-//     blockVar = 0;
-//     eflag = 0;
-// }

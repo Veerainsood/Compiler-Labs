@@ -19,8 +19,8 @@ curlRight    \}
 IF          "if"
 ELSE        "else"
 RELOP       \<|\>|">="|"<="
-BoolAnd     "&&"
-BoolOr     "||"
+Booland     "&&"
+Boolor     "||"
 %%
 
 {IF}  {
@@ -55,6 +55,16 @@ BoolOr     "||"
                 yylval.str = strdup(yytext); // assignment token
                 return ASSIGN;
              }
+{Booland}   { 
+               // printf("%s ", yytext);
+               yylval.str = strdup(yytext);
+               return BoolAnd; 
+             }
+{Boolor}    { 
+               // printf("%s ", yytext);
+                yylval.str = strdup(yytext);
+               return BoolOr;  
+             }
 {operators}    { 
                //  printf("%s ", yytext);
                 return yytext[0]; 
@@ -64,15 +74,6 @@ BoolOr     "||"
                 yylval.str = strdup(yytext);
                 return RELOP; 
              }
-{BoolAnd}   { 
-               // printf("%s ", yytext);
-               return yytext[0]; 
-             }
-{BoolOr}    { 
-               // printf("%s ", yytext);
-               return yytext[0]; 
-             }
-
 {floats}    { 
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // float token

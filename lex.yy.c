@@ -362,11 +362,11 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[48] =
     {   0,
-        0,    0,   20,   18,   17,   17,    7,    7,   13,   14,
-        7,    7,    7,   18,    7,   11,   12,    8,    6,    8,
-        5,    5,    5,   15,    7,   16,   17,    9,    6,    3,
-        0,    4,    0,    0,   11,   11,    8,    5,    5,    1,
-       10,    0,    5,    0,   11,    2,    0
+        0,    0,   20,   18,   17,   17,    9,    9,   13,   14,
+        9,    9,    9,   18,    9,   11,   12,   10,    6,   10,
+        5,    5,    5,   15,    9,   16,   17,    7,    6,    3,
+        0,    4,    0,    0,   11,   11,   10,    5,    5,    1,
+        8,    0,    5,    0,   11,    2,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
@@ -812,38 +812,40 @@ case 7:
 YY_RULE_SETUP
 #line 58 "prob.l"
 { 
-               //  printf("%s ", yytext);
-                return yytext[0]; 
+               // printf("%s ", yytext);
+               yylval.str = strdup(yytext);
+               return BoolAnd; 
              }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 62 "prob.l"
+#line 63 "prob.l"
+{ 
+               // printf("%s ", yytext);
+                yylval.str = strdup(yytext);
+               return BoolOr;  
+             }
+	YY_BREAK
+case 9:
+YY_RULE_SETUP
+#line 68 "prob.l"
+{ 
+               //  printf("%s ", yytext);
+                return yytext[0]; 
+             }
+	YY_BREAK
+case 10:
+YY_RULE_SETUP
+#line 72 "prob.l"
 { 
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext);
                 return RELOP; 
              }
 	YY_BREAK
-case 9:
-YY_RULE_SETUP
-#line 67 "prob.l"
-{ 
-               // printf("%s ", yytext);
-               return yytext[0]; 
-             }
-	YY_BREAK
-case 10:
-YY_RULE_SETUP
-#line 71 "prob.l"
-{ 
-               // printf("%s ", yytext);
-               return yytext[0]; 
-             }
-	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 76 "prob.l"
+#line 77 "prob.l"
 { 
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // float token
@@ -852,7 +854,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 81 "prob.l"
+#line 82 "prob.l"
 { 
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // statement terminator
@@ -861,7 +863,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 87 "prob.l"
+#line 88 "prob.l"
 { 
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // left parenthesis
@@ -870,7 +872,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 92 "prob.l"
+#line 93 "prob.l"
 { 
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // right parenthesis
@@ -879,7 +881,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 97 "prob.l"
+#line 98 "prob.l"
 { 
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // left parenthesis
@@ -888,7 +890,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 102 "prob.l"
+#line 103 "prob.l"
 { 
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // right parenthesis
@@ -898,12 +900,12 @@ YY_RULE_SETUP
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 107 "prob.l"
+#line 108 "prob.l"
 ;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 108 "prob.l"
+#line 109 "prob.l"
 { 
                 fprintf(stderr, "Unrecognized character: %s \n", yytext);
                 return yytext[0];
@@ -911,10 +913,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 113 "prob.l"
+#line 114 "prob.l"
 ECHO;
 	YY_BREAK
-#line 918 "lex.yy.c"
+#line 920 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1919,7 +1921,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 113 "prob.l"
+#line 114 "prob.l"
 
 int yywrap() {
     return 1;

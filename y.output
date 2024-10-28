@@ -1,71 +1,51 @@
-Conflict in state 86 between rule 34 and token '|' resolved as reduce.
-Conflict in state 86 between rule 34 and token '^' resolved as shift.
-Conflict in state 86 between rule 34 and token '&' resolved as shift.
-Conflict in state 86 between rule 34 and token '+' resolved as shift.
-Conflict in state 86 between rule 34 and token '-' resolved as shift.
-Conflict in state 86 between rule 34 and token '*' resolved as shift.
-Conflict in state 86 between rule 34 and token '/' resolved as shift.
-Conflict in state 86 between rule 34 and token '%' resolved as shift.
-Conflict in state 87 between rule 36 and token '|' resolved as reduce.
-Conflict in state 87 between rule 36 and token '^' resolved as reduce.
-Conflict in state 87 between rule 36 and token '&' resolved as shift.
-Conflict in state 87 between rule 36 and token '+' resolved as shift.
-Conflict in state 87 between rule 36 and token '-' resolved as shift.
-Conflict in state 87 between rule 36 and token '*' resolved as shift.
-Conflict in state 87 between rule 36 and token '/' resolved as shift.
-Conflict in state 87 between rule 36 and token '%' resolved as shift.
-Conflict in state 88 between rule 35 and token '|' resolved as reduce.
-Conflict in state 88 between rule 35 and token '^' resolved as reduce.
-Conflict in state 88 between rule 35 and token '&' resolved as reduce.
-Conflict in state 88 between rule 35 and token '+' resolved as shift.
-Conflict in state 88 between rule 35 and token '-' resolved as shift.
-Conflict in state 88 between rule 35 and token '*' resolved as shift.
-Conflict in state 88 between rule 35 and token '/' resolved as shift.
-Conflict in state 88 between rule 35 and token '%' resolved as shift.
-Conflict in state 89 between rule 32 and token '|' resolved as reduce.
-Conflict in state 89 between rule 32 and token '^' resolved as reduce.
-Conflict in state 89 between rule 32 and token '&' resolved as reduce.
-Conflict in state 89 between rule 32 and token '+' resolved as reduce.
-Conflict in state 89 between rule 32 and token '-' resolved as reduce.
-Conflict in state 89 between rule 32 and token '*' resolved as shift.
-Conflict in state 89 between rule 32 and token '/' resolved as shift.
-Conflict in state 89 between rule 32 and token '%' resolved as shift.
-Conflict in state 90 between rule 33 and token '|' resolved as reduce.
-Conflict in state 90 between rule 33 and token '^' resolved as reduce.
-Conflict in state 90 between rule 33 and token '&' resolved as reduce.
-Conflict in state 90 between rule 33 and token '+' resolved as reduce.
-Conflict in state 90 between rule 33 and token '-' resolved as reduce.
-Conflict in state 90 between rule 33 and token '*' resolved as shift.
-Conflict in state 90 between rule 33 and token '/' resolved as shift.
-Conflict in state 90 between rule 33 and token '%' resolved as shift.
-Conflict in state 91 between rule 37 and token '|' resolved as reduce.
-Conflict in state 91 between rule 37 and token '^' resolved as reduce.
-Conflict in state 91 between rule 37 and token '&' resolved as reduce.
-Conflict in state 91 between rule 37 and token '+' resolved as reduce.
-Conflict in state 91 between rule 37 and token '-' resolved as reduce.
-Conflict in state 91 between rule 37 and token '*' resolved as reduce.
-Conflict in state 91 between rule 37 and token '/' resolved as reduce.
-Conflict in state 91 between rule 37 and token '%' resolved as reduce.
-Conflict in state 92 between rule 38 and token '|' resolved as reduce.
-Conflict in state 92 between rule 38 and token '^' resolved as reduce.
-Conflict in state 92 between rule 38 and token '&' resolved as reduce.
-Conflict in state 92 between rule 38 and token '+' resolved as reduce.
-Conflict in state 92 between rule 38 and token '-' resolved as reduce.
-Conflict in state 92 between rule 38 and token '*' resolved as reduce.
-Conflict in state 92 between rule 38 and token '/' resolved as reduce.
-Conflict in state 92 between rule 38 and token '%' resolved as reduce.
-Conflict in state 93 between rule 39 and token '|' resolved as reduce.
-Conflict in state 93 between rule 39 and token '^' resolved as reduce.
-Conflict in state 93 between rule 39 and token '&' resolved as reduce.
-Conflict in state 93 between rule 39 and token '+' resolved as reduce.
-Conflict in state 93 between rule 39 and token '-' resolved as reduce.
-Conflict in state 93 between rule 39 and token '*' resolved as reduce.
-Conflict in state 93 between rule 39 and token '/' resolved as reduce.
-Conflict in state 93 between rule 39 and token '%' resolved as reduce.
-Conflict in state 96 between rule 17 and token BoolAnd resolved as reduce.
-Conflict in state 96 between rule 17 and token BoolOr resolved as reduce.
-Conflict in state 97 between rule 19 and token BoolAnd resolved as shift.
-Conflict in state 97 between rule 19 and token BoolOr resolved as reduce.
+
+
+Terminals which are not used:
+
+   '|'
+   '&'
+
+
+Conflict in state 81 between rule 16 and token BoolAnd resolved as reduce.
+Conflict in state 81 between rule 16 and token BoolOr resolved as reduce.
+Conflict in state 82 between rule 17 and token BoolAnd resolved as shift.
+Conflict in state 82 between rule 17 and token BoolOr resolved as reduce.
+Conflict in state 84 between rule 32 and token '^' resolved as reduce.
+Conflict in state 84 between rule 32 and token '+' resolved as shift.
+Conflict in state 84 between rule 32 and token '-' resolved as shift.
+Conflict in state 84 between rule 32 and token '*' resolved as shift.
+Conflict in state 84 between rule 32 and token '/' resolved as shift.
+Conflict in state 84 between rule 32 and token '%' resolved as shift.
+Conflict in state 85 between rule 30 and token '^' resolved as reduce.
+Conflict in state 85 between rule 30 and token '+' resolved as reduce.
+Conflict in state 85 between rule 30 and token '-' resolved as reduce.
+Conflict in state 85 between rule 30 and token '*' resolved as shift.
+Conflict in state 85 between rule 30 and token '/' resolved as shift.
+Conflict in state 85 between rule 30 and token '%' resolved as shift.
+Conflict in state 86 between rule 31 and token '^' resolved as reduce.
+Conflict in state 86 between rule 31 and token '+' resolved as reduce.
+Conflict in state 86 between rule 31 and token '-' resolved as reduce.
+Conflict in state 86 between rule 31 and token '*' resolved as shift.
+Conflict in state 86 between rule 31 and token '/' resolved as shift.
+Conflict in state 86 between rule 31 and token '%' resolved as shift.
+Conflict in state 87 between rule 33 and token '^' resolved as reduce.
+Conflict in state 87 between rule 33 and token '+' resolved as reduce.
+Conflict in state 87 between rule 33 and token '-' resolved as reduce.
+Conflict in state 87 between rule 33 and token '*' resolved as reduce.
+Conflict in state 87 between rule 33 and token '/' resolved as reduce.
+Conflict in state 87 between rule 33 and token '%' resolved as reduce.
+Conflict in state 88 between rule 34 and token '^' resolved as reduce.
+Conflict in state 88 between rule 34 and token '+' resolved as reduce.
+Conflict in state 88 between rule 34 and token '-' resolved as reduce.
+Conflict in state 88 between rule 34 and token '*' resolved as reduce.
+Conflict in state 88 between rule 34 and token '/' resolved as reduce.
+Conflict in state 88 between rule 34 and token '%' resolved as reduce.
+Conflict in state 89 between rule 35 and token '^' resolved as reduce.
+Conflict in state 89 between rule 35 and token '+' resolved as reduce.
+Conflict in state 89 between rule 35 and token '-' resolved as reduce.
+Conflict in state 89 between rule 35 and token '*' resolved as reduce.
+Conflict in state 89 between rule 35 and token '/' resolved as reduce.
+Conflict in state 89 between rule 35 and token '%' resolved as reduce.
 
 Grammar
 rule 1    @1 ->		/* empty */
@@ -83,76 +63,72 @@ rule 12   ElseExpr ->		/* empty */
 rule 13   BoolExp -> Expr RELOP Expr
 rule 14   BoolExp -> Assignments
 rule 15   BoolExp -> '!' Expr
-rule 16   @5 ->		/* empty */
-rule 17   BoolExp -> BoolExp BoolAnd @5 BoolExp
-rule 18   @6 ->		/* empty */
-rule 19   BoolExp -> BoolExp BoolOr @6 BoolExp
-rule 20   BoolExp -> error SC
-rule 21   Assignments -> VAR ASSIGN Expr SC
-rule 22   Assignments -> VAR INC SC
-rule 23   Assignments -> VAR DEC SC
-rule 24   Assignments -> INC VAR SC
-rule 25   Assignments -> DEC VAR SC
-rule 26   Assignments -> error
-rule 27   Op -> '+'
-rule 28   Op -> '-'
-rule 29   Op -> '/'
-rule 30   Op -> '%'
-rule 31   Op -> '*'
-rule 32   Expr -> Expr '+' Expr
-rule 33   Expr -> Expr '-' Expr
-rule 34   Expr -> Expr '|' Expr
-rule 35   Expr -> Expr '&' Expr
-rule 36   Expr -> Expr '^' Expr
-rule 37   Expr -> Expr '*' Expr
-rule 38   Expr -> Expr '/' Expr
-rule 39   Expr -> Expr '%' Expr
-rule 40   Expr -> Expr Op
-rule 41   Expr -> Fact
-rule 42   Fact -> VAR INC
-rule 43   Fact -> VAR DEC
-rule 44   Fact -> INC VAR
-rule 45   Fact -> DEC VAR
-rule 46   Fact -> VAR C
-rule 47   Fact -> Floats C
-rule 48   Fact -> Floats INC error
-rule 49   Fact -> Floats DEC error
-rule 50   Fact -> DEC Floats error
-rule 51   Fact -> INC Floats error
-rule 52   Fact -> LP Expr RP
-rule 53   Fact -> LP Expr error
-rule 54   C -> VAR error
-rule 55   C -> Floats error
-rule 56   C ->		/* empty */
+rule 16   BoolExp -> BoolExp BoolAnd BoolExp
+rule 17   BoolExp -> BoolExp BoolOr BoolExp
+rule 18   BoolExp -> error SC
+rule 19   Assignments -> VAR ASSIGN Expr SC
+rule 20   Assignments -> VAR INC SC
+rule 21   Assignments -> VAR DEC SC
+rule 22   Assignments -> INC VAR SC
+rule 23   Assignments -> DEC VAR SC
+rule 24   Assignments -> error
+rule 25   Op -> '+'
+rule 26   Op -> '-'
+rule 27   Op -> '/'
+rule 28   Op -> '%'
+rule 29   Op -> '*'
+rule 30   Expr -> Expr '+' Expr
+rule 31   Expr -> Expr '-' Expr
+rule 32   Expr -> Expr '^' Expr
+rule 33   Expr -> Expr '*' Expr
+rule 34   Expr -> Expr '/' Expr
+rule 35   Expr -> Expr '%' Expr
+rule 36   Expr -> Expr Op
+rule 37   Expr -> Fact
+rule 38   Fact -> VAR INC
+rule 39   Fact -> VAR DEC
+rule 40   Fact -> INC VAR
+rule 41   Fact -> DEC VAR
+rule 42   Fact -> VAR C
+rule 43   Fact -> Floats C
+rule 44   Fact -> Floats INC error
+rule 45   Fact -> Floats DEC error
+rule 46   Fact -> DEC Floats error
+rule 47   Fact -> INC Floats error
+rule 48   Fact -> LP Expr RP
+rule 49   Fact -> LP Expr error
+rule 50   C -> VAR error
+rule 51   C -> Floats error
+rule 52   C ->		/* empty */
 
 Terminals, with rules where they appear
 
 $ (-1)
 '!' (33) 15
-'%' (37) 30 39
-'&' (38) 35
-'*' (42) 31 37
-'+' (43) 27 32
-'-' (45) 28 33
-'/' (47) 29 38
-'^' (94) 36
-'|' (124) 34
-error (256) 9 10 20 26 48 49 50 51 53 54 55
-VAR (258) 21 22 23 24 25 42 43 44 45 46 54
-Floats (259) 47 48 49 50 51 55
-ASSIGN (260) 21
-SC (261) 20 21 22 23 24 25
-LP (262) 8 10 52 53
-RP (263) 8 52
+'%' (37) 28 35
+'&' (38)
+'*' (42) 29 33
+'+' (43) 25 30
+'-' (45) 26 31
+'/' (47) 27 34
+'^' (94) 32
+'|' (124)
+error (256) 9 10 18 24 44 45 46 47 49 50 51
+VAR (258) 19 20 21 22 23 38 39 40 41 42 50
+Floats (259) 43 44 45 46 47 51
+ASSIGN (260) 19
+SC (261) 18 19 20 21 22 23
+LP (262) 8 10 48 49
+RP (263) 8 48
 CL (264) 8 10 11
 CR (265) 8 9 10 11
-INC (266) 22 24 42 44 48 51
+INC (266) 20 22 38 40 44 47
 RELOP (267) 13
 Else (268) 11
-DEC (269) 23 25 43 45 49 50
+DEC (269) 21 23 39 41 45 46
 If (270) 8 9 10
-BoolAnd (271) 17
-BoolOr (272) 19
+BoolAnd (271) 16
+BoolOr (272) 17
 
 Nonterminals, with rules where they appear
 
@@ -171,22 +147,18 @@ IfStatement (30)
 ElseExpr (33)
     on left: 11 12, on right: 8
 BoolExp (34)
-    on left: 13 14 15 17 19 20, on right: 8 9 10 17 19
-@5 (35)
-    on left: 16, on right: 17
-@6 (36)
-    on left: 18, on right: 19
-Assignments (37)
-    on left: 21 22 23 24 25 26, on right: 4 14
-Op (38)
-    on left: 27 28 29 30 31, on right: 40
-Expr (39)
-    on left: 32 33 34 35 36 37 38 39 40 41, on right: 13 15 21 32 33
-    34 35 36 37 38 39 40 52 53
-Fact (40)
-    on left: 42 43 44 45 46 47 48 49 50 51 52 53, on right: 41
-C (41)
-    on left: 54 55 56, on right: 46 47
+    on left: 13 14 15 16 17 18, on right: 8 9 10 16 17
+Assignments (35)
+    on left: 19 20 21 22 23 24, on right: 4 14
+Op (36)
+    on left: 25 26 27 28 29, on right: 36
+Expr (37)
+    on left: 30 31 32 33 34 35 36 37, on right: 13 15 19 30 31 32 33
+    34 35 36 48 49
+Fact (38)
+    on left: 38 39 40 41 42 43 44 45 46 47 48 49, on right: 37
+C (39)
+    on left: 50 51 52, on right: 42 43
 
 
 state 0
@@ -199,7 +171,7 @@ state 0
 
     $   	reduce using rule 5 (S)
 
-    S   	go to state 108
+    S   	go to state 102
     IfStatement	go to state 6
     Assignments	go to state 7
 
@@ -207,17 +179,17 @@ state 0
 
 state 1
 
-    Assignments  ->  error .   (rule 26)
+    Assignments  ->  error .   (rule 24)
 
-    $default	reduce using rule 26 (Assignments)
+    $default	reduce using rule 24 (Assignments)
 
 
 
 state 2
 
-    Assignments  ->  VAR . ASSIGN Expr SC   (rule 21)
-    Assignments  ->  VAR . INC SC   (rule 22)
-    Assignments  ->  VAR . DEC SC   (rule 23)
+    Assignments  ->  VAR . ASSIGN Expr SC   (rule 19)
+    Assignments  ->  VAR . INC SC   (rule 20)
+    Assignments  ->  VAR . DEC SC   (rule 21)
 
     ASSIGN	shift, and go to state 8
     INC 	shift, and go to state 9
@@ -227,7 +199,7 @@ state 2
 
 state 3
 
-    Assignments  ->  INC . VAR SC   (rule 24)
+    Assignments  ->  INC . VAR SC   (rule 22)
 
     VAR 	shift, and go to state 11
 
@@ -235,7 +207,7 @@ state 3
 
 state 4
 
-    Assignments  ->  DEC . VAR SC   (rule 25)
+    Assignments  ->  DEC . VAR SC   (rule 23)
 
     VAR 	shift, and go to state 12
 
@@ -284,7 +256,7 @@ state 7
 
 state 8
 
-    Assignments  ->  VAR ASSIGN . Expr SC   (rule 21)
+    Assignments  ->  VAR ASSIGN . Expr SC   (rule 19)
 
     VAR 	shift, and go to state 26
     Floats	shift, and go to state 15
@@ -299,7 +271,7 @@ state 8
 
 state 9
 
-    Assignments  ->  VAR INC . SC   (rule 22)
+    Assignments  ->  VAR INC . SC   (rule 20)
 
     SC  	shift, and go to state 31
 
@@ -307,7 +279,7 @@ state 9
 
 state 10
 
-    Assignments  ->  VAR DEC . SC   (rule 23)
+    Assignments  ->  VAR DEC . SC   (rule 21)
 
     SC  	shift, and go to state 32
 
@@ -315,7 +287,7 @@ state 10
 
 state 11
 
-    Assignments  ->  INC VAR . SC   (rule 24)
+    Assignments  ->  INC VAR . SC   (rule 22)
 
     SC  	shift, and go to state 33
 
@@ -323,7 +295,7 @@ state 11
 
 state 12
 
-    Assignments  ->  DEC VAR . SC   (rule 25)
+    Assignments  ->  DEC VAR . SC   (rule 23)
 
     SC  	shift, and go to state 34
 
@@ -331,23 +303,23 @@ state 12
 
 state 13
 
-    BoolExp  ->  error . SC   (rule 20)
-    Assignments  ->  error .   (rule 26)
+    BoolExp  ->  error . SC   (rule 18)
+    Assignments  ->  error .   (rule 24)
 
     SC  	shift, and go to state 35
 
-    $default	reduce using rule 26 (Assignments)
+    $default	reduce using rule 24 (Assignments)
 
 
 
 state 14
 
-    Assignments  ->  VAR . ASSIGN Expr SC   (rule 21)
-    Assignments  ->  VAR . INC SC   (rule 22)
-    Assignments  ->  VAR . DEC SC   (rule 23)
-    Fact  ->  VAR . INC   (rule 42)
-    Fact  ->  VAR . DEC   (rule 43)
-    Fact  ->  VAR . C   (rule 46)
+    Assignments  ->  VAR . ASSIGN Expr SC   (rule 19)
+    Assignments  ->  VAR . INC SC   (rule 20)
+    Assignments  ->  VAR . DEC SC   (rule 21)
+    Fact  ->  VAR . INC   (rule 38)
+    Fact  ->  VAR . DEC   (rule 39)
+    Fact  ->  VAR . C   (rule 42)
 
     VAR 	shift, and go to state 36
     Floats	shift, and go to state 37
@@ -355,7 +327,7 @@ state 14
     INC 	shift, and go to state 38
     DEC 	shift, and go to state 39
 
-    $default	reduce using rule 56 (C)
+    $default	reduce using rule 52 (C)
 
     C   	go to state 40
 
@@ -363,16 +335,16 @@ state 14
 
 state 15
 
-    Fact  ->  Floats . C   (rule 47)
-    Fact  ->  Floats . INC error   (rule 48)
-    Fact  ->  Floats . DEC error   (rule 49)
+    Fact  ->  Floats . C   (rule 43)
+    Fact  ->  Floats . INC error   (rule 44)
+    Fact  ->  Floats . DEC error   (rule 45)
 
     VAR 	shift, and go to state 36
     Floats	shift, and go to state 37
     INC 	shift, and go to state 41
     DEC 	shift, and go to state 42
 
-    $default	reduce using rule 56 (C)
+    $default	reduce using rule 52 (C)
 
     C   	go to state 43
 
@@ -382,8 +354,8 @@ state 16
 
     IfStatement  ->  If LP . BoolExp RP CL @3 S CR @4 ElseExpr   (rule 8)
     IfStatement  ->  If LP . BoolExp CL error CR   (rule 10)
-    Fact  ->  LP . Expr RP   (rule 52)
-    Fact  ->  LP . Expr error   (rule 53)
+    Fact  ->  LP . Expr RP   (rule 48)
+    Fact  ->  LP . Expr error   (rule 49)
 
     error	shift, and go to state 13
     VAR 	shift, and go to state 14
@@ -402,9 +374,9 @@ state 16
 
 state 17
 
-    Assignments  ->  INC . VAR SC   (rule 24)
-    Fact  ->  INC . VAR   (rule 44)
-    Fact  ->  INC . Floats error   (rule 51)
+    Assignments  ->  INC . VAR SC   (rule 22)
+    Fact  ->  INC . VAR   (rule 40)
+    Fact  ->  INC . Floats error   (rule 47)
 
     VAR 	shift, and go to state 46
     Floats	shift, and go to state 47
@@ -413,9 +385,9 @@ state 17
 
 state 18
 
-    Assignments  ->  DEC . VAR SC   (rule 25)
-    Fact  ->  DEC . VAR   (rule 45)
-    Fact  ->  DEC . Floats error   (rule 50)
+    Assignments  ->  DEC . VAR SC   (rule 23)
+    Fact  ->  DEC . VAR   (rule 41)
+    Fact  ->  DEC . Floats error   (rule 46)
 
     VAR 	shift, and go to state 48
     Floats	shift, and go to state 49
@@ -440,8 +412,8 @@ state 19
 state 20
 
     IfStatement  ->  If BoolExp . error CR   (rule 9)
-    BoolExp  ->  BoolExp . BoolAnd @5 BoolExp   (rule 17)
-    BoolExp  ->  BoolExp . BoolOr @6 BoolExp   (rule 19)
+    BoolExp  ->  BoolExp . BoolAnd BoolExp   (rule 16)
+    BoolExp  ->  BoolExp . BoolOr BoolExp   (rule 17)
 
     error	shift, and go to state 51
     BoolAnd	shift, and go to state 52
@@ -460,35 +432,31 @@ state 21
 state 22
 
     BoolExp  ->  Expr . RELOP Expr   (rule 13)
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
 
     RELOP	shift, and go to state 54
-    '|' 	shift, and go to state 55
-    '^' 	shift, and go to state 56
-    '&' 	shift, and go to state 57
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
+    '^' 	shift, and go to state 55
+    '+' 	shift, and go to state 56
+    '-' 	shift, and go to state 57
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
 
-    Op  	go to state 63
+    Op  	go to state 61
 
 
 
 state 23
 
-    Expr  ->  Fact .   (rule 41)
+    Expr  ->  Fact .   (rule 37)
 
-    $default	reduce using rule 41 (Expr)
+    $default	reduce using rule 37 (Expr)
 
 
 
@@ -505,7 +473,7 @@ state 24
     $   	reduce using rule 5 (S)
     CR  	reduce using rule 5 (S)
 
-    S   	go to state 64
+    S   	go to state 62
     IfStatement	go to state 6
     Assignments	go to state 7
 
@@ -524,7 +492,7 @@ state 25
     $   	reduce using rule 5 (S)
     CR  	reduce using rule 5 (S)
 
-    S   	go to state 65
+    S   	go to state 63
     IfStatement	go to state 6
     Assignments	go to state 7
 
@@ -532,16 +500,16 @@ state 25
 
 state 26
 
-    Fact  ->  VAR . INC   (rule 42)
-    Fact  ->  VAR . DEC   (rule 43)
-    Fact  ->  VAR . C   (rule 46)
+    Fact  ->  VAR . INC   (rule 38)
+    Fact  ->  VAR . DEC   (rule 39)
+    Fact  ->  VAR . C   (rule 42)
 
     VAR 	shift, and go to state 36
     Floats	shift, and go to state 37
-    INC 	shift, and go to state 66
-    DEC 	shift, and go to state 67
+    INC 	shift, and go to state 64
+    DEC 	shift, and go to state 65
 
-    $default	reduce using rule 56 (C)
+    $default	reduce using rule 52 (C)
 
     C   	go to state 40
 
@@ -549,8 +517,8 @@ state 26
 
 state 27
 
-    Fact  ->  LP . Expr RP   (rule 52)
-    Fact  ->  LP . Expr error   (rule 53)
+    Fact  ->  LP . Expr RP   (rule 48)
+    Fact  ->  LP . Expr error   (rule 49)
 
     VAR 	shift, and go to state 26
     Floats	shift, and go to state 15
@@ -558,165 +526,161 @@ state 27
     INC 	shift, and go to state 28
     DEC 	shift, and go to state 29
 
-    Expr	go to state 68
+    Expr	go to state 66
     Fact	go to state 23
 
 
 
 state 28
 
-    Fact  ->  INC . VAR   (rule 44)
-    Fact  ->  INC . Floats error   (rule 51)
+    Fact  ->  INC . VAR   (rule 40)
+    Fact  ->  INC . Floats error   (rule 47)
 
-    VAR 	shift, and go to state 69
+    VAR 	shift, and go to state 67
     Floats	shift, and go to state 47
 
 
 
 state 29
 
-    Fact  ->  DEC . VAR   (rule 45)
-    Fact  ->  DEC . Floats error   (rule 50)
+    Fact  ->  DEC . VAR   (rule 41)
+    Fact  ->  DEC . Floats error   (rule 46)
 
-    VAR 	shift, and go to state 70
+    VAR 	shift, and go to state 68
     Floats	shift, and go to state 49
 
 
 
 state 30
 
-    Assignments  ->  VAR ASSIGN Expr . SC   (rule 21)
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
+    Assignments  ->  VAR ASSIGN Expr . SC   (rule 19)
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
 
-    SC  	shift, and go to state 71
-    '|' 	shift, and go to state 55
-    '^' 	shift, and go to state 56
-    '&' 	shift, and go to state 57
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
+    SC  	shift, and go to state 69
+    '^' 	shift, and go to state 55
+    '+' 	shift, and go to state 56
+    '-' 	shift, and go to state 57
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
 
-    Op  	go to state 63
+    Op  	go to state 61
 
 
 
 state 31
 
-    Assignments  ->  VAR INC SC .   (rule 22)
+    Assignments  ->  VAR INC SC .   (rule 20)
 
-    $default	reduce using rule 22 (Assignments)
+    $default	reduce using rule 20 (Assignments)
 
 
 
 state 32
 
-    Assignments  ->  VAR DEC SC .   (rule 23)
+    Assignments  ->  VAR DEC SC .   (rule 21)
 
-    $default	reduce using rule 23 (Assignments)
+    $default	reduce using rule 21 (Assignments)
 
 
 
 state 33
 
-    Assignments  ->  INC VAR SC .   (rule 24)
+    Assignments  ->  INC VAR SC .   (rule 22)
 
-    $default	reduce using rule 24 (Assignments)
+    $default	reduce using rule 22 (Assignments)
 
 
 
 state 34
 
-    Assignments  ->  DEC VAR SC .   (rule 25)
+    Assignments  ->  DEC VAR SC .   (rule 23)
 
-    $default	reduce using rule 25 (Assignments)
+    $default	reduce using rule 23 (Assignments)
 
 
 
 state 35
 
-    BoolExp  ->  error SC .   (rule 20)
+    BoolExp  ->  error SC .   (rule 18)
 
-    $default	reduce using rule 20 (BoolExp)
+    $default	reduce using rule 18 (BoolExp)
 
 
 
 state 36
 
-    C  ->  VAR . error   (rule 54)
+    C  ->  VAR . error   (rule 50)
 
-    error	shift, and go to state 72
+    error	shift, and go to state 70
 
 
 
 state 37
 
-    C  ->  Floats . error   (rule 55)
+    C  ->  Floats . error   (rule 51)
 
-    error	shift, and go to state 73
+    error	shift, and go to state 71
 
 
 
 state 38
 
-    Assignments  ->  VAR INC . SC   (rule 22)
-    Fact  ->  VAR INC .   (rule 42)
+    Assignments  ->  VAR INC . SC   (rule 20)
+    Fact  ->  VAR INC .   (rule 38)
 
     SC  	shift, and go to state 31
 
-    $default	reduce using rule 42 (Fact)
+    $default	reduce using rule 38 (Fact)
 
 
 
 state 39
 
-    Assignments  ->  VAR DEC . SC   (rule 23)
-    Fact  ->  VAR DEC .   (rule 43)
+    Assignments  ->  VAR DEC . SC   (rule 21)
+    Fact  ->  VAR DEC .   (rule 39)
 
     SC  	shift, and go to state 32
 
-    $default	reduce using rule 43 (Fact)
+    $default	reduce using rule 39 (Fact)
 
 
 
 state 40
 
-    Fact  ->  VAR C .   (rule 46)
+    Fact  ->  VAR C .   (rule 42)
 
-    $default	reduce using rule 46 (Fact)
+    $default	reduce using rule 42 (Fact)
 
 
 
 state 41
 
-    Fact  ->  Floats INC . error   (rule 48)
+    Fact  ->  Floats INC . error   (rule 44)
 
-    error	shift, and go to state 74
+    error	shift, and go to state 72
 
 
 
 state 42
 
-    Fact  ->  Floats DEC . error   (rule 49)
+    Fact  ->  Floats DEC . error   (rule 45)
 
-    error	shift, and go to state 75
+    error	shift, and go to state 73
 
 
 
 state 43
 
-    Fact  ->  Floats C .   (rule 47)
+    Fact  ->  Floats C .   (rule 43)
 
-    $default	reduce using rule 47 (Fact)
+    $default	reduce using rule 43 (Fact)
 
 
 
@@ -724,11 +688,11 @@ state 44
 
     IfStatement  ->  If LP BoolExp . RP CL @3 S CR @4 ElseExpr   (rule 8)
     IfStatement  ->  If LP BoolExp . CL error CR   (rule 10)
-    BoolExp  ->  BoolExp . BoolAnd @5 BoolExp   (rule 17)
-    BoolExp  ->  BoolExp . BoolOr @6 BoolExp   (rule 19)
+    BoolExp  ->  BoolExp . BoolAnd BoolExp   (rule 16)
+    BoolExp  ->  BoolExp . BoolOr BoolExp   (rule 17)
 
-    RP  	shift, and go to state 76
-    CL  	shift, and go to state 77
+    RP  	shift, and go to state 74
+    CL  	shift, and go to state 75
     BoolAnd	shift, and go to state 52
     BoolOr	shift, and go to state 53
 
@@ -737,97 +701,89 @@ state 44
 state 45
 
     BoolExp  ->  Expr . RELOP Expr   (rule 13)
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-    Fact  ->  LP Expr . RP   (rule 52)
-    Fact  ->  LP Expr . error   (rule 53)
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+    Fact  ->  LP Expr . RP   (rule 48)
+    Fact  ->  LP Expr . error   (rule 49)
 
-    error	shift, and go to state 78
-    RP  	shift, and go to state 79
+    error	shift, and go to state 76
+    RP  	shift, and go to state 77
     RELOP	shift, and go to state 54
-    '|' 	shift, and go to state 55
-    '^' 	shift, and go to state 56
-    '&' 	shift, and go to state 57
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
+    '^' 	shift, and go to state 55
+    '+' 	shift, and go to state 56
+    '-' 	shift, and go to state 57
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
 
-    Op  	go to state 63
+    Op  	go to state 61
 
 
 
 state 46
 
-    Assignments  ->  INC VAR . SC   (rule 24)
-    Fact  ->  INC VAR .   (rule 44)
+    Assignments  ->  INC VAR . SC   (rule 22)
+    Fact  ->  INC VAR .   (rule 40)
 
     SC  	shift, and go to state 33
 
-    $default	reduce using rule 44 (Fact)
+    $default	reduce using rule 40 (Fact)
 
 
 
 state 47
 
-    Fact  ->  INC Floats . error   (rule 51)
+    Fact  ->  INC Floats . error   (rule 47)
 
-    error	shift, and go to state 80
+    error	shift, and go to state 78
 
 
 
 state 48
 
-    Assignments  ->  DEC VAR . SC   (rule 25)
-    Fact  ->  DEC VAR .   (rule 45)
+    Assignments  ->  DEC VAR . SC   (rule 23)
+    Fact  ->  DEC VAR .   (rule 41)
 
     SC  	shift, and go to state 34
 
-    $default	reduce using rule 45 (Fact)
+    $default	reduce using rule 41 (Fact)
 
 
 
 state 49
 
-    Fact  ->  DEC Floats . error   (rule 50)
+    Fact  ->  DEC Floats . error   (rule 46)
 
-    error	shift, and go to state 81
+    error	shift, and go to state 79
 
 
 
 state 50
 
     BoolExp  ->  '!' Expr .   (rule 15)
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
 
-    '|' 	shift, and go to state 55
-    '^' 	shift, and go to state 56
-    '&' 	shift, and go to state 57
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
+    '^' 	shift, and go to state 55
+    '+' 	shift, and go to state 56
+    '-' 	shift, and go to state 57
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
 
     $default	reduce using rule 15 (BoolExp)
 
-    Op  	go to state 63
+    Op  	go to state 61
 
 
 
@@ -835,27 +791,45 @@ state 51
 
     IfStatement  ->  If BoolExp error . CR   (rule 9)
 
-    CR  	shift, and go to state 82
+    CR  	shift, and go to state 80
 
 
 
 state 52
 
-    BoolExp  ->  BoolExp BoolAnd . @5 BoolExp   (rule 17)
+    BoolExp  ->  BoolExp BoolAnd . BoolExp   (rule 16)
 
-    $default	reduce using rule 16 (@5)
+    error	shift, and go to state 13
+    VAR 	shift, and go to state 14
+    Floats	shift, and go to state 15
+    LP  	shift, and go to state 27
+    INC 	shift, and go to state 17
+    DEC 	shift, and go to state 18
+    '!' 	shift, and go to state 19
 
-    @5  	go to state 83
+    BoolExp	go to state 81
+    Assignments	go to state 21
+    Expr	go to state 22
+    Fact	go to state 23
 
 
 
 state 53
 
-    BoolExp  ->  BoolExp BoolOr . @6 BoolExp   (rule 19)
+    BoolExp  ->  BoolExp BoolOr . BoolExp   (rule 17)
 
-    $default	reduce using rule 18 (@6)
+    error	shift, and go to state 13
+    VAR 	shift, and go to state 14
+    Floats	shift, and go to state 15
+    LP  	shift, and go to state 27
+    INC 	shift, and go to state 17
+    DEC 	shift, and go to state 18
+    '!' 	shift, and go to state 19
 
-    @6  	go to state 84
+    BoolExp	go to state 82
+    Assignments	go to state 21
+    Expr	go to state 22
+    Fact	go to state 23
 
 
 
@@ -869,14 +843,14 @@ state 54
     INC 	shift, and go to state 28
     DEC 	shift, and go to state 29
 
-    Expr	go to state 85
+    Expr	go to state 83
     Fact	go to state 23
 
 
 
 state 55
 
-    Expr  ->  Expr '|' . Expr   (rule 34)
+    Expr  ->  Expr '^' . Expr   (rule 32)
 
     VAR 	shift, and go to state 26
     Floats	shift, and go to state 15
@@ -884,14 +858,15 @@ state 55
     INC 	shift, and go to state 28
     DEC 	shift, and go to state 29
 
-    Expr	go to state 86
+    Expr	go to state 84
     Fact	go to state 23
 
 
 
 state 56
 
-    Expr  ->  Expr '^' . Expr   (rule 36)
+    Op  ->  '+' .   (rule 25)
+    Expr  ->  Expr '+' . Expr   (rule 30)
 
     VAR 	shift, and go to state 26
     Floats	shift, and go to state 15
@@ -899,14 +874,17 @@ state 56
     INC 	shift, and go to state 28
     DEC 	shift, and go to state 29
 
-    Expr	go to state 87
+    $default	reduce using rule 25 (Op)
+
+    Expr	go to state 85
     Fact	go to state 23
 
 
 
 state 57
 
-    Expr  ->  Expr '&' . Expr   (rule 35)
+    Op  ->  '-' .   (rule 26)
+    Expr  ->  Expr '-' . Expr   (rule 31)
 
     VAR 	shift, and go to state 26
     Floats	shift, and go to state 15
@@ -914,69 +892,17 @@ state 57
     INC 	shift, and go to state 28
     DEC 	shift, and go to state 29
 
-    Expr	go to state 88
+    $default	reduce using rule 26 (Op)
+
+    Expr	go to state 86
     Fact	go to state 23
 
 
 
 state 58
 
-    Op  ->  '+' .   (rule 27)
-    Expr  ->  Expr '+' . Expr   (rule 32)
-
-    VAR 	shift, and go to state 26
-    Floats	shift, and go to state 15
-    LP  	shift, and go to state 27
-    INC 	shift, and go to state 28
-    DEC 	shift, and go to state 29
-
-    $default	reduce using rule 27 (Op)
-
-    Expr	go to state 89
-    Fact	go to state 23
-
-
-
-state 59
-
-    Op  ->  '-' .   (rule 28)
-    Expr  ->  Expr '-' . Expr   (rule 33)
-
-    VAR 	shift, and go to state 26
-    Floats	shift, and go to state 15
-    LP  	shift, and go to state 27
-    INC 	shift, and go to state 28
-    DEC 	shift, and go to state 29
-
-    $default	reduce using rule 28 (Op)
-
-    Expr	go to state 90
-    Fact	go to state 23
-
-
-
-state 60
-
-    Op  ->  '*' .   (rule 31)
-    Expr  ->  Expr '*' . Expr   (rule 37)
-
-    VAR 	shift, and go to state 26
-    Floats	shift, and go to state 15
-    LP  	shift, and go to state 27
-    INC 	shift, and go to state 28
-    DEC 	shift, and go to state 29
-
-    $default	reduce using rule 31 (Op)
-
-    Expr	go to state 91
-    Fact	go to state 23
-
-
-
-state 61
-
-    Op  ->  '/' .   (rule 29)
-    Expr  ->  Expr '/' . Expr   (rule 38)
+    Op  ->  '*' .   (rule 29)
+    Expr  ->  Expr '*' . Expr   (rule 33)
 
     VAR 	shift, and go to state 26
     Floats	shift, and go to state 15
@@ -986,15 +912,15 @@ state 61
 
     $default	reduce using rule 29 (Op)
 
-    Expr	go to state 92
+    Expr	go to state 87
     Fact	go to state 23
 
 
 
-state 62
+state 59
 
-    Op  ->  '%' .   (rule 30)
-    Expr  ->  Expr '%' . Expr   (rule 39)
+    Op  ->  '/' .   (rule 27)
+    Expr  ->  Expr '/' . Expr   (rule 34)
 
     VAR 	shift, and go to state 26
     Floats	shift, and go to state 15
@@ -1002,22 +928,40 @@ state 62
     INC 	shift, and go to state 28
     DEC 	shift, and go to state 29
 
-    $default	reduce using rule 30 (Op)
+    $default	reduce using rule 27 (Op)
 
-    Expr	go to state 93
+    Expr	go to state 88
     Fact	go to state 23
 
 
 
-state 63
+state 60
 
-    Expr  ->  Expr Op .   (rule 40)
+    Op  ->  '%' .   (rule 28)
+    Expr  ->  Expr '%' . Expr   (rule 35)
 
-    $default	reduce using rule 40 (Expr)
+    VAR 	shift, and go to state 26
+    Floats	shift, and go to state 15
+    LP  	shift, and go to state 27
+    INC 	shift, and go to state 28
+    DEC 	shift, and go to state 29
+
+    $default	reduce using rule 28 (Op)
+
+    Expr	go to state 89
+    Fact	go to state 23
 
 
 
-state 64
+state 61
+
+    Expr  ->  Expr Op .   (rule 36)
+
+    $default	reduce using rule 36 (Expr)
+
+
+
+state 62
 
     S  ->  IfStatement @1 S .   (rule 2)
 
@@ -1025,7 +969,7 @@ state 64
 
 
 
-state 65
+state 63
 
     S  ->  Assignments @2 S .   (rule 4)
 
@@ -1033,156 +977,152 @@ state 65
 
 
 
+state 64
+
+    Fact  ->  VAR INC .   (rule 38)
+
+    $default	reduce using rule 38 (Fact)
+
+
+
+state 65
+
+    Fact  ->  VAR DEC .   (rule 39)
+
+    $default	reduce using rule 39 (Fact)
+
+
+
 state 66
 
-    Fact  ->  VAR INC .   (rule 42)
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+    Fact  ->  LP Expr . RP   (rule 48)
+    Fact  ->  LP Expr . error   (rule 49)
 
-    $default	reduce using rule 42 (Fact)
+    error	shift, and go to state 76
+    RP  	shift, and go to state 77
+    '^' 	shift, and go to state 55
+    '+' 	shift, and go to state 56
+    '-' 	shift, and go to state 57
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
+
+    Op  	go to state 61
 
 
 
 state 67
 
-    Fact  ->  VAR DEC .   (rule 43)
+    Fact  ->  INC VAR .   (rule 40)
 
-    $default	reduce using rule 43 (Fact)
+    $default	reduce using rule 40 (Fact)
 
 
 
 state 68
 
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-    Fact  ->  LP Expr . RP   (rule 52)
-    Fact  ->  LP Expr . error   (rule 53)
+    Fact  ->  DEC VAR .   (rule 41)
 
-    error	shift, and go to state 78
-    RP  	shift, and go to state 79
-    '|' 	shift, and go to state 55
-    '^' 	shift, and go to state 56
-    '&' 	shift, and go to state 57
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
-
-    Op  	go to state 63
+    $default	reduce using rule 41 (Fact)
 
 
 
 state 69
 
-    Fact  ->  INC VAR .   (rule 44)
+    Assignments  ->  VAR ASSIGN Expr SC .   (rule 19)
 
-    $default	reduce using rule 44 (Fact)
+    $default	reduce using rule 19 (Assignments)
 
 
 
 state 70
 
-    Fact  ->  DEC VAR .   (rule 45)
+    C  ->  VAR error .   (rule 50)
 
-    $default	reduce using rule 45 (Fact)
+    $default	reduce using rule 50 (C)
 
 
 
 state 71
 
-    Assignments  ->  VAR ASSIGN Expr SC .   (rule 21)
+    C  ->  Floats error .   (rule 51)
 
-    $default	reduce using rule 21 (Assignments)
+    $default	reduce using rule 51 (C)
 
 
 
 state 72
 
-    C  ->  VAR error .   (rule 54)
+    Fact  ->  Floats INC error .   (rule 44)
 
-    $default	reduce using rule 54 (C)
+    $default	reduce using rule 44 (Fact)
 
 
 
 state 73
 
-    C  ->  Floats error .   (rule 55)
+    Fact  ->  Floats DEC error .   (rule 45)
 
-    $default	reduce using rule 55 (C)
+    $default	reduce using rule 45 (Fact)
 
 
 
 state 74
 
-    Fact  ->  Floats INC error .   (rule 48)
+    IfStatement  ->  If LP BoolExp RP . CL @3 S CR @4 ElseExpr   (rule 8)
 
-    $default	reduce using rule 48 (Fact)
+    CL  	shift, and go to state 90
 
 
 
 state 75
 
-    Fact  ->  Floats DEC error .   (rule 49)
+    IfStatement  ->  If LP BoolExp CL . error CR   (rule 10)
 
-    $default	reduce using rule 49 (Fact)
+    error	shift, and go to state 91
 
 
 
 state 76
 
-    IfStatement  ->  If LP BoolExp RP . CL @3 S CR @4 ElseExpr   (rule 8)
+    Fact  ->  LP Expr error .   (rule 49)
 
-    CL  	shift, and go to state 94
+    $default	reduce using rule 49 (Fact)
 
 
 
 state 77
 
-    IfStatement  ->  If LP BoolExp CL . error CR   (rule 10)
+    Fact  ->  LP Expr RP .   (rule 48)
 
-    error	shift, and go to state 95
+    $default	reduce using rule 48 (Fact)
 
 
 
 state 78
 
-    Fact  ->  LP Expr error .   (rule 53)
+    Fact  ->  INC Floats error .   (rule 47)
 
-    $default	reduce using rule 53 (Fact)
+    $default	reduce using rule 47 (Fact)
 
 
 
 state 79
 
-    Fact  ->  LP Expr RP .   (rule 52)
+    Fact  ->  DEC Floats error .   (rule 46)
 
-    $default	reduce using rule 52 (Fact)
+    $default	reduce using rule 46 (Fact)
 
 
 
 state 80
-
-    Fact  ->  INC Floats error .   (rule 51)
-
-    $default	reduce using rule 51 (Fact)
-
-
-
-state 81
-
-    Fact  ->  DEC Floats error .   (rule 50)
-
-    $default	reduce using rule 50 (Fact)
-
-
-
-state 82
 
     IfStatement  ->  If BoolExp error CR .   (rule 9)
 
@@ -1190,300 +1130,265 @@ state 82
 
 
 
-state 83
+state 81
 
-    BoolExp  ->  BoolExp BoolAnd @5 . BoolExp   (rule 17)
+    BoolExp  ->  BoolExp . BoolAnd BoolExp   (rule 16)
+    BoolExp  ->  BoolExp BoolAnd BoolExp .   (rule 16)
+    BoolExp  ->  BoolExp . BoolOr BoolExp   (rule 17)
 
-    error	shift, and go to state 13
-    VAR 	shift, and go to state 14
-    Floats	shift, and go to state 15
-    LP  	shift, and go to state 27
-    INC 	shift, and go to state 17
-    DEC 	shift, and go to state 18
-    '!' 	shift, and go to state 19
 
-    BoolExp	go to state 96
-    Assignments	go to state 21
-    Expr	go to state 22
-    Fact	go to state 23
+    $default	reduce using rule 16 (BoolExp)
 
 
 
-state 84
+state 82
 
-    BoolExp  ->  BoolExp BoolOr @6 . BoolExp   (rule 19)
+    BoolExp  ->  BoolExp . BoolAnd BoolExp   (rule 16)
+    BoolExp  ->  BoolExp . BoolOr BoolExp   (rule 17)
+    BoolExp  ->  BoolExp BoolOr BoolExp .   (rule 17)
 
-    error	shift, and go to state 13
-    VAR 	shift, and go to state 14
-    Floats	shift, and go to state 15
-    LP  	shift, and go to state 27
-    INC 	shift, and go to state 17
-    DEC 	shift, and go to state 18
-    '!' 	shift, and go to state 19
-
-    BoolExp	go to state 97
-    Assignments	go to state 21
-    Expr	go to state 22
-    Fact	go to state 23
-
-
-
-state 85
-
-    BoolExp  ->  Expr RELOP Expr .   (rule 13)
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-    '|' 	shift, and go to state 55
-    '^' 	shift, and go to state 56
-    '&' 	shift, and go to state 57
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
-
-    $default	reduce using rule 13 (BoolExp)
-
-    Op  	go to state 63
-
-
-
-state 86
-
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr '|' Expr .   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-    '^' 	shift, and go to state 56
-    '&' 	shift, and go to state 57
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
-
-    $default	reduce using rule 34 (Expr)
-
-    Op  	go to state 63
-
-
-
-state 87
-
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr '^' Expr .   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-    '&' 	shift, and go to state 57
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
-
-    $default	reduce using rule 36 (Expr)
-
-    Op  	go to state 63
-
-
-
-state 88
-
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr '&' Expr .   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-    '+' 	shift, and go to state 58
-    '-' 	shift, and go to state 59
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
-
-    $default	reduce using rule 35 (Expr)
-
-    Op  	go to state 63
-
-
-
-state 89
-
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr '+' Expr .   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
-
-    $default	reduce using rule 32 (Expr)
-
-    Op  	go to state 63
-
-
-
-state 90
-
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr '-' Expr .   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-    '*' 	shift, and go to state 60
-    '/' 	shift, and go to state 61
-    '%' 	shift, and go to state 62
-
-    $default	reduce using rule 33 (Expr)
-
-    Op  	go to state 63
-
-
-
-state 91
-
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr '*' Expr .   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-
-    $default	reduce using rule 37 (Expr)
-
-    Op  	go to state 63
-
-
-
-state 92
-
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr '/' Expr .   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-
-    $default	reduce using rule 38 (Expr)
-
-    Op  	go to state 63
-
-
-
-state 93
-
-    Expr  ->  Expr . '+' Expr   (rule 32)
-    Expr  ->  Expr . '-' Expr   (rule 33)
-    Expr  ->  Expr . '|' Expr   (rule 34)
-    Expr  ->  Expr . '&' Expr   (rule 35)
-    Expr  ->  Expr . '^' Expr   (rule 36)
-    Expr  ->  Expr . '*' Expr   (rule 37)
-    Expr  ->  Expr . '/' Expr   (rule 38)
-    Expr  ->  Expr . '%' Expr   (rule 39)
-    Expr  ->  Expr '%' Expr .   (rule 39)
-    Expr  ->  Expr . Op   (rule 40)
-
-
-    $default	reduce using rule 39 (Expr)
-
-    Op  	go to state 63
-
-
-
-state 94
-
-    IfStatement  ->  If LP BoolExp RP CL . @3 S CR @4 ElseExpr   (rule 8)
-
-    $default	reduce using rule 6 (@3)
-
-    @3  	go to state 98
-
-
-
-state 95
-
-    IfStatement  ->  If LP BoolExp CL error . CR   (rule 10)
-
-    CR  	shift, and go to state 99
-
-
-
-state 96
-
-    BoolExp  ->  BoolExp . BoolAnd @5 BoolExp   (rule 17)
-    BoolExp  ->  BoolExp BoolAnd @5 BoolExp .   (rule 17)
-    BoolExp  ->  BoolExp . BoolOr @6 BoolExp   (rule 19)
-
+    BoolAnd	shift, and go to state 52
 
     $default	reduce using rule 17 (BoolExp)
 
 
 
+state 83
+
+    BoolExp  ->  Expr RELOP Expr .   (rule 13)
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+
+    '^' 	shift, and go to state 55
+    '+' 	shift, and go to state 56
+    '-' 	shift, and go to state 57
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
+
+    $default	reduce using rule 13 (BoolExp)
+
+    Op  	go to state 61
+
+
+
+state 84
+
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr '^' Expr .   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+
+    '+' 	shift, and go to state 56
+    '-' 	shift, and go to state 57
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
+
+    $default	reduce using rule 32 (Expr)
+
+    Op  	go to state 61
+
+
+
+state 85
+
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr '+' Expr .   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
+
+    $default	reduce using rule 30 (Expr)
+
+    Op  	go to state 61
+
+
+
+state 86
+
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr '-' Expr .   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+
+    '*' 	shift, and go to state 58
+    '/' 	shift, and go to state 59
+    '%' 	shift, and go to state 60
+
+    $default	reduce using rule 31 (Expr)
+
+    Op  	go to state 61
+
+
+
+state 87
+
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr '*' Expr .   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+
+
+    $default	reduce using rule 33 (Expr)
+
+    Op  	go to state 61
+
+
+
+state 88
+
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr '/' Expr .   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+
+
+    $default	reduce using rule 34 (Expr)
+
+    Op  	go to state 61
+
+
+
+state 89
+
+    Expr  ->  Expr . '+' Expr   (rule 30)
+    Expr  ->  Expr . '-' Expr   (rule 31)
+    Expr  ->  Expr . '^' Expr   (rule 32)
+    Expr  ->  Expr . '*' Expr   (rule 33)
+    Expr  ->  Expr . '/' Expr   (rule 34)
+    Expr  ->  Expr . '%' Expr   (rule 35)
+    Expr  ->  Expr '%' Expr .   (rule 35)
+    Expr  ->  Expr . Op   (rule 36)
+
+
+    $default	reduce using rule 35 (Expr)
+
+    Op  	go to state 61
+
+
+
+state 90
+
+    IfStatement  ->  If LP BoolExp RP CL . @3 S CR @4 ElseExpr   (rule 8)
+
+    $default	reduce using rule 6 (@3)
+
+    @3  	go to state 92
+
+
+
+state 91
+
+    IfStatement  ->  If LP BoolExp CL error . CR   (rule 10)
+
+    CR  	shift, and go to state 93
+
+
+
+state 92
+
+    IfStatement  ->  If LP BoolExp RP CL @3 . S CR @4 ElseExpr   (rule 8)
+
+    error	shift, and go to state 1
+    VAR 	shift, and go to state 2
+    INC 	shift, and go to state 3
+    DEC 	shift, and go to state 4
+    If  	shift, and go to state 5
+
+    CR  	reduce using rule 5 (S)
+
+    S   	go to state 94
+    IfStatement	go to state 6
+    Assignments	go to state 7
+
+
+
+state 93
+
+    IfStatement  ->  If LP BoolExp CL error CR .   (rule 10)
+
+    $default	reduce using rule 10 (IfStatement)
+
+
+
+state 94
+
+    IfStatement  ->  If LP BoolExp RP CL @3 S . CR @4 ElseExpr   (rule 8)
+
+    CR  	shift, and go to state 95
+
+
+
+state 95
+
+    IfStatement  ->  If LP BoolExp RP CL @3 S CR . @4 ElseExpr   (rule 8)
+
+    $default	reduce using rule 7 (@4)
+
+    @4  	go to state 96
+
+
+
+state 96
+
+    IfStatement  ->  If LP BoolExp RP CL @3 S CR @4 . ElseExpr   (rule 8)
+
+    Else	shift, and go to state 97
+
+    $default	reduce using rule 12 (ElseExpr)
+
+    ElseExpr	go to state 98
+
+
+
 state 97
 
-    BoolExp  ->  BoolExp . BoolAnd @5 BoolExp   (rule 17)
-    BoolExp  ->  BoolExp . BoolOr @6 BoolExp   (rule 19)
-    BoolExp  ->  BoolExp BoolOr @6 BoolExp .   (rule 19)
+    ElseExpr  ->  Else . CL S CR   (rule 11)
 
-    BoolAnd	shift, and go to state 52
-
-    $default	reduce using rule 19 (BoolExp)
+    CL  	shift, and go to state 99
 
 
 
 state 98
 
-    IfStatement  ->  If LP BoolExp RP CL @3 . S CR @4 ElseExpr   (rule 8)
+    IfStatement  ->  If LP BoolExp RP CL @3 S CR @4 ElseExpr .   (rule 8)
+
+    $default	reduce using rule 8 (IfStatement)
+
+
+
+state 99
+
+    ElseExpr  ->  Else CL . S CR   (rule 11)
 
     error	shift, and go to state 1
     VAR 	shift, and go to state 2
@@ -1499,17 +1404,9 @@ state 98
 
 
 
-state 99
-
-    IfStatement  ->  If LP BoolExp CL error CR .   (rule 10)
-
-    $default	reduce using rule 10 (IfStatement)
-
-
-
 state 100
 
-    IfStatement  ->  If LP BoolExp RP CL @3 S . CR @4 ElseExpr   (rule 8)
+    ElseExpr  ->  Else CL S . CR   (rule 11)
 
     CR  	shift, and go to state 101
 
@@ -1517,88 +1414,24 @@ state 100
 
 state 101
 
-    IfStatement  ->  If LP BoolExp RP CL @3 S CR . @4 ElseExpr   (rule 8)
-
-    $default	reduce using rule 7 (@4)
-
-    @4  	go to state 102
-
-
-
-state 102
-
-    IfStatement  ->  If LP BoolExp RP CL @3 S CR @4 . ElseExpr   (rule 8)
-
-    Else	shift, and go to state 103
-
-    $default	reduce using rule 12 (ElseExpr)
-
-    ElseExpr	go to state 104
-
-
-
-state 103
-
-    ElseExpr  ->  Else . CL S CR   (rule 11)
-
-    CL  	shift, and go to state 105
-
-
-
-state 104
-
-    IfStatement  ->  If LP BoolExp RP CL @3 S CR @4 ElseExpr .   (rule 8)
-
-    $default	reduce using rule 8 (IfStatement)
-
-
-
-state 105
-
-    ElseExpr  ->  Else CL . S CR   (rule 11)
-
-    error	shift, and go to state 1
-    VAR 	shift, and go to state 2
-    INC 	shift, and go to state 3
-    DEC 	shift, and go to state 4
-    If  	shift, and go to state 5
-
-    CR  	reduce using rule 5 (S)
-
-    S   	go to state 106
-    IfStatement	go to state 6
-    Assignments	go to state 7
-
-
-
-state 106
-
-    ElseExpr  ->  Else CL S . CR   (rule 11)
-
-    CR  	shift, and go to state 107
-
-
-
-state 107
-
     ElseExpr  ->  Else CL S CR .   (rule 11)
 
     $default	reduce using rule 11 (ElseExpr)
 
 
 
-state 108
+state 102
 
-    $   	go to state 109
-
-
-
-state 109
-
-    $   	go to state 110
+    $   	go to state 103
 
 
 
-state 110
+state 103
+
+    $   	go to state 104
+
+
+
+state 104
 
     $default	accept

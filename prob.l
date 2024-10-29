@@ -17,13 +17,19 @@ rightParen  \)
 curlLeft    \{
 curlRight    \}
 IF          "if"
+WHILE          "while"
 ELSE        "else"
-RELOP       \<|\>|">="|"<="
+RELOP       \<|\>|">="|"<="|"!="
 Booland     "&&"
 Boolor     "||"
 %%
 
 {IF}  {
+         // printf("%s ", yytext);
+         yylval.str = strdup(yytext);
+         return If;
+}
+{WHILE}  {
          // printf("%s ", yytext);
          yylval.str = strdup(yytext);
          return If;

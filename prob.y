@@ -9,11 +9,12 @@
     int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
     int yydebug = 0;
-    char* string;
     int blockVar =0;
     int IFCOUNTER=0;
     int tempVar=0;
     int ifStmntPtr=0;
+    int lineNumber=1;
+    int** mapLineNumber;
     char* getLabels()
     {
         char* tVar = (char*)malloc(10*sizeof(char));
@@ -22,10 +23,15 @@
     }
     void handleClear(int val)
     {
-        for(int i=0;i<3000;i++)
+        for(int i=0;i<10000;i++)
         {
-            string[i] = '\0';
+            if(mapLineNumber[i]!=NULL)
+            {
+                free(mapLineNumber[i]);
+            }
+            mapLineNumber[i] = (int*)malloc(2*sizeof(int));
         }
+        lineNumber=1;
         ifStmntPtr=0;
         if(val)
         {
@@ -53,6 +59,7 @@
 %token<str> Else
 %token<str> DEC 
 %token<str> If
+%token<str> While
 %token<str> BoolAnd
 %token<str> BoolOr
 
@@ -60,6 +67,7 @@
 %type<str> ElseExpr
 %type<str> BoolExp
 %type<str> Assignments
+%type<str> WhileStatements
 %type<str> Expr
 %type<str> Fact
 %type<str> S
@@ -94,7 +102,7 @@ S:  IfStatement {
         }
         else if(eflag == 1)
         {
-            printf("  float not to be used with modulo symbol\n\n");
+            printf("    float not to be used with modulo symbol\n\n");
             handleClear(1);
         }
         else if( eflag==2)
@@ -107,13 +115,16 @@ S:  IfStatement {
     | Assignments {
         $$ = strdup($1);
     } S
-    | { }
+    | WhileStatements { 
+        $$ = strdup($1);
+    }  S
+    | {}
     ;
 
 IfStatement:
     If LP BoolExp RP CL {
-        printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
-        printf("L%d:\n",blockVar);
+        printf("%d if t%d goto L%d\n goto L%d\n",lineNumber tempVar-1,blockVar , blockVar+1);
+        printf("%d L%d:\n",blockVar);
         blockVar+=2;
         IFCOUNTER++;
         handleClear(0);
@@ -144,19 +155,47 @@ IfStatement:
     ;
 
 ElseExpr:
-    Else CL S CR 
-    {   
-        for(int i=0;i<ifStmntPtr;i++)
-        {
-            printf("%c",string[i]);
-        }
-    }
+    Else CL S CR {}
     | {}
     ;
+
+WhileStatements:
+    While LP BoolExp RP CL {
+        printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
+        printf("L%d:\n",blockVar);
+        blockVar+=2;
+        IFCOUNTER++;
+        handleClear(0);
+    } S CR {   
+        printf("goto%d:\n",blockVar-2);
+        handleClear(0);
+    }
+    |
+    While BoolExp error CR
+    {
+        yyerror("");
+        printf("\t\t error : Expected \'(\' before %s \n\n",$2);
+        yyerrok;
+        yyclearin;
+        handleClear(1);
+        eflag = 3;
+    }
+    |
+    While LP BoolExp CL error Else CL S CR
+    {
+        yyerror("");
+        printf("\t\t error : Expected \')\' after %s \n\n",$3);
+        yyerrok;
+        yyclearin;
+        handleClear(1);
+        eflag = 3;
+    }
+    ;
+
 BoolExp:
     Expr RELOP Expr {
         char* Label = getLabels();
-        printf("%s = %s %s %s;\n",Label,$1,$2,$3);
+        printf("%s = (%s %s %s) ;\n",Label,$1,$2,$3);
         $$ = Label;
     }
     |
@@ -170,13 +209,13 @@ BoolExp:
     |
     BoolExp BoolAnd BoolExp{
         char* Label = getLabels();
-        printf("%s =  %s && %s;\n",Label,$1,$3);
+        printf("%s =  (%s && %s) ;\n",Label,$1,$3);
         $$ = Label;
     } 
     |
     BoolExp BoolOr BoolExp  {
         char* Label = getLabels();
-        printf("%s =  %s || %s;\n",Label,$1,$3);
+        printf("%s =  (%s || %s) ;\n",Label,$1,$3);
         $$ = Label;
     } 
     |
@@ -225,7 +264,7 @@ Assignments:
     }
     | error {
         yyerror("");
-        printf("Missing \';\' !!");
+        printf("Missing \';\' or some syntax issue you have chanted ;) :) \n");
         yyerrok;
         yyclearin;
         handleClear(1);
@@ -398,7 +437,7 @@ int yyerror(char* err) {
 
 int main(int argc, char* argv[]) {
     int yydebug = 1;
-    string = (char*)malloc(3000*sizeof(char));
+    mapLineNumber = (int**)malloc(10000*sizeof(int*));//map of lineNumber vs L
     handleClear(1);
     // Rest of the main function
     if (argc > 1) {

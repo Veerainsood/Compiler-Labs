@@ -13,7 +13,7 @@
 
  #line 8 "/usr/share/bison++/bison.h"
 
-#line 38 "prob.y"
+#line 33 "prob.y"
 typedef union {
     char* str;
 } yy_parser_stype;
@@ -203,8 +203,9 @@ typedef
 #define	Else	268
 #define	DEC	269
 #define	If	270
-#define	BoolAnd	271
-#define	BoolOr	272
+#define	While	271
+#define	BoolAnd	272
+#define	BoolOr	273
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -266,6 +267,7 @@ static const int RELOP;
 static const int Else;
 static const int DEC;
 static const int If;
+static const int While;
 static const int BoolAnd;
 static const int BoolOr;
 
@@ -289,8 +291,9 @@ static const int BoolOr;
 	,Else=268
 	,DEC=269
 	,If=270
-	,BoolAnd=271
-	,BoolOr=272
+	,While=271
+	,BoolAnd=272
+	,BoolOr=273
 
 
 #line 215 "/usr/share/bison++/bison.h"

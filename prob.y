@@ -156,7 +156,7 @@ ElseExpr:
 BoolExp:
     Expr RELOP Expr {
         char* Label = getLabels();
-        printf("%s = %s %s %s;\n",Label,$1,$2,$3);
+        printf("%s = (%s %s %s) ;\n",Label,$1,$2,$3);
         $$ = Label;
     }
     |

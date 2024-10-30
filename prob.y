@@ -9,12 +9,25 @@
     int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
     int yydebug = 0;
-    int blockVar =0;
-    int IFCOUNTER=0;
+    
+    typedef struct list 
+    {
+        int addr;
+        char* val;
+        struct node* tlist;
+        struct node* flist;
+    } List;
+    
+    typedef struct Node
+    {
+        int indx;
+        struct Node* next;
+    } node;
+
+    char** interMedCode;
+    int instrPtr=0;
     int tempVar=0;
-    int ifStmntPtr=0;
     int lineNumber=1;
-    int** mapLineNumber;
     char* getLabels()
     {
         char* tVar = (char*)malloc(10*sizeof(char));
@@ -23,26 +36,30 @@
     }
     void handleClear(int val)
     {
-        for(int i=0;i<10000;i++)
+        for(int i=0;i<1000;i++)
         {
-            if(mapLineNumber[i]!=NULL)
+            if(interMedCode[i]!=NULL)
             {
-                free(mapLineNumber[i]);
+                free(interMedCode[i]);
             }
-            mapLineNumber[i] = (int*)malloc(2*sizeof(int));
+            interMedCode[i] = (char*)malloc(100*sizeof(char));
         }
         lineNumber=1;
-        ifStmntPtr=0;
-        if(val)
+    }
+    void BackPatch(List* patchlist,int addr)
+    {   
+        node* head = patchlist;
+        while(head!=NULL)
         {
-            tempVar=0;
-            blockVar=0;
+            snprintf(interMedCode[head->indx] + strlen(interMedCode[head->indx]) , " %d",addr);
+            head = head->next;
         }
     }
 %}
 %name parser
 %union {
     char* str;
+    struct list * list;
 }
 
 %token<str> VAR
@@ -64,14 +81,15 @@
 %token<str> BoolOr
 
 
-%type<str> ElseExpr
-%type<str> BoolExp
-%type<str> Assignments
-%type<str> WhileStatements
-%type<str> Expr
-%type<str> Fact
-%type<str> S
-%type<str> IfStatement
+%type<list> ElseExpr
+%type<list> BoolExp
+%type<list> Assignments
+%type<list> WhileStatements
+%type<list> Expr
+%type<list> Fact
+%type<list> S
+%type<list> IfStatement
+%type<list> M
 
 %left BoolOr
 %left BoolAnd
@@ -84,54 +102,32 @@
 %nonassoc INC DEC  
 
 %%
-S:  IfStatement { 
-        if(eflag == 0) 
-        {
-            if(IFCOUNTER==1)
-            {
-                printf("\t\t Accepted!\n\n");
-                printf("\nProcessing Next Input\n");
-                tempVar=0;
-                blockVar=0;
-            }
-            else
-            {
-                blockVar-=2;
-            }
-            IFCOUNTER--;
-        }
-        else if(eflag == 1)
-        {
-            printf("    float not to be used with modulo symbol\n\n");
-            handleClear(1);
-        }
-        else if( eflag==2)
-        {
-            printf("\t\t Operands not found\n\n");
-            handleClear(1);
-        }
-
-    } S
-    | Assignments {
-        $$ = strdup($1);
-    } S
-    | WhileStatements { 
-        $$ = strdup($1);
-    }  S
+S:  S M IfStatement { 
+        
+    } 
+    | S M Assignments {
+        
+    } 
+    | S M WhileStatements { 
+        
+    }  
     | {}
     ;
 
+M:  {
+        List* curr = $$;
+        curr->addr = lineNumber;
+    }
+    ;
+
 IfStatement:
-    If LP BoolExp RP CL {
-        printf("%d if t%d goto L%d\n goto L%d\n",lineNumber tempVar-1,blockVar , blockVar+1);
-        printf("%d L%d:\n",blockVar);
-        blockVar+=2;
-        IFCOUNTER++;
-        handleClear(0);
-    } S CR {   
-        printf("L%d:\n",blockVar-1);
-        handleClear(0);
-    }  ElseExpr
+    If LP BoolExp RP CL S CR M M ElseExpr{
+        List* B = $3;
+        List* M1 = $8;
+        List* M2 = $9;
+        BackPatch(B->tlist,M1->addr);
+        BackPatch(B->flist,M2->addr);
+    }  
     |
     If BoolExp error CR
     {
@@ -155,21 +151,12 @@ IfStatement:
     ;
 
 ElseExpr:
-    Else CL S CR {}
+    Else CL M S CR {   }
     | {}
     ;
 
 WhileStatements:
-    While LP BoolExp RP CL {
-        printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
-        printf("L%d:\n",blockVar);
-        blockVar+=2;
-        IFCOUNTER++;
-        handleClear(0);
-    } S CR {   
-        printf("goto%d:\n",blockVar-2);
-        handleClear(0);
-    }
+    While LP BoolExp RP M M CL S CR {}
     |
     While BoolExp error CR
     {
@@ -195,28 +182,35 @@ WhileStatements:
 BoolExp:
     Expr RELOP Expr {
         char* Label = getLabels();
-        printf("%s = (%s %s %s) ;\n",Label,$1,$2,$3);
-        $$ = Label;
+        sprintf(interMedCode[instrPtr++],"%d %s = (%s %s %s);\n",lineNumber,Label,$1->val,$2,$3->val);
+        $$->val = Label; $$->tlist = NULL;
+        $$->addr = lineNumber++; $$->tlist = NULL;
     }
     |
-    Assignments {}
+    Assignments {
+        $$->val = strdup($1); $$->tlist = $1->tlist;
+        $$->addr = $1->addr;  $$->flist = $1->flist;
+    }
     |
     '!' Expr {
         char* Label = getLabels();
-        printf("%s = ! ( %s );\n",Label,$2);
-        $$ = Label;
+        sprintf(interMedCode[instrPtr++],"%d %s = !(%s);\n",lineNumber,Label,$2->val);
+        $$->val = Label; $$->tlist = NULL;
+        $$->addr = lineNumber++; $$->tlist = NULL;
     }
     |
     BoolExp BoolAnd BoolExp{
         char* Label = getLabels();
-        printf("%s =  (%s && %s) ;\n",Label,$1,$3);
-        $$ = Label;
+        sprintf(interMedCode[instrPtr++],"%d %s = %s %s %s;\n",lineNumber,Label,$1->val, $2, $3->val);
+        $$->val = Label; $$->tlist = NULL;
+        $$->addr = lineNumber++; $$->tlist = NULL;
     } 
     |
     BoolExp BoolOr BoolExp  {
         char* Label = getLabels();
-        printf("%s =  (%s || %s) ;\n",Label,$1,$3);
-        $$ = Label;
+        sprintf(interMedCode[instrPtr++],"%d %s = %s %s %s;\n",lineNumber,Label,$1->val, $2, $3->val);
+        $$->val = Label; $$->tlist = NULL;
+        $$->addr = lineNumber++; $$->tlist = NULL;
     } 
     |
     error SC{
@@ -233,34 +227,22 @@ Assignments:
     VAR ASSIGN Expr SC 
     {   
         char* Label = getLabels();
-        printf("%s %s %s;\n",$1,$2,$3);
-        printf("%s = %s;\n",Label,$1);
-        $$ = Label;
+        sprintf(interMedCode[instrPtr++],"%d %s = %s %s %s;\n",lineNumber,Label,$1->val, $2, $3->val);
+        $$->val = Label; $$->tlist = NULL;
+        $$->addr = lineNumber++; $$->tlist = NULL;
     }
     |
     VAR INC SC { 
-        char* Label = getLabels();
-        printf("%s = %s\n",Label, $1);
-        printf("%s = %s + 1\n",$1, $1);
-        $$ = Label;
+        
     } 
     | VAR DEC SC{ 
-        char* Label = getLabels();
-        printf("%s = %s\n",Label, $1);
-        printf("%s = %s - 1\n",$1, $1);
-        $$ = Label;
+        
     } 
     | INC VAR SC{ 
-        char* Label = getLabels();
-        printf("%s = %s + 1\n",$1, $1);
-        printf("%s = %s\n",Label, $1);
-        $$ = Label;
+        
     }
     | DEC VAR SC{ 
-        char* Label = getLabels();
-        printf("%s = %s - 1\n",$1, $1);
-        printf("%s = %s\n",Label, $1);
-        $$ = Label;
+        
     }
     | error {
         yyerror("");
@@ -276,45 +258,32 @@ Op: '+'|'-'|'/'|'%'|'*';
 Expr: Expr '+' Expr 
     { 
         // Generate TAC for addition
-        char* Label = getLabels();
-        printf("%s = %s + %s\n",Label, $1, $3);
-        $$ = Label;
     }
     | Expr '-' Expr 
     { 
         // Generate TAC for subtraction
-        char* Label = getLabels();
-        printf("%s = %s - %s\n",Label, $1, $3);
-        $$ = Label;
+        
     }
     | Expr '^' Expr 
     { 
         // Generate TAC for or
-        char* Label = getLabels();
-        printf("%s = %s ^ %s\n",Label, $1, $3);
-        $$ = Label;
+        
     }
     | Expr '*' Expr 
     { 
         // Generate TAC for multiplication
-        char* Label = getLabels();
-        printf("%s = %s * %s\n",Label, $1, $3);
-        $$ = Label;
+        
     }
     | Expr '/' Expr 
     {   
         // Generate TAC for division
-        char* Label = getLabels();
-        printf("%s = %s / %s\n",Label, $1, $3);
-        $$ = Label;
+        
     }
     | Expr '%' Expr
     {
         if (strchr($1, '.') == NULL && strchr($3, '.') == NULL)
         {
-            char* Label = getLabels();
-            printf("%s = %s \% %s\n",Label, $1, $3);
-            $$ = Label;
+            
         }
         else
         {
@@ -334,38 +303,25 @@ Expr: Expr '+' Expr
 
 
 Fact: VAR INC { 
-            char* Label = getLabels();
-            printf("%s = %s\n",Label, $1);
-            printf("%s = %s + 1\n",$1, $1);
-            $$ = Label;
+            // $$ = Label;
         } 
         | VAR DEC { 
-            char* Label = getLabels();
-            printf("%s = %s\n",Label, $1);
-            printf("%s = %s - 1\n",$1, $1);
-            $$ = Label;
+            
+            // $$ = Label;
         } 
         | INC VAR { 
-            char* Label = getLabels();
-            printf("%s = %s + 1\n",$1, $1);
-            printf("%s = %s\n",Label, $1);
-            $$ = Label;
+            
+            // $$ = Label;
         }
         | DEC VAR { 
-            char* Label = getLabels();
-            printf("%s = %s - 1\n",$1, $1);
-            printf("%s = %s\n",Label, $1);
-            $$ = Label;
+            
+            // $$ = Label;
         }
         | VAR C { 
-            char* Label = getLabels();
-            printf("%s = %s;\n",Label,$1); 
-            $$ = Label;
+            
         }
         | Floats C { 
-            char* Label = getLabels();
-            printf("%s = %s;\n",Label,$1); 
-            $$ = Label;
+            
         }
         | Floats INC error
         {
@@ -437,7 +393,7 @@ int yyerror(char* err) {
 
 int main(int argc, char* argv[]) {
     int yydebug = 1;
-    mapLineNumber = (int**)malloc(10000*sizeof(int*));//map of lineNumber vs L
+    interMedCode = (char**)malloc(1000*sizeof(char*));//map of lineNumber vs L
     handleClear(1);
     // Rest of the main function
     if (argc > 1) {

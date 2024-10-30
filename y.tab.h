@@ -13,9 +13,10 @@
 
  #line 8 "/usr/share/bison++/bison.h"
 
-#line 33 "prob.y"
+#line 60 "prob.y"
 typedef union {
     char* str;
+    struct list * list;
 } yy_parser_stype;
 #define YY_parser_STYPE yy_parser_stype
 #ifndef YY_USE_CLASS

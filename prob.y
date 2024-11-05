@@ -237,7 +237,7 @@
     char* str;
 }
 
-%token<str> VAR Floats ASSIGN SC LP RP CL CR INC  RELOP Else DEC Int If While BoolAnd BoolOr Float Char
+%token<str> VAR Floats ASSIGN SC LP RP CL CR INC  RELOP Else DEC Int If While BoolAnd BoolOr Float Char COMMA
 
 %type<str> ElseExpr BoolExp Assignments WhileStatements Expr Fact S IfStatement DeclType VarDecl
 
@@ -328,9 +328,12 @@ VarDecl:
         $$ = "";
     } 
     ;
-Comma: ',';
 
-L:  L Comma VAR
+L:  L COMMA VAR
+    {
+        printf("%s type -> %s\n",$3,type);
+        insert(currMap,$3,type);
+    }
     | VAR {
         if(search(currMap,$1)!=NULL)
         {
@@ -470,6 +473,7 @@ Assignments:
     }
     | TypeDecl VAR ASSIGN Expr SC 
     {   
+        printf("%s type -> %s\n",$2,type);
         char* Label = getLabels();
         printf("%s %s %s %s;\n",type,$2,$3, $4);
         printf("%s = %s;\n",Label,$2);

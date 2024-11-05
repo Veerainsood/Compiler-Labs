@@ -1,7 +1,3 @@
-int a;
-char a;
-{
-    int c;
-    int c;
-    z = a + c;
-}
+int a , b , c ;
+char e ;
+float pi = 3.24 ;

@@ -209,6 +209,7 @@ typedef
 #define	BoolOr	274
 #define	Float	275
 #define	Char	276
+#define	COMMA	277
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -276,6 +277,7 @@ static const int BoolAnd;
 static const int BoolOr;
 static const int Float;
 static const int Char;
+static const int COMMA;
 
 
 #line 212 "/usr/share/bison++/bison.h"
@@ -303,6 +305,7 @@ static const int Char;
 	,BoolOr=274
 	,Float=275
 	,Char=276
+	,COMMA=277
 
 
 #line 215 "/usr/share/bison++/bison.h"

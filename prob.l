@@ -25,8 +25,14 @@ Boolor     "||"
 DtypeFlt       "float"
 DtypeInt       "int"
 DtypeChar      "char"
+Comma          ","
 
 %%
+
+{Comma}  {
+            yylval.str = strdup(yytext);
+            return COMMA;
+         }
 
 {IF}  {
          // printf("%s ", yytext);
@@ -132,7 +138,10 @@ DtypeChar      "char"
                 yylval.str = strdup(yytext); // right parenthesis
                 return CR;
              }
-[\t\n ]+    ;
+[\t ]+    ;
+[\n]         {
+                  printf("\n");
+             }
 .            { 
                 fprintf(stderr, "Unrecognized character: %s \n", yytext);
                 return yytext[0];

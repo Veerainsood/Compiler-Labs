@@ -9,11 +9,11 @@
     int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
     int yydebug = 0;
-    char* string;
     int blockVar =0;
     int IFCOUNTER=0;
     int tempVar=0;
     int ifStmntPtr=0;
+    int lineNumber=1;
     char* getLabels()
     {
         char* tVar = (char*)malloc(10*sizeof(char));
@@ -22,10 +22,7 @@
     }
     void handleClear(int val)
     {
-        for(int i=0;i<3000;i++)
-        {
-            string[i] = '\0';
-        }
+        lineNumber=1;
         ifStmntPtr=0;
         if(val)
         {
@@ -35,35 +32,14 @@
     }
 %}
 %name parser
+
 %union {
     char* str;
 }
 
-%token<str> VAR
-%token<str> Floats
-%token<str> ASSIGN
+%token<str> VAR Floats ASSIGN SC LP RP CL CR INC  RELOP Else DEC Int If While BoolAnd BoolOr Float
 
-%token<str> SC
-%token<str> LP
-%token<str> RP
-%token<str> CL
-%token<str> CR
-%token<str> INC 
-%token<str> RELOP
-%token<str> Else
-%token<str> DEC 
-%token<str> If
-%token<str> BoolAnd
-%token<str> BoolOr
-
-
-%type<str> ElseExpr
-%type<str> BoolExp
-%type<str> Assignments
-%type<str> Expr
-%type<str> Fact
-%type<str> S
-%type<str> IfStatement
+%type<str> ElseExpr BoolExp Assignments WhileStatements Expr Fact S IfStatement DeclType VarDecl
 
 %left BoolOr
 %left BoolAnd
@@ -94,7 +70,7 @@ S:  IfStatement {
         }
         else if(eflag == 1)
         {
-            printf("  float not to be used with modulo symbol\n\n");
+            printf("    float not to be used with modulo symbol\n\n");
             handleClear(1);
         }
         else if( eflag==2)
@@ -107,12 +83,40 @@ S:  IfStatement {
     | Assignments {
         $$ = strdup($1);
     } S
-    | { }
+    | WhileStatements { 
+        $$ = strdup($1);
+    }  S
+    | VarDecl
+    {
+        $$ = strdup($1);
+    } S
+    | {}
+    ;
+
+DeclType:
+    Int
+    {
+        $$ = strdup($1);
+    }
+    | Float 
+    {
+        $$ = strdup($1);
+    }
+    ;
+
+VarDecl:
+    DeclType VAR SC
+    {
+        char* Label = getLabels();
+        printf("%s %s;\n",$1,$2);
+        printf("%s = %s;\n",Label,$2);
+        $$ = Label;
+    }
     ;
 
 IfStatement:
     If LP BoolExp RP CL {
-        printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
+        printf("if t%d goto L%d\n goto L%d\n",tempVar-1,blockVar , blockVar+1);
         printf("L%d:\n",blockVar);
         blockVar+=2;
         IFCOUNTER++;
@@ -144,15 +148,43 @@ IfStatement:
     ;
 
 ElseExpr:
-    Else CL S CR 
-    {   
-        for(int i=0;i<ifStmntPtr;i++)
-        {
-            printf("%c",string[i]);
-        }
-    }
+    Else CL S CR {}
     | {}
     ;
+
+WhileStatements:
+    While LP BoolExp RP CL {
+        printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
+        printf("L%d:\n",blockVar);
+        blockVar+=2;
+        IFCOUNTER++;
+        handleClear(0);
+    } S CR {   
+        printf("goto%d:\n",blockVar-2);
+        handleClear(0);
+    }
+    |
+    While BoolExp error CR
+    {
+        yyerror("");
+        printf("\t\t error : Expected \'(\' before %s \n\n",$2);
+        yyerrok;
+        yyclearin;
+        handleClear(1);
+        eflag = 3;
+    }
+    |
+    While LP BoolExp CL error Else CL S CR
+    {
+        yyerror("");
+        printf("\t\t error : Expected \')\' after %s \n\n",$3);
+        yyerrok;
+        yyclearin;
+        handleClear(1);
+        eflag = 3;
+    }
+    ;
+
 BoolExp:
     Expr RELOP Expr {
         char* Label = getLabels();
@@ -170,13 +202,13 @@ BoolExp:
     |
     BoolExp BoolAnd BoolExp{
         char* Label = getLabels();
-        printf("%s =  %s && %s;\n",Label,$1,$3);
+        printf("%s =  (%s && %s) ;\n",Label,$1,$3);
         $$ = Label;
     } 
     |
     BoolExp BoolOr BoolExp  {
         char* Label = getLabels();
-        printf("%s =  %s || %s;\n",Label,$1,$3);
+        printf("%s =  (%s || %s) ;\n",Label,$1,$3);
         $$ = Label;
     } 
     |
@@ -196,6 +228,13 @@ Assignments:
         char* Label = getLabels();
         printf("%s %s %s;\n",$1,$2,$3);
         printf("%s = %s;\n",Label,$1);
+        $$ = Label;
+    }
+    | DeclType VAR ASSIGN Expr SC 
+    {   
+        char* Label = getLabels();
+        printf("%s %s %s %s;\n",$1,$2,$3, $4);
+        printf("%s = %s;\n",Label,$2);
         $$ = Label;
     }
     |
@@ -225,7 +264,7 @@ Assignments:
     }
     | error {
         yyerror("");
-        printf("Missing \';\' !!");
+        printf("Missing \';\' or some syntax issue you have chanted ;) :) \n");
         yyerrok;
         yyclearin;
         handleClear(1);
@@ -398,7 +437,6 @@ int yyerror(char* err) {
 
 int main(int argc, char* argv[]) {
     int yydebug = 1;
-    string = (char*)malloc(3000*sizeof(char));
     handleClear(1);
     // Rest of the main function
     if (argc > 1) {

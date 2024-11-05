@@ -17,13 +17,22 @@ rightParen  \)
 curlLeft    \{
 curlRight    \}
 IF          "if"
+WHILE          "while"
 ELSE        "else"
-RELOP       \<|\>|">="|"<="
+RELOP       \<|\>|">="|"<="|"!="
 Booland     "&&"
 Boolor     "||"
+DtypeFlt       "float"
+DtypeInt       "int"
+
 %%
 
 {IF}  {
+         // printf("%s ", yytext);
+         yylval.str = strdup(yytext);
+         return If;
+}
+{WHILE}  {
          // printf("%s ", yytext);
          yylval.str = strdup(yytext);
          return If;
@@ -43,6 +52,18 @@ Boolor     "||"
       //   printf("%s ", yytext);
         yylval.str = strdup(yytext); 
         return DEC;
+}
+
+{DtypeFlt} { 
+   //   printf("%s ", yytext);
+      yylval.str = strdup(yytext); 
+      return Float;
+}
+
+{DtypeInt} { 
+   //   printf("%s ", yytext);
+      yylval.str = strdup(yytext); 
+      return Int;
 }
 
 {variable}  { 

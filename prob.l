@@ -24,6 +24,7 @@ Booland     "&&"
 Boolor     "||"
 DtypeFlt       "float"
 DtypeInt       "int"
+DtypeChar      "char"
 
 %%
 
@@ -64,6 +65,11 @@ DtypeInt       "int"
    //   printf("%s ", yytext);
       yylval.str = strdup(yytext); 
       return Int;
+}
+{DtypeChar} { 
+   //   printf("%s ", yytext);
+      yylval.str = strdup(yytext); 
+      return Char;
 }
 
 {variable}  { 

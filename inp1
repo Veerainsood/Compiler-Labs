@@ -1,3 +1,11 @@
-int a , b , c ;
-char e ;
-float pi = 3.24 ;
+int a ;
+char a ;
+int z;
+{
+    int y;
+    {
+        int c ;
+        int c ;
+        z = a + c;
+    }
+}

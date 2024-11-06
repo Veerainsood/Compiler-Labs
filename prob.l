@@ -16,6 +16,8 @@ leftParen   "("
 rightParen  \)
 curlLeft    \{
 curlRight    \}
+arrayBrackRight    "]"
+arrayBrackLeft    "["
 IF          "if"
 WHILE          "while"
 ELSE        "else"
@@ -137,6 +139,18 @@ Comma          ","
                //  printf("%s ", yytext);
                 yylval.str = strdup(yytext); // right parenthesis
                 return CR;
+             }
+{arrayBrackRight} { 
+               // printf("Detetect");
+               //  printf("%s ", yytext);
+                yylval.str = strdup(yytext); // left parenthesis
+                return arrRP;
+             }
+{arrayBrackLeft} { 
+               // printf("Detetect");
+               //  printf("%s ", yytext);
+                yylval.str = strdup(yytext); // right parenthesis
+                return arrLP;
              }
 [\t ]+    ;
 [\n]         {

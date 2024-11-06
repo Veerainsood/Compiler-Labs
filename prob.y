@@ -10,11 +10,13 @@
     int eflag = 0;  // Error flag for certain expressions
     extern int yylex();
     int yydebug = 0;
+    int wentInArray=0;
     int blockVar =0;
     int IFCOUNTER=0;
     int tempVar=0;
     int ifStmntPtr=0;
     int lineNumber=1;
+    char* array;
     char* type;
     typedef struct Node {
         char *key;
@@ -237,9 +239,9 @@
     char* str;
 }
 
-%token<str> VAR Floats ASSIGN SC LP RP CL CR INC  RELOP Else DEC Int If While BoolAnd BoolOr Float Char COMMA
+%token<str> VAR Floats ASSIGN SC LP RP CL CR INC  RELOP Else DEC Int If While BoolAnd BoolOr Float Char COMMA arrRP arrLP
 
-%type<str> ElseExpr BoolExp Assignments WhileStatements Expr Fact S IfStatement DeclType VarDecl
+%type<str> ElseExpr BoolExp Assignments WhileStatements Expr Fact S IfStatement DeclType VarDecl Arrays
 
 %left BoolOr
 %left BoolAnd
@@ -350,9 +352,10 @@ L:  L COMMA VAR
         else
         {
             printf("%s type -> %s\n",$1,type);
+            array = strdup($1);
             insert(currMap,$1,type);
         }        
-    }
+    } C 
     ;
 IfStatement:
     If LP BoolExp RP CL {
@@ -578,7 +581,6 @@ Expr: Expr '+' Expr
     }
     ;
 
-
 Fact:   VAR INC { 
             checkDeclaration($1);
             char* Label = getLabels();
@@ -607,16 +609,18 @@ Fact:   VAR INC {
             printf("%s = %s\n",Label, $1);
             $$ = Label;
         }
-        | VAR C { 
+        | VAR { 
             checkDeclaration($1);
             char* Label = getLabels();
             printf("%s = %s;\n",Label,$1); 
             $$ = Label;
-        }
+            array = strdup($1);
+        } C 
         | Floats C { 
             char* Label = getLabels();
             printf("%s = %s;\n",Label,$1); 
             $$ = Label;
+            array = NULL;
         }
         | Floats INC error
         {
@@ -663,7 +667,16 @@ Fact:   VAR INC {
             handleClear(1);
         }
         ;
-C:      VAR error
+
+C:      Arrays
+        {
+            if(wentInArray)
+            {
+                printf("%s %s\n",array,$1);
+            }
+        }
+        |
+        VAR error
         {
             yyerror("");
             printf("\t\t no operators between Operands\n\n");
@@ -680,7 +693,71 @@ C:      VAR error
             yyclearin;
             handleClear(1);
         }
-        |;
+        ;
+
+Arrays: arrLP Floats arrRP Arrays
+        {
+            // Copy the original number
+            if(array == NULL)
+            {
+                printf("Error -> Please dont use array operations with floats...!!!\n");
+                $$ = "";
+            }
+            else{
+                wentInArray = 1;
+                char* number = strdup($2);
+                if (number == NULL) {
+                    printf("Error: Memory allocation failed for 'number'.\n");
+                    YYABORT; // or handle error
+                }
+
+                if (strchr(number, '.') != NULL) {
+                    printf("Error: Using floats as array indices is not allowed!\nTruncating...to integer..\n");
+
+                    // Find the position of the decimal point
+                    char* dot_position = strchr(number, '.');
+                    int int_part_length = dot_position - number;
+
+                    // Allocate memory for the integer part
+                    char* integer_part = (char*)malloc(int_part_length + 1);
+                    if (integer_part != NULL) {
+                        strncpy(integer_part, number, int_part_length);
+                        integer_part[int_part_length] = '\0';
+
+                        // Free original number and assign integer_part to number
+                        free(number);
+                        number = integer_part;
+                    } else {
+                        // On memory allocation failure, set number to "0"
+                        free(number);
+                        number = strdup("0");
+                        if (number == NULL) {
+                            printf("Error: Memory allocation failed for '0'.\n");
+                            YYABORT;
+                        }
+                    }
+                }
+
+                // Create the output string
+                char* sending = (char*)malloc(20000);
+                if (sending != NULL) {
+                    sprintf(sending, "array(%s , %s)", number, $4);
+                    $$ = sending;
+                } else {
+                    printf("Error: Memory allocation failed for 'sending'.\n");
+                    $$ = NULL;
+                    YYABORT;
+                }
+                // Clean up
+                free(number);    
+            }
+            
+        }
+        | {
+            $$ = strdup("");
+        } 
+        ;
+
 %%
 int yyerror(char* err) {
     return 0;

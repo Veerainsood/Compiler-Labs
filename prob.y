@@ -42,7 +42,8 @@
         int size;
     } Stack;
     // Free all memory used by the hash map
-    void free_hashmap(HashMap *map) {
+        void free_hashmap(HashMap *map) {
+        if (map == NULL) return;
         for (int i = 0; i < TABLE_SIZE; i++) {
             Node *current = map->table[i];
             while (current != NULL) {
@@ -52,9 +53,10 @@
                 free(temp->value);
                 free(temp);
             }
+            map->table[i] = NULL;  // Nullify after free
         }
         free(map);
-    }
+        }
 
     // Hash function for strings
     unsigned int hash(const char *key) {
@@ -72,10 +74,14 @@
     // Initialize hash map
     HashMap* create_hashmap() {
         HashMap *map = (HashMap *)malloc(sizeof(HashMap));
+        if (!map) {
+            fprintf(stderr, "Memory allocation failed\n");
+            return NULL;
+        }
         for (int i = 0; i < TABLE_SIZE; i++) {
             map->table[i] = NULL;
         }
-        map->size=0;
+        map->size = 0;
         return map;
     }
 
@@ -89,7 +95,7 @@
     }
 
     // Insert a key-value pair into the hash map
-    void insert(HashMap *map, const char *key, const char *value) {
+    void insert(HashMap *map,char *key, char *value) {
         unsigned int index = hash(key);
         Node *new_node = create_node(key, value);
         new_node->next = map->table[index];
@@ -213,7 +219,7 @@
     Stack* globStack;
     HashMap* currMap;
 
-    void checkDeclaration(char* var)
+    void checkDeclaration(char* var, int newDecl)
     {
         Stack* tempStack = create_stack();
         while(!is_empty(globStack) && (search(currMap,var)==NULL))
@@ -223,13 +229,33 @@
         }
         if((search(currMap,var)==NULL))
         {
-            printf("Variable %s not declared in all scopes\n",var);
-            printf("I will add it anyways... sob sob weep weep\n");
+            if(newDecl==0)
+            {
+                printf("Variable %s not declared in all scopes\n",var);
+                printf("I will add it anyways... sob sob weep weep\n");
+            }
         }
+        else if(newDecl)
+        {
+            char* val = search(currMap, var);
+            printf("Error -> Redeclartion of variable %s!!\n",var);
+            if(strcmp(val,type) !=0)
+            {
+                printf("Error -> Change of Type of variable %s!!\n",var);
+                printf("I am a good compiler so I will change its type just like python\n");
+                delete_key(currMap,var);
+            }
+        }
+        push(globStack,currMap);//put the currMap back...
         while(!is_empty(tempStack))
         {
             push(globStack,pop(tempStack));
-        }
+        } 
+        currMap = pop(globStack);//push in currMap...
+        printf("%s type -> %s\n",var,type);
+        array = strdup(var);
+        insert(currMap,strdup(var),strdup(type));
+        free_stack(tempStack);
     }
 
 %}
@@ -254,6 +280,7 @@
 %nonassoc INC DEC  
 
 %%
+
 S:  IfStatement { 
         if(eflag == 0) 
         {
@@ -272,7 +299,7 @@ S:  IfStatement {
         }
         else if(eflag == 1)
         {
-            printf("    float not to be used with modulo symbol\n\n");
+            printf("float not to be used with modulo symbol\n\n");
             handleClear(1);
         }
         else if( eflag==2)
@@ -293,15 +320,18 @@ S:  IfStatement {
         $$ = strdup($1);
     } S
     | CL {
-        if(currMap->size!=0)
-        {
-            push(globStack,currMap);
-            currMap = create_hashmap();
-        }
+        push(globStack,currMap);
+        currMap = create_hashmap();
     } S CR {
         $$ = strdup($1);
-        free_hashmap(currMap);
-        currMap = pop(globStack);//restore old type info...
+        if(currMap!=NULL)
+        {
+            free_hashmap(currMap);
+        }
+        if(globStack->size>0)
+        {
+            currMap = pop(globStack);//restore old type info...
+        }
     } S
     | {}
     ;
@@ -333,28 +363,10 @@ VarDecl:
 
 L:  L COMMA VAR
     {
-        printf("%s type -> %s\n",$3,type);
-        insert(currMap,$3,type);
+        checkDeclaration($3,1);
     }
     | VAR {
-        if(search(currMap,$1)!=NULL)
-        {
-            char* val = search(currMap, $1);
-            printf("Error -> Redeclartion of variable %s!!\n",$1);
-            if(strcmp(val,type) !=0)
-            {
-                printf("Error -> Change of Type of variable %s!!\n",$1);
-                printf("I am a good compiler so I will change its type just like python\n");
-                delete_key(currMap,$1);
-                insert(currMap,$1,type);//updated type information
-            }
-        }
-        else
-        {
-            printf("%s type -> %s\n",$1,type);
-            array = strdup($1);
-            insert(currMap,$1,type);
-        }        
+        checkDeclaration($1,1);
     } C 
     ;
 IfStatement:
@@ -431,44 +443,31 @@ WhileStatements:
 BoolExp:
     Expr RELOP Expr {
         char* Label = getLabels();
-        printf("%s = (%s %s %s) ;\n",Label,$1,$2,$3);
+        printf("%s = (%s %s %s);\n",Label,$1,$2,$3);
         $$ = Label;
     }
-    |
-    Assignments {}
-    |
-    '!' Expr {
+    | Assignments {}
+    | '!' Expr {
         char* Label = getLabels();
         printf("%s = ! ( %s );\n",Label,$2);
         $$ = Label;
     }
-    |
-    BoolExp BoolAnd BoolExp{
+    | BoolExp BoolAnd BoolExp{
         char* Label = getLabels();
         printf("%s =  (%s && %s) ;\n",Label,$1,$3);
         $$ = Label;
     } 
-    |
-    BoolExp BoolOr BoolExp  {
+    | BoolExp BoolOr BoolExp  {
         char* Label = getLabels();
         printf("%s =  (%s || %s) ;\n",Label,$1,$3);
         $$ = Label;
     } 
-    |
-    error SC{
-        yyerror("");
-        printf("\t\tBoolean Expression Issues\n\n");
-        yyerrok;
-        yyclearin;
-        eflag = 3;
-        handleClear(1);
-    }
     ;
 
 Assignments: 
     VAR ASSIGN Expr SC 
     {   
-        checkDeclaration($1);
+        checkDeclaration($1,0);
         char* Label = getLabels();
         printf("%s %s %s;\n",$1,$2,$3);
         printf("%s = %s;\n",Label,$1);
@@ -476,7 +475,8 @@ Assignments:
     }
     | TypeDecl VAR ASSIGN Expr SC 
     {   
-        printf("%s type -> %s\n",$2,type);
+        checkDeclaration($2,1);
+        insert(currMap,strdup($2),strdup(type));
         char* Label = getLabels();
         printf("%s %s %s %s;\n",type,$2,$3, $4);
         printf("%s = %s;\n",Label,$2);
@@ -484,34 +484,34 @@ Assignments:
     }
     |
     VAR INC SC { 
-        checkDeclaration($1);
+        checkDeclaration($1,0);
         char* Label = getLabels();
         printf("%s = %s\n",Label, $1);
         printf("%s = %s + 1\n",$1, $1);
         $$ = Label;
     } 
     | VAR DEC SC{ 
-        checkDeclaration($1);
+        checkDeclaration($1,0);
         char* Label = getLabels();
         printf("%s = %s\n",Label, $1);
         printf("%s = %s - 1\n",$1, $1);
         $$ = Label;
     } 
     | INC VAR SC{ 
-        checkDeclaration($2);
+        checkDeclaration($2,0);
         char* Label = getLabels();
         printf("%s = %s + 1\n",$1, $1);
         printf("%s = %s\n",Label, $1);
         $$ = Label;
     }
     | DEC VAR SC{ 
-        checkDeclaration($2);
+        checkDeclaration($2,0);
         char* Label = getLabels();
         printf("%s = %s - 1\n",$1, $1);
         printf("%s = %s\n",Label, $1);
         $$ = Label;
     }
-    | error {
+    | error SC{
         yyerror("");
         printf("Missing \';\' or some syntax issue you have chanted ;) :) \n");
         yyerrok;
@@ -582,35 +582,35 @@ Expr: Expr '+' Expr
     ;
 
 Fact:   VAR INC { 
-            checkDeclaration($1);
+            checkDeclaration($1,0);
             char* Label = getLabels();
             printf("%s = %s\n",Label, $1);
             printf("%s = %s + 1\n",$1, $1);
             $$ = Label;
         } 
         | VAR DEC { 
-            checkDeclaration($1);
+            checkDeclaration($1,0);
             char* Label = getLabels();
             printf("%s = %s\n",Label, $1);
             printf("%s = %s - 1\n",$1, $1);
             $$ = Label;
         } 
         | INC VAR { 
-            checkDeclaration($2);
+            checkDeclaration($2,0);
             char* Label = getLabels();
             printf("%s = %s + 1\n",$1, $1);
             printf("%s = %s\n",Label, $1);
             $$ = Label;
         }
         | DEC VAR { 
-            checkDeclaration($2);
+            checkDeclaration($2,0);
             char* Label = getLabels();
             printf("%s = %s - 1\n",$1, $1);
             printf("%s = %s\n",Label, $1);
             $$ = Label;
         }
         | VAR { 
-            checkDeclaration($1);
+            checkDeclaration($1,0);
             char* Label = getLabels();
             printf("%s = %s;\n",Label,$1); 
             $$ = Label;
@@ -779,6 +779,7 @@ int main(int argc, char* argv[]) {
         }
     }
     yyparse();
+    free_stack(globStack);
     fclose(yyin);
 
     //handleClear(1); // Clean up before exiting

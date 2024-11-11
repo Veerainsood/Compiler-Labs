@@ -14,6 +14,8 @@
     int blockVar =0;
     int IFCOUNTER=0;
     int tempVar=0;
+    char* allocations[1000];
+    int allocated=0;
     int ifStmntPtr=0;
     int lineNumber=1;
     char* array;
@@ -42,21 +44,19 @@
         int size;
     } Stack;
     // Free all memory used by the hash map
-        void free_hashmap(HashMap *map) {
+    void free_hashmap(HashMap *map) {
         if (map == NULL) return;
         for (int i = 0; i < TABLE_SIZE; i++) {
             Node *current = map->table[i];
             while (current != NULL) {
                 Node *temp = current;
                 current = current->next;
-                free(temp->key);
-                free(temp->value);
                 free(temp);
             }
             map->table[i] = NULL;  // Nullify after free
         }
         free(map);
-        }
+    }
 
     // Hash function for strings
     unsigned int hash(const char *key) {
@@ -88,8 +88,8 @@
     // Create a new node for the hash map
     Node *create_node(const char *key, const char *value) {
         Node *new_node = (Node *)malloc(sizeof(Node));
-        new_node->key = strdup(key);      // Copy key string
-        new_node->value = strdup(value);  // Copy value string
+        new_node->key = key;      // Copy key string
+        new_node->value = value;  // Copy value string
         new_node->next = NULL;
         return new_node;
     }
@@ -137,12 +137,8 @@
             prev->next = current->next;
         }
         map->size--;
-        free(current->key);
-        free(current->value);
         free(current);
     }
-
-
 
     // Function to create a new stack
     Stack *create_stack() {
@@ -203,7 +199,9 @@
     {
         char* tVar = (char*)malloc(10*sizeof(char));
         snprintf(tVar,10,"t%d",tempVar++);
+        allocations[allocated++] = tVar;
         return tVar;
+
     }
     void handleClear(int val)
     {
@@ -222,6 +220,14 @@
     void checkDeclaration(char* var, int newDecl)
     {
         Stack* tempStack = create_stack();
+        if(newDecl && search(currMap,var)==NULL)
+        {
+            printf("%s type -> %s\n",var,type);
+            array = var;
+            insert(currMap,var,type);
+            free_stack(tempStack);
+            return;
+        }
         while(!is_empty(globStack) && (search(currMap,var)==NULL))
         {
             push(tempStack, currMap);
@@ -231,19 +237,27 @@
         {
             if(newDecl==0)
             {
-                printf("Variable %s not declared in all scopes\n",var);
+                printf("Variable [`%s`]  not declared in all scopes\n",var);
                 printf("I will add it anyways... sob sob weep weep\n");
             }
         }
         else if(newDecl)
         {
             char* val = search(currMap, var);
-            printf("Error -> Redeclartion of variable %s!!\n",var);
+            printf("Error -> Redeclartion of variable [`%s`] !!\n",var);
             if(strcmp(val,type) !=0)
             {
-                printf("Error -> Change of Type of variable %s!!\n",var);
+                printf("Error -> Change of Type of variable [`%s`] !!\n",var);
                 printf("I am a good compiler so I will change its type just like python\n");
                 delete_key(currMap,var);
+            }
+        }
+        else{
+            //means type is defined....
+            char* prevType = search(currMap,var);
+            if(strcmp(prevType,type)!=0)
+            {
+                printf("%s = (%s)%s;\n", var,type,var);
             }
         }
         push(globStack,currMap);//put the currMap back...
@@ -253,8 +267,8 @@
         } 
         currMap = pop(globStack);//push in currMap...
         printf("%s type -> %s\n",var,type);
-        array = strdup(var);
-        insert(currMap,strdup(var),strdup(type));
+        array = var;
+        insert(currMap,var,type);
         free_stack(tempStack);
     }
 
@@ -310,20 +324,20 @@ S:  IfStatement {
 
     } S
     | Assignments {
-        $$ = strdup($1);
+        $$ = $1;
     } S
     | WhileStatements { 
-        $$ = strdup($1);
+        $$ = $1;
     }  S
     | VarDecl
     {
-        $$ = strdup($1);
+        $$ = $1;
     } S
     | CL {
         push(globStack,currMap);
         currMap = create_hashmap();
     } S CR {
-        $$ = strdup($1);
+        $$ = $1;
         if(currMap!=NULL)
         {
             free_hashmap(currMap);
@@ -339,20 +353,20 @@ S:  IfStatement {
 DeclType:
     Int
     {
-        $$ = strdup($1);
+        $$ = $1;
     }
     | Float 
     {
-        $$ = strdup($1);
+        $$ = $1;
     }
     | Char
     {
-        $$ = strdup($1);
+        $$ = $1;
     }
     ;
 
 TypeDecl:
-    DeclType { type = strdup($1); }
+    DeclType { type = $1; }
     ;
 
 VarDecl:
@@ -373,6 +387,7 @@ IfStatement:
     If LP BoolExp RP CL {
         printf("if t%d goto L%d\n goto L%d\n",tempVar-1,blockVar , blockVar+1);
         printf("L%d:\n",blockVar);
+        free($1);// a way to reduce mem leaks
         blockVar+=2;
         IFCOUNTER++;
         handleClear(0);
@@ -476,7 +491,7 @@ Assignments:
     | TypeDecl VAR ASSIGN Expr SC 
     {   
         checkDeclaration($2,1);
-        insert(currMap,strdup($2),strdup(type));
+        insert(currMap,$2,type);
         char* Label = getLabels();
         printf("%s %s %s %s;\n",type,$2,$3, $4);
         printf("%s = %s;\n",Label,$2);
@@ -577,7 +592,7 @@ Expr: Expr '+' Expr
     }
     | Fact
     {
-        $$ = strdup($1);
+        $$ = $1;
     }
     ;
 
@@ -614,7 +629,7 @@ Fact:   VAR INC {
             char* Label = getLabels();
             printf("%s = %s;\n",Label,$1); 
             $$ = Label;
-            array = strdup($1);
+            array = $1;
         } C 
         | Floats C { 
             char* Label = getLabels();
@@ -656,7 +671,7 @@ Fact:   VAR INC {
         }
         | LP Expr RP 
         { 
-            $$ = strdup($2); 
+            $$ = $2; 
         }
         | LP Expr error
         {
@@ -705,7 +720,7 @@ Arrays: arrLP Floats arrRP Arrays
             }
             else{
                 wentInArray = 1;
-                char* number = strdup($2);
+                char* number = $2;
                 if (number == NULL) {
                     printf("Error: Memory allocation failed for 'number'.\n");
                     YYABORT; // or handle error
@@ -730,7 +745,7 @@ Arrays: arrLP Floats arrRP Arrays
                     } else {
                         // On memory allocation failure, set number to "0"
                         free(number);
-                        number = strdup("0");
+                        number = "0";
                         if (number == NULL) {
                             printf("Error: Memory allocation failed for '0'.\n");
                             YYABORT;
@@ -754,7 +769,7 @@ Arrays: arrLP Floats arrRP Arrays
             
         }
         | {
-            $$ = strdup("");
+            $$ = "";
         } 
         ;
 
@@ -777,6 +792,10 @@ int main(int argc, char* argv[]) {
             fprintf(stderr, "Failed to open file: %s\n", argv[1]);
             return 1;
         }
+    }
+    for(int i=0;i<allocated;i++)
+    {
+        free(allocations[i]);
     }
     yyparse();
     free_stack(globStack);

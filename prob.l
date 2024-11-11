@@ -28,7 +28,7 @@ DtypeFlt       "float"
 DtypeInt       "int"
 DtypeChar      "char"
 Comma          ","
-
+FOR         "for"
 %%
 
 {Comma}  {
@@ -41,10 +41,15 @@ Comma          ","
          yylval.str = strdup(yytext);
          return If;
 }
+{FOR}  {
+      // printf("%s ", yytext);
+      yylval.str = strdup(yytext);
+      return For;
+}
 {WHILE}  {
          // printf("%s ", yytext);
          yylval.str = strdup(yytext);
-         return If;
+         return While;
 }
 {ELSE}  {
          // printf("%s ", yytext);

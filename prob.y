@@ -18,6 +18,7 @@
     int allocated=0;
     int ifStmntPtr=0;
     int lineNumber=1;
+    int forIncrementer;
     char* array;
     char* type;
     typedef struct Node {
@@ -279,9 +280,9 @@
     char* str;
 }
 
-%token<str> VAR Floats ASSIGN SC LP RP CL CR INC  RELOP Else DEC Int If While BoolAnd BoolOr Float Char COMMA arrRP arrLP
+%token<str> VAR Floats ASSIGN SC LP RP CL CR INC  RELOP Else DEC Int If While BoolAnd BoolOr Float Char COMMA arrRP arrLP For
 
-%type<str> ElseExpr BoolExp Assignments WhileStatements Expr Fact S IfStatement DeclType VarDecl Arrays
+%type<str> ElseExpr BoolExp Assignments WhileStatements Expr Fact S IfStatement DeclType VarDecl Arrays ForStatements Increments MegAssign
 
 %left BoolOr
 %left BoolAnd
@@ -323,10 +324,13 @@ S:  IfStatement {
         }
 
     } S
-    | Assignments {
+    | MegAssign SC {
         $$ = $1;
     } S
     | WhileStatements { 
+        $$ = $1;
+    }  S
+    | ForStatements { 
         $$ = $1;
     }  S
     | VarDecl
@@ -383,6 +387,16 @@ L:  L COMMA VAR
         checkDeclaration($1,1);
     } C 
     ;
+MegAssign:  Assignments
+            {
+                $$ = $1;
+            }
+            | Increments
+            {
+                $$ = $1;
+            }
+            ;
+
 IfStatement:
     If LP BoolExp RP CL {
         printf("if t%d goto L%d\n goto L%d\n",tempVar-1,blockVar , blockVar+1);
@@ -421,6 +435,23 @@ ElseExpr:
     Else CL S CR {}
     | {}
     ;
+ForStatements:
+    {
+        printf("L%d:\n",blockVar);
+        forIncrementer = blockVar;
+        blockVar++;
+    }
+    For LP MegAssign SC BoolExp SC {
+        printf("if t%d goto L%d\n goto L%d\n",tempVar-1,blockVar , blockVar+1); 
+        printf("L%d:\n",blockVar);
+        blockVar+=2;
+        IFCOUNTER++;
+        handleClear(0);
+    } MegAssign RP CL S CR {
+        printf("goto L%d\n",forIncrementer);
+        handleClear(0);
+    }
+    ;
 
 WhileStatements:
     While LP BoolExp RP CL {
@@ -430,7 +461,7 @@ WhileStatements:
         IFCOUNTER++;
         handleClear(0);
     } S CR {   
-        printf("goto%d:\n",blockVar-2);
+        printf("goto L%d\n",blockVar-2);
         handleClear(0);
     }
     |
@@ -480,7 +511,7 @@ BoolExp:
     ;
 
 Assignments: 
-    VAR ASSIGN Expr SC 
+    VAR ASSIGN Expr 
     {   
         checkDeclaration($1,0);
         char* Label = getLabels();
@@ -488,42 +519,13 @@ Assignments:
         printf("%s = %s;\n",Label,$1);
         $$ = Label;
     }
-    | TypeDecl VAR ASSIGN Expr SC 
+    | TypeDecl VAR ASSIGN Expr
     {   
         checkDeclaration($2,1);
         insert(currMap,$2,type);
         char* Label = getLabels();
         printf("%s %s %s %s;\n",type,$2,$3, $4);
         printf("%s = %s;\n",Label,$2);
-        $$ = Label;
-    }
-    |
-    VAR INC SC { 
-        checkDeclaration($1,0);
-        char* Label = getLabels();
-        printf("%s = %s\n",Label, $1);
-        printf("%s = %s + 1\n",$1, $1);
-        $$ = Label;
-    } 
-    | VAR DEC SC{ 
-        checkDeclaration($1,0);
-        char* Label = getLabels();
-        printf("%s = %s\n",Label, $1);
-        printf("%s = %s - 1\n",$1, $1);
-        $$ = Label;
-    } 
-    | INC VAR SC{ 
-        checkDeclaration($2,0);
-        char* Label = getLabels();
-        printf("%s = %s + 1\n",$1, $1);
-        printf("%s = %s\n",Label, $1);
-        $$ = Label;
-    }
-    | DEC VAR SC{ 
-        checkDeclaration($2,0);
-        char* Label = getLabels();
-        printf("%s = %s - 1\n",$1, $1);
-        printf("%s = %s\n",Label, $1);
         $$ = Label;
     }
     | error SC{
@@ -596,35 +598,9 @@ Expr: Expr '+' Expr
     }
     ;
 
-Fact:   VAR INC { 
-            checkDeclaration($1,0);
-            char* Label = getLabels();
-            printf("%s = %s\n",Label, $1);
-            printf("%s = %s + 1\n",$1, $1);
-            $$ = Label;
-        } 
-        | VAR DEC { 
-            checkDeclaration($1,0);
-            char* Label = getLabels();
-            printf("%s = %s\n",Label, $1);
-            printf("%s = %s - 1\n",$1, $1);
-            $$ = Label;
-        } 
-        | INC VAR { 
-            checkDeclaration($2,0);
-            char* Label = getLabels();
-            printf("%s = %s + 1\n",$1, $1);
-            printf("%s = %s\n",Label, $1);
-            $$ = Label;
-        }
-        | DEC VAR { 
-            checkDeclaration($2,0);
-            char* Label = getLabels();
-            printf("%s = %s - 1\n",$1, $1);
-            printf("%s = %s\n",Label, $1);
-            $$ = Label;
-        }
-        | VAR { 
+Fact:   Increments
+        |
+        VAR { 
             checkDeclaration($1,0);
             char* Label = getLabels();
             printf("%s = %s;\n",Label,$1); 
@@ -682,6 +658,35 @@ Fact:   VAR INC {
             handleClear(1);
         }
         ;
+
+Increments: VAR INC { 
+                checkDeclaration($1,0);
+                char* Label = getLabels();
+                printf("%s = %s\n",Label, $1);
+                printf("%s = %s + 1\n",$1, $1);
+                $$ = Label;
+            } 
+            | VAR DEC { 
+                checkDeclaration($1,0);
+                char* Label = getLabels();
+                printf("%s = %s\n",Label, $1);
+                printf("%s = %s - 1\n",$1, $1);
+                $$ = Label;
+            } 
+            | INC VAR { 
+                checkDeclaration($2,0);
+                char* Label = getLabels();
+                printf("%s = %s + 1\n",$1, $1);
+                printf("%s = %s\n",Label, $1);
+                $$ = Label;
+            }
+            | DEC VAR { 
+                checkDeclaration($2,0);
+                char* Label = getLabels();
+                printf("%s = %s - 1\n",$1, $1);
+                printf("%s = %s\n",Label, $1);
+                $$ = Label;
+            }
 
 C:      Arrays
         {

@@ -361,12 +361,6 @@
         pkg* package = search(currMap,var);
         //  package->value -> gives type...
         //  package->index -> gives symbol table index...
-        while(!is_empty(globStack) && (package==NULL))
-        {
-            push(tempStack, currMap);
-            currMap = pop(globStack);
-            package = search(currMap,var);
-        }
         if(newDecl && package==NULL)
         {
             Sinsert(SymbTable,var,type);    //STable *Stable,char *token, char *type,int space
@@ -375,7 +369,13 @@
             free_stack(tempStack);
             return;
         }
-        else if(package==NULL)
+        while(!is_empty(globStack) && (package==NULL))
+        {
+            push(tempStack, currMap);
+            currMap = pop(globStack);
+            package = search(currMap,var);
+        }
+        if(package==NULL)
         {
             printf("Variable [`%s`]  not declared in all scopes\n",var);
             printf("I will add it anyways... sob sob weep weep\n");
@@ -410,7 +410,6 @@
             if(strcmp(prevType,type)!=0)
             {
                 printf("%s = (%s)%s;\n", var,type,var);
-                SymbTable->table[package->index]->type = type;
                 free(package);
             }
             else
@@ -558,6 +557,8 @@ MegAssign:  Assignments
 
 IfStatement:
     If LP BoolExp RP CL {
+        push(globStack,currMap);
+        currMap = create_hashmap();
         printf("if t%d goto L%d\n goto L%d\n",tempVar-1,blockVar , blockVar+1);
         printf("L%d:\n",blockVar);
         free($1);// a way to reduce mem leaks
@@ -566,6 +567,14 @@ IfStatement:
         handleClear(0);
     } S CR {   
         printf("L%d:\n",blockVar-1);
+        if(currMap!=NULL)
+        {
+            free_hashmap(currMap);
+        }
+        if(globStack->size>0)
+        {
+            currMap = pop(globStack);//restore old type info...
+        }
         handleClear(0);
     }  ElseExpr
     |
@@ -606,20 +615,41 @@ ForStatements:
         blockVar+=2;
         IFCOUNTER++;
         handleClear(0);
-    } MegAssign RP CL S CR {
+    } MegAssign RP CL{
+        push(globStack,currMap);
+        currMap = create_hashmap();
+    } S CR {
         printf("goto L%d\n",forIncrementer);
+        if(currMap!=NULL)
+        {
+            free_hashmap(currMap);
+        }
+        if(globStack->size>0)
+        {
+            currMap = pop(globStack);//restore old type info...
+        }
         handleClear(0);
     }
     ;
 
 WhileStatements:
     While LP BoolExp RP CL {
+        push(globStack,currMap);
+        currMap = create_hashmap();
         printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
         printf("L%d:\n",blockVar);
         blockVar+=2;
         IFCOUNTER++;
         handleClear(0);
-    } S CR {   
+    } S CR {  
+        if(currMap!=NULL)
+        {
+            free_hashmap(currMap);
+        }
+        if(globStack->size>0)
+        {
+            currMap = pop(globStack);//restore old type info...
+        } 
         printf("goto L%d\n",blockVar-2);
         handleClear(0);
     }

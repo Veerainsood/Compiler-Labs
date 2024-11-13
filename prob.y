@@ -21,6 +21,68 @@
     int forIncrementer;
     char* array;
     char* type;
+
+
+    //////////////////////////////////////////// SYMBOL TABLE BEGIN /////////////////////////////////////////////////////////////////
+    typedef struct SymbolNode {
+        char *token;
+        char *type;
+        int space;
+        struct SymbolNode *next;
+    } SyNode;
+
+    typedef struct SymbolTable {
+        SyNode* table[TABLE_SIZE];
+        int size;
+    } SymTable;
+
+    void * createSymbTable(){
+        
+        SymTable *STable = (SymTable *)malloc(sizeof(SymTable));
+        if (!STable) {
+            fprintf(stderr, "Memory allocation failed\n");
+            return NULL;
+        }
+        for (int i = 0; i < TABLE_SIZE; i++) {
+            STable->table[i] = NULL;
+        }
+        STable->size = 0;
+        return STable;
+    }
+
+    void Sinsert(SymTable *Stable,char *token, char *type,int space) {
+        if(Stable->size < TABLE_SIZE)
+        {
+            SyNode* new_node = (SyNode)*malloc(sizeof(SyNode));
+            new_node->size = size;
+            new_node->token = token;
+            new_node->type = type;
+            new_node->size= space;
+            Stable->table[Stable->size++] = new_node;
+        }
+        else
+        {
+            printf("Symbol Table out of Space!!!\n");
+        }
+    }
+
+    void Sprint(SymTable * Stable)
+    {
+        printf("////////////////////////// SYMBOL TABLE //////////////////////////\n");
+        printf("Addr\tToken\ttype\n");
+        int n = Stable->size;
+        int size=0;
+        for(int i=0;i<n;i++)
+        {
+            printf("%d\t%s\t%s\n",size);
+            size+=Stable->table[i]->space;
+        }
+        printf("//////////////////////////// END SYMBOL TABLE ////////////////////////\n");
+    }
+//////////////////////////////////////////// SYMBOL TABLE  END /////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////// HASH MAP BEGIN /////////////////////////////////////////////////////////////////
+
     typedef struct Node {
         char *key;
         char *value;
@@ -33,17 +95,6 @@
         int size;
     } HashMap;
 
-    // Stack node definition
-    typedef struct StackNode {
-        HashMap *map;
-        struct StackNode *next;
-    } StackNode;
-
-    // Stack structure
-    typedef struct Stack {
-        StackNode *top;
-        int size;
-    } Stack;
     // Free all memory used by the hash map
     void free_hashmap(HashMap *map) {
         if (map == NULL) return;
@@ -140,7 +191,22 @@
         map->size--;
         free(current);
     }
+//////////////////////////////////////////// HASH MAP END /////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////// STACK BEGIN /////////////////////////////////////////////////////////////////
+
+
+    // Stack node definition
+    typedef struct StackNode {
+        HashMap *map;
+        struct StackNode *next;
+    } StackNode;
+
+    // Stack structure
+    typedef struct Stack {
+        StackNode *top;
+        int size;
+    } Stack;
     // Function to create a new stack
     Stack *create_stack() {
         Stack *stack = (Stack *)malloc(sizeof(Stack));
@@ -196,6 +262,9 @@
         free(stack);
     }
 
+//////////////////////////////////////////// STACK END //////////////////////////////////////////////////////////////////
+
+
     char* getLabels()
     {
         char* tVar = (char*)malloc(10*sizeof(char));
@@ -217,7 +286,7 @@
 
     Stack* globStack;
     HashMap* currMap;
-
+    createSymbTable* SymbTable;
     void checkDeclaration(char* var, int newDecl)
     {
         Stack* tempStack = create_stack();
@@ -225,6 +294,7 @@
         {
             printf("%s type -> %s\n",var,type);
             array = var;
+            Sinsert(SymbTable,var,type,)//SymTable *Stable,char *token, char *type,int space
             insert(currMap,var,type);
             free_stack(tempStack);
             return;
@@ -787,6 +857,7 @@ int main(int argc, char* argv[]) {
     int yydebug = 1;
     globStack = create_stack();
     currMap = create_hashmap();
+    SymTable* SymbTable = createSymbTable();
     handleClear(1);
     // Rest of the main function
     if (argc > 1) {

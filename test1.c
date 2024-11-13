@@ -9,7 +9,7 @@ int counter;
         int common_var = 20;
         {
             int level2_var = 5;
-            int temp = common_var + level2_var;
+            float temp = common_var + level2_var;
             
             while (temp < global_var) {
                 temp += 15;
@@ -19,7 +19,7 @@ int counter;
                     int level3_var = level1_var + temp;
                     level2_var = level3_var - level2_var;
                     {
-                        int level4_var = 2 * level3_var; 
+                        float level4_var = 2 * level3_var; 
                         temp += level4_var;
 
                         if (level4_var > 0) {

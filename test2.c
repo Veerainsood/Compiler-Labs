@@ -23,7 +23,7 @@ int z = 19;
         z = a + c;  
 
         if (c > y) {
-            int a = 8;
+            
             z = a;
         } else {
             int temp = 0;
@@ -51,18 +51,16 @@ int z = 19;
     while (y < 10) {
         y = 2;
         if (y == 9) {
-            a = 2;
+            
         }
     }
 
     {
         int c = 3;  
-        int c = 4;  
-        z = a + c;  
+        float c = 4;  
 
         if (c > y) {
-            int a = 8;
-            z = a;
+            
         } else {
             int temp = 0;
             while (temp < y) {

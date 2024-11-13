@@ -42,7 +42,7 @@ int another_var = 20;
         }
     }
     int a[10][20][30];
-    
+    counter[1] = 10;
     deep_var1 = 500;           
     recursive_scope = 100;     
 }

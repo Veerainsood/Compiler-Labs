@@ -22,7 +22,6 @@
     char* array;
     char* type;
 
-
     //////////////////////////////////////////// SYMBOL TABLE BEGIN /////////////////////////////////////////////////////////////////
     typedef struct SymbolNode {
         char *token;
@@ -34,23 +33,23 @@
     typedef struct SymbolTable {
         SyNode* table[TABLE_SIZE];
         int size;
-    } SymTable;
+    } STable;
 
-    void * createSymbTable(){
+    STable* createSymbTable(){
         
-        SymTable *STable = (SymTable *)malloc(sizeof(SymTable));
-        if (!STable) {
+        STable *table = (STable *)malloc(sizeof(STable));
+        if (!table) {
             fprintf(stderr, "Memory allocation failed\n");
             return NULL;
         }
         for (int i = 0; i < TABLE_SIZE; i++) {
-            STable->table[i] = NULL;
+            table->table[i] = NULL;
         }
-        STable->size = 0;
-        return STable;
+        table->size = 0;
+        return table;
     }
 
-    void Sinsert(SymTable *Stable,char *token, char *type) {
+    void Sinsert(STable *Stable,char *token, char *type) {
         int size =0;
         if(strcmp(type,"int")==0)
         {
@@ -68,8 +67,8 @@
         {
             SyNode* new_node = (SyNode*)malloc(sizeof(SyNode));
             new_node->size = size;
-            new_node->token = strdup(token);
-            new_node->type = strdup(type);
+            new_node->token =token;
+            new_node->type = type;
             Stable->table[Stable->size] = new_node;
             Stable->size++;
         }
@@ -79,7 +78,21 @@
         }
     }
 
-    void Sprint(SymTable * Stable)
+    STable* SymbTable;
+    
+    void freeSTable()
+    {
+        int n = SymbTable->size;
+        for(int i=0;i<n;i++)
+        {
+            if(SymbTable->table[i]!=NULL)
+            {
+                free(SymbTable->table[i]);
+            }
+        }
+    }
+
+    void Sprint()
     {
         printf("////////////////////////// SYMBOL TABLE //////////////////////////\n");
         
@@ -91,17 +104,18 @@
         // Print the header row
         printf("%-*s%-*s%-*s\n", addr_width, "Addr", token_width, "Token", type_width, "Type");
 
-        int n = Stable->size;
+        int n = SymbTable->size;
         int size = 0;
 
         // Iterate through the symbol table and print the entries
         for (int i = 0; i < n; i++) {
-            printf("%-*d%-*s%-*s\n", addr_width, size, token_width, Stable->table[i]->token, type_width, Stable->table[i]->type);
-            size += Stable->table[i]->size;
+            printf("%-*d%-*s%-*s\n", addr_width, size, token_width, SymbTable->table[i]->token, type_width, SymbTable->table[i]->type);
+            size += SymbTable->table[i]->size;
         }
         
         printf("//////////////////////////// END SYMBOL TABLE ////////////////////////\n");
     }
+
 //////////////////////////////////////////// SYMBOL TABLE  END /////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////// HASH MAP BEGIN /////////////////////////////////////////////////////////////////
@@ -109,8 +123,14 @@
     typedef struct Node {
         char *key;
         char *value;
-        struct Node *next;//
+        int index;
+        struct Node *next;
     } Node;
+
+    typedef struct package{
+        char* value;
+        int index;
+    } pkg;
 
     // Hash map structure
     typedef struct HashMap {
@@ -162,34 +182,47 @@
 
     // Create a new node for the hash map
     Node *create_node(const char *key, const char *value) {
+        
+        int Sindex = SymbTable->size;
         Node *new_node = (Node *)malloc(sizeof(Node));
         new_node->key = key;      // Copy key string
         new_node->value = value;  // Copy value string
+        new_node->index = Sindex;  // Copy value of SymbolTableIndex
         new_node->next = NULL;
         return new_node;
     }
 
     // Insert a key-value pair into the hash map
-    void insert(HashMap *map,char *key, char *value) {
+    void insert(HashMap *map,char *key, char *value,int STableIndex) {
         unsigned int index = hash(key);
         Node *new_node = create_node(key, value);
         new_node->next = map->table[index];
+        if(STableIndex==-1)
+        {
+            new_node->index = SymbTable->size-1;
+        }
+        else
+        {
+            new_node->index = STableIndex;
+        }
         map->table[index] = new_node;
         map->size++;
     }
 
     // Search for a value by key in the hash map
-    char *search(HashMap *map, const char *key) {
+    pkg* search(HashMap *map, const char *key) {
         unsigned int index = hash(key);
         Node *current = map->table[index];
-
+        pkg* pack = (pkg*)malloc(sizeof(pkg));
         while (current != NULL) {
             if (strcmp(current->key, key) == 0) {
-                return current->value;
+                pack->value = current->value;
+                pack->index = current->index;
+                return pack;
             }
             current = current->next;
         }
-
+        free(pack);
         return NULL;  // Key not found
     }
 
@@ -288,6 +321,21 @@
 //////////////////////////////////////////// STACK END //////////////////////////////////////////////////////////////////
 
 
+    Stack* globStack;
+    HashMap* currMap;
+
+    void restoreShitDone(Stack* tempStack,char* var)
+    {
+        push(globStack,currMap);//put the currMap back...
+        while(!is_empty(tempStack))
+        {
+            push(globStack,pop(tempStack));
+        } 
+        printf("%s type -> %s\n",var,type);
+        currMap = pop(globStack);//push in currMap...
+        array = var;
+    }
+
     char* getLabels()
     {
         char* tVar = (char*)malloc(10*sizeof(char));
@@ -307,63 +355,73 @@
         }
     }
 
-    Stack* globStack;
-    HashMap* currMap;
-    SymTable* SymbTable;
     void checkDeclaration(char* var, int newDecl)
     {
         Stack* tempStack = create_stack();
-        if(newDecl && search(currMap,var)==NULL)
-        {
-            printf("%s type -> %s\n",var,type);
-            array = var;
-            Sinsert(SymbTable,var,type);//SymTable *Stable,char *token, char *type,int space
-            insert(currMap,var,type);
-            free_stack(tempStack);
-            return;
-        }
-        while(!is_empty(globStack) && (search(currMap,var)==NULL))
+        pkg* package = search(currMap,var);
+        //  package->value -> gives type...
+        //  package->index -> gives symbol table index...
+        while(!is_empty(globStack) && (package==NULL))
         {
             push(tempStack, currMap);
             currMap = pop(globStack);
+            package = search(currMap,var);
         }
-        if((search(currMap,var)==NULL))
+        if(newDecl && package==NULL)
         {
-            if(newDecl==0)
-            {
-                printf("Variable [`%s`]  not declared in all scopes\n",var);
-                printf("I will add it anyways... sob sob weep weep\n");
-                Sinsert(SymbTable,var,type);//SymTable *Stable,char *token, char *type,int space
-            }
+            Sinsert(SymbTable,var,type);    //STable *Stable,char *token, char *type,int space
+            restoreShitDone(tempStack,var);
+            insert(currMap,var,type,-1);
+            free_stack(tempStack);
+            return;
+        }
+        else if(package==NULL)
+        {
+            printf("Variable [`%s`]  not declared in all scopes\n",var);
+            printf("I will add it anyways... sob sob weep weep\n");
+            Sinsert(SymbTable,var,type);//STable *Stable,char *token, char *type,int space
+            restoreShitDone(tempStack,var);
+            insert(currMap,var,type,-1);
         }
         else if(newDecl)
         {
-            char* val = search(currMap, var);
+            char* val = package->value;
             printf("Error -> Redeclartion of variable [`%s`] !!\n",var);
             if(strcmp(val,type) !=0)
             {
                 printf("Error -> Change of Type of variable [`%s`] !!\n",var);
                 printf("I am a good compiler so I will change its type just like python\n");
+                SymbTable->table[package->index]->type = type;
                 delete_key(currMap,var);
+                restoreShitDone(tempStack,var);
+                insert(currMap,var,type,package->index);
             }
+            else{
+                restoreShitDone(tempStack,var);
+                free(package);
+                free_stack(tempStack);
+                return;
+            }
+            free(package);
         }
         else{
             //means type is defined....
-            char* prevType = search(currMap,var);
+            char* prevType = package->value; 
             if(strcmp(prevType,type)!=0)
             {
                 printf("%s = (%s)%s;\n", var,type,var);
+                SymbTable->table[package->index]->type = type;
+                free(package);
             }
+            else
+            {
+                restoreShitDone(tempStack,var);
+                free(package);
+                free_stack(tempStack);
+                return;//of same type no type conversion needed...
+            }
+            restoreShitDone(tempStack,var);
         }
-        push(globStack,currMap);//put the currMap back...
-        while(!is_empty(tempStack))
-        {
-            push(globStack,pop(tempStack));
-        } 
-        currMap = pop(globStack);//push in currMap...
-        printf("%s type -> %s\n",var,type);
-        array = var;
-        insert(currMap,var,type);
         free_stack(tempStack);
     }
 
@@ -479,7 +537,14 @@ L:  L COMMA VAR
     }
     | VAR {
         checkDeclaration($1,1);
-    } C 
+    } C {
+            if(wentInArray)
+            {
+                pkg* pack = search(currMap,$1);
+                SymbTable->table[pack->index]->type = "Array";
+                wentInArray=0;
+            }
+    }
     ;
 MegAssign:  Assignments
             {
@@ -616,7 +681,6 @@ Assignments:
     | TypeDecl VAR ASSIGN Expr
     {   
         checkDeclaration($2,1);
-        insert(currMap,$2,type);
         char* Label = getLabels();
         printf("%s %s %s %s;\n",type,$2,$3, $4);
         printf("%s = %s;\n",Label,$2);
@@ -700,7 +764,15 @@ Fact:   Increments
             printf("%s = %s;\n",Label,$1); 
             $$ = Label;
             array = $1;
-        } C 
+            
+        } C {
+            if(wentInArray)
+            {
+                pkg* pack = search(currMap,$1);
+                SymbTable->table[pack->index]->type = "Array";
+                wentInArray=0;
+            }
+        }
         | Floats C { 
             char* Label = getLabels();
             printf("%s = %s;\n",Label,$1); 
@@ -856,12 +928,13 @@ Arrays: arrLP Floats arrRP Arrays
                 char* sending = (char*)malloc(20000);
                 if (sending != NULL) {
                     sprintf(sending, "array(%s , %s)", number, $4);
-                    $$ = sending;
+                    $$ = sending;    
                 } else {
                     printf("Error: Memory allocation failed for 'sending'.\n");
                     $$ = NULL;
                     YYABORT;
                 }
+                free(sending);
                 // Clean up
                 free(number);    
             }
@@ -899,6 +972,7 @@ int main(int argc, char* argv[]) {
     }
     yyparse();
     Sprint(SymbTable);
+    freeSTable();
     free(SymbTable);
     free_stack(globStack);
     fclose(yyin);

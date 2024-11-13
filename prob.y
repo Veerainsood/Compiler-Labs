@@ -27,7 +27,7 @@
     typedef struct SymbolNode {
         char *token;
         char *type;
-        int space;
+        int size;
         struct SymbolNode *next;
     } SyNode;
 
@@ -50,15 +50,28 @@
         return STable;
     }
 
-    void Sinsert(SymTable *Stable,char *token, char *type,int space) {
+    void Sinsert(SymTable *Stable,char *token, char *type) {
+        int size =0;
+        if(strcmp(type,"int")==0)
+        {
+            size=4;
+        }
+        else if(strcmp(type,"float")==0)
+        {
+            size=8;
+        }
+        else
+        {
+            size=1;
+        }
         if(Stable->size < TABLE_SIZE)
         {
-            SyNode* new_node = (SyNode)*malloc(sizeof(SyNode));
+            SyNode* new_node = (SyNode*)malloc(sizeof(SyNode));
             new_node->size = size;
-            new_node->token = token;
-            new_node->type = type;
-            new_node->size= space;
-            Stable->table[Stable->size++] = new_node;
+            new_node->token = strdup(token);
+            new_node->type = strdup(type);
+            Stable->table[Stable->size] = new_node;
+            Stable->size++;
         }
         else
         {
@@ -69,14 +82,24 @@
     void Sprint(SymTable * Stable)
     {
         printf("////////////////////////// SYMBOL TABLE //////////////////////////\n");
-        printf("Addr\tToken\ttype\n");
+        
+        // Define the width for each column for better alignment
+        const int addr_width = 8;
+        const int token_width = 20;
+        const int type_width = 15;
+        
+        // Print the header row
+        printf("%-*s%-*s%-*s\n", addr_width, "Addr", token_width, "Token", type_width, "Type");
+
         int n = Stable->size;
-        int size=0;
-        for(int i=0;i<n;i++)
-        {
-            printf("%d\t%s\t%s\n",size);
-            size+=Stable->table[i]->space;
+        int size = 0;
+
+        // Iterate through the symbol table and print the entries
+        for (int i = 0; i < n; i++) {
+            printf("%-*d%-*s%-*s\n", addr_width, size, token_width, Stable->table[i]->token, type_width, Stable->table[i]->type);
+            size += Stable->table[i]->size;
         }
+        
         printf("//////////////////////////// END SYMBOL TABLE ////////////////////////\n");
     }
 //////////////////////////////////////////// SYMBOL TABLE  END /////////////////////////////////////////////////////////////////
@@ -286,7 +309,7 @@
 
     Stack* globStack;
     HashMap* currMap;
-    createSymbTable* SymbTable;
+    SymTable* SymbTable;
     void checkDeclaration(char* var, int newDecl)
     {
         Stack* tempStack = create_stack();
@@ -294,7 +317,7 @@
         {
             printf("%s type -> %s\n",var,type);
             array = var;
-            Sinsert(SymbTable,var,type,)//SymTable *Stable,char *token, char *type,int space
+            Sinsert(SymbTable,var,type);//SymTable *Stable,char *token, char *type,int space
             insert(currMap,var,type);
             free_stack(tempStack);
             return;
@@ -310,6 +333,7 @@
             {
                 printf("Variable [`%s`]  not declared in all scopes\n",var);
                 printf("I will add it anyways... sob sob weep weep\n");
+                Sinsert(SymbTable,var,type);//SymTable *Stable,char *token, char *type,int space
             }
         }
         else if(newDecl)
@@ -433,7 +457,7 @@ DeclType:
     {
         $$ = $1;
     }
-    | Char
+    | Char 
     {
         $$ = $1;
     }
@@ -857,7 +881,7 @@ int main(int argc, char* argv[]) {
     int yydebug = 1;
     globStack = create_stack();
     currMap = create_hashmap();
-    SymTable* SymbTable = createSymbTable();
+    SymbTable = createSymbTable();
     handleClear(1);
     // Rest of the main function
     if (argc > 1) {
@@ -874,6 +898,8 @@ int main(int argc, char* argv[]) {
         free(allocations[i]);
     }
     yyparse();
+    Sprint(SymbTable);
+    free(SymbTable);
     free_stack(globStack);
     fclose(yyin);
 

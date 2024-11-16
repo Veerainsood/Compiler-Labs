@@ -29,8 +29,10 @@ DtypeInt       "int"
 DtypeChar      "char"
 Comma          ","
 FOR         "for"
+Comments    "//"[^\n]*|\/\*([^"*]*|\".*\")*\*\/
 %%
 
+{Comments} {}
 {Comma}  {
             yylval.str = strdup(yytext);
             return COMMA;

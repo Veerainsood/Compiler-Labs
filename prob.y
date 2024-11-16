@@ -320,6 +320,46 @@
 
 //////////////////////////////////////////// STACK END //////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////////Loop Stack Begin///////////////////////////////////////////////////////////////////
+
+    typedef struct {
+        int data[TABLE_SIZE];
+        int top;
+    } LoopStack;
+
+    // Initialize a stack
+    void initStack(LoopStack *stack) {
+        stack->top = -1;
+    }
+
+    // Push an element onto the stack
+    void pushLoop(LoopStack *stack, int value) {
+        if (stack->top >= TABLE_SIZE - 1) {
+            fprintf(stderr, "Stack overflow\n");
+            exit(EXIT_FAILURE);
+        }
+        stack->data[++stack->top] = value;
+    }
+
+    // Pop an element from the stack
+    int popLoop(LoopStack *stack) {
+        if (stack->top < 0) {
+            fprintf(stderr, "Stack underflow\n");
+            exit(EXIT_FAILURE);
+        }
+        return stack->data[stack->top--];
+    }
+
+    // Peek the top element of the stack without popping
+    int peekLoop(LoopStack *stack) {
+        if (stack->top < 0) {
+            fprintf(stderr, "Stack is empty\n");
+            exit(EXIT_FAILURE);
+        }
+        return stack->data[stack->top];
+    }
+
+/////////////////////////////// Loop Stack Ends //////////////////////////////////////////////////////////////////////////////////
 
     Stack* globStack;
     HashMap* currMap;
@@ -409,7 +449,7 @@
             char* prevType = package->value; 
             if(strcmp(prevType,type)!=0)
             {
-                printf("%s = (%s)%s;\n", var,type,var);
+                printf("%s = (%s)%s;//typeCasting on the fly!!!\n", var,type,var);
                 free(package);
             }
             else
@@ -423,7 +463,10 @@
         }
         free_stack(tempStack);
     }
+    int forStart=0,forIf=0;
 
+    LoopStack forStartStack, forIfStack, forIncrementerStack;
+    Stack whileStartStack, whileEndStack;
 %}
 %name parser
 
@@ -604,22 +647,26 @@ ElseExpr:
     | {}
     ;
 ForStatements:
-    {
-        printf("L%d:\n",blockVar);
-        forIncrementer = blockVar;
+    For LP MegAssign SC {
+        printf("L%d:\n", blockVar);
+        pushLoop(&forIncrementerStack, blockVar);
         blockVar++;
-    }
-    For LP MegAssign SC BoolExp SC {
-        printf("if t%d goto L%d\n goto L%d\n",tempVar-1,blockVar , blockVar+1); 
-        printf("L%d:\n",blockVar);
-        blockVar+=2;
-        IFCOUNTER++;
+    } BoolExp SC {
+        printf("For Loop's IF statement begins here:\nif t%d goto L%d\n goto L%d\n", tempVar-1, blockVar, blockVar+1); 
+        pushLoop(&forIfStack, blockVar);
+        blockVar += 2;
         handleClear(0);
-    } MegAssign RP CL{
+        printf("L%d:\n", blockVar);
+        pushLoop(&forStartStack, blockVar);
+    } MegAssign RP CL {
+        int forIncrementer = popLoop(&forIncrementerStack);
+        printf("goto L%d\n", forIncrementer);
+        printf("L%d:\n", popLoop(&forIfStack));
         push(globStack,currMap);
         currMap = create_hashmap();
+        blockVar++;
     } S CR {
-        printf("goto L%d\n",forIncrementer);
+        printf("goto L%d\n", popLoop(&forStartStack)); 
         if(currMap!=NULL)
         {
             free_hashmap(currMap);
@@ -629,49 +676,28 @@ ForStatements:
             currMap = pop(globStack);//restore old type info...
         }
         handleClear(0);
-    }
-    ;
+    };
+
 
 WhileStatements:
-    While LP BoolExp RP CL {
-        push(globStack,currMap);
-        currMap = create_hashmap();
-        printf("if t%d goto L%d\n goto L%d\n", tempVar-1,blockVar , blockVar+1); 
-        printf("L%d:\n",blockVar);
-        blockVar+=2;
-        IFCOUNTER++;
+    While { 
+        int whileStart = blockVar++;  // Label for the start of the loop
+        printf("L%d:\n", whileStart);  // Emit label at the start of the loop
+        push(&whileStartStack, whileStart); 
+    } LP BoolExp RP CL {
+        int whileEnd = blockVar;  // Label for the end of the loop's conditional check
+        printf("While loop's IF statement begins here:\n");
+        printf("if t%d goto L%d\n", tempVar-1, whileEnd); // Jump to loop body if condition is true
+        printf("L%d:\n",whileEnd);
+        push(&whileEndStack, blockVar + 1);
+        blockVar += 2;
         handleClear(0);
-    } S CR {  
-        if(currMap!=NULL)
-        {
-            free_hashmap(currMap);
-        }
-        if(globStack->size>0)
-        {
-            currMap = pop(globStack);//restore old type info...
-        } 
-        printf("goto L%d\n",blockVar-2);
+    } S CR {
+        int whileStart = pop(&whileStartStack);
+        int whileEnd = pop(&whileEndStack);
+        printf("goto L%d\n", whileStart);  // Jump back to the loop's start
+        printf("L%d:\n", whileEnd);  // Emit label for the end of the loop
         handleClear(0);
-    }
-    |
-    While BoolExp error CR
-    {
-        yyerror("");
-        printf("\t\t error : Expected \'(\' before %s \n\n",$2);
-        yyerrok;
-        yyclearin;
-        handleClear(1);
-        eflag = 3;
-    }
-    |
-    While LP BoolExp CL error Else CL S CR
-    {
-        yyerror("");
-        printf("\t\t error : Expected \')\' after %s \n\n",$3);
-        yyerrok;
-        yyclearin;
-        handleClear(1);
-        eflag = 3;
     }
     ;
 
@@ -985,6 +1011,11 @@ int main(int argc, char* argv[]) {
     globStack = create_stack();
     currMap = create_hashmap();
     SymbTable = createSymbTable();
+    initStack(&forStartStack);
+    initStack(&forIfStack);
+    initStack(&forIncrementerStack);
+    initStack(&whileStartStack);
+    initStack(&whileEndStack);
     handleClear(1);
     // Rest of the main function
     if (argc > 1) {

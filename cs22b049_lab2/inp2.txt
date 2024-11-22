@@ -1,0 +1,8 @@
+int a = 20, b = 21, c= -20002;
+int a = -20, b = 21, c= 20002.0;
+float _cde123 = 21.00;
+int 1_a = 20;
+float _cde123 = 21;
+float _cde123 = -21 , _edf12ee3 = 21.111 ,a12ee3 = -21.111111111;
+float _cde123 = 21, _edf12ee3 = 21.111,;
+float temp = 21, _edf12ee3 = 21.111

@@ -1,0 +1,21 @@
+#include <stdio.h>
+// Hi I am Veerain Sood
+/*
+	this is multiline "*/"
+    *
+    *
+    *
+    *
+    "Hi ia ma *\"
+    \
+    \
+    /
+    /
+*/
+int main() {
+    printf("Hello, World!\n");
+    float a +=   10.022;
+    char* b = &d;
+    float c = a + b;
+    return 0;
+}

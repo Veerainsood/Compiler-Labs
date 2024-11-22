@@ -1,0 +1,27 @@
+Lexeme:"#include Keyword"
+Lexeme:"<stdio.h> Header File"
+Lexeme:"int Keyword"
+Lexeme:"main"        Identifiers found.
+Lexeme:"( Special Symbol"
+Lexeme:") Special Symbol"
+Lexeme:"{ Special Symbol"
+Lexeme:"printf"        Identifiers found.
+Lexeme:""Hello, World!\n" String Constant"
+Lexeme:"; Special Symbol"
+Lexeme:"float Keyword"
+Lexeme:"a"        Identifiers found.
+Lexeme:"+= Assignment Operator"
+Lexeme:"10.022 Floating Point Constant"
+Lexeme:"char Keyword"
+Lexeme:"*"        Arithmatic Operator.
+Lexeme:"b"        Identifiers found.
+Lexeme:"= Assignment Operator"
+Lexeme:"& Bitwise Operator"
+Lexeme:"d"        Identifiers found.
+Lexeme:"c"        Identifiers found.
+Lexeme:"a"        Identifiers found.
+Lexeme:"+"        Arithmatic Operator.
+Lexeme:"b"        Identifiers found.
+Lexeme:"return Keyword"
+Lexeme:"0 Integer Constant"
+Lexeme:"} Special Symbol"

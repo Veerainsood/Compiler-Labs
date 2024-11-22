@@ -1,0 +1,21 @@
+int a =0 ;
+int b =0; 
+int d =0;
+int c , k=0 ;
+
+
+while ( a> 0 )
+{  
+    int kl ;
+    a ++ ; b++; d++;  
+ int h = 10;
+
+
+while (k >1)
+{
+    int t = 10;
+}
+
+
+
+}

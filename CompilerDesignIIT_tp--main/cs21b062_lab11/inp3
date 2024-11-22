@@ -1,0 +1,22 @@
+int arpit , aman , tajasve , ashu ,c ,k , m , a , b , d , o ,t;
+switch ( arpit )
+{
+    case arpit :  a++ ; 
+                 switch ( aman )
+                    {
+                        case aman :  t++ ; 
+                                    break; 
+                        case tajasve : k++ ; 
+                                    break; 
+                        default : 
+                                d++;
+                    }     
+                     o++;        
+
+                  break; 
+    case ashu  :  b++ ; 
+                  break; 
+    default : 
+            c++; 
+}
+m++;

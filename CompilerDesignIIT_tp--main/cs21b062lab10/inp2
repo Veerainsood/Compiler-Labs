@@ -1,0 +1,12 @@
+switch ( arpit )
+{
+    case arpit :  a++ ; 
+             
+
+                  break; 
+    case ashu  :  b++ ; 
+                  break; 
+    default : 
+            c++; 
+}
+m++;

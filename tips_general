@@ -1,0 +1,3 @@
+Always check for semicolons in error statemnts
+make sure to put printing statements in each rule accepted
+make sure no pointers are left open

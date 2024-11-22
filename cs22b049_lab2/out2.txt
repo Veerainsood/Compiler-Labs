@@ -1,0 +1,8 @@
+The String {int a = 20, b = 21, c= -20002;} is in lang
+The String {int a = -20, b = 21, c= 20002.0;} is not in lang
+The String {float _cde123 = 21.00;} is in lang
+The String {int 1_a = 20;} is not in lang
+The String {float _cde123 = 21;} is in lang
+The String {float _cde123 = -21 , _edf12ee3 = 21.111 ,a12ee3 = -21.111111111;} is in lang
+The String {float _cde123 = 21, _edf12ee3 = 21.111,;} is not in lang
+The String {float temp = 21, _edf12ee3 = 21.111} is not in lang

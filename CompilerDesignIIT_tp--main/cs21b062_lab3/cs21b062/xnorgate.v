@@ -1,0 +1,5 @@
+module xnorgate(input x, input y, output z);
+
+
+xnor xnor1(z,x,y);
+endmodule

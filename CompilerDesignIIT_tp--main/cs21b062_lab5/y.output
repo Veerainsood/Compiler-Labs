@@ -1,0 +1,305 @@
+Grammar
+
+    0 $accept: slist $end
+
+    1 $@1: ε
+
+    2 slist: C_E scol $@1 slist
+
+    3 $@2: ε
+
+    4 slist: error $@2 scol slist
+    5      | ε
+
+    6 C_E: Img
+    7    | Real add Img
+    8    | Real sub Img
+
+    9 Real: Int
+   10     | sub Int
+   11     | sub Float
+   12     | Float
+
+   13 Img: Real I
+   14    | I
+   15    | I Real
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256) 4
+    Int (258) 9 10
+    Float (259) 11 12
+    I (260) 13 14 15
+    add (261) 7
+    sub (262) 8 10 11
+    scol (263) 2 4
+
+
+Nonterminals, with rules where they appear
+
+    $accept (9)
+        on left: 0
+    slist (10)
+        on left: 2 4 5
+        on right: 0 2 4
+    $@1 (11)
+        on left: 1
+        on right: 2
+    $@2 (12)
+        on left: 3
+        on right: 4
+    C_E (13)
+        on left: 6 7 8
+        on right: 2
+    Real (14)
+        on left: 9 10 11 12
+        on right: 7 8 13 15
+    Img (15)
+        on left: 13 14 15
+        on right: 6 7 8
+
+
+State 0
+
+    0 $accept: • slist $end
+
+    error  shift, and go to state 1
+    Int    shift, and go to state 2
+    Float  shift, and go to state 3
+    I      shift, and go to state 4
+    sub    shift, and go to state 5
+
+    $end  reduce using rule 5 (slist)
+
+    slist  go to state 6
+    C_E    go to state 7
+    Real   go to state 8
+    Img    go to state 9
+
+
+State 1
+
+    4 slist: error • $@2 scol slist
+
+    $default  reduce using rule 3 ($@2)
+
+    $@2  go to state 10
+
+
+State 2
+
+    9 Real: Int •
+
+    $default  reduce using rule 9 (Real)
+
+
+State 3
+
+   12 Real: Float •
+
+    $default  reduce using rule 12 (Real)
+
+
+State 4
+
+   14 Img: I •
+   15    | I • Real
+
+    Int    shift, and go to state 2
+    Float  shift, and go to state 3
+    sub    shift, and go to state 5
+
+    $default  reduce using rule 14 (Img)
+
+    Real  go to state 11
+
+
+State 5
+
+   10 Real: sub • Int
+   11     | sub • Float
+
+    Int    shift, and go to state 12
+    Float  shift, and go to state 13
+
+
+State 6
+
+    0 $accept: slist • $end
+
+    $end  shift, and go to state 14
+
+
+State 7
+
+    2 slist: C_E • scol $@1 slist
+
+    scol  shift, and go to state 15
+
+
+State 8
+
+    7 C_E: Real • add Img
+    8    | Real • sub Img
+   13 Img: Real • I
+
+    I    shift, and go to state 16
+    add  shift, and go to state 17
+    sub  shift, and go to state 18
+
+
+State 9
+
+    6 C_E: Img •
+
+    $default  reduce using rule 6 (C_E)
+
+
+State 10
+
+    4 slist: error $@2 • scol slist
+
+    scol  shift, and go to state 19
+
+
+State 11
+
+   15 Img: I Real •
+
+    $default  reduce using rule 15 (Img)
+
+
+State 12
+
+   10 Real: sub Int •
+
+    $default  reduce using rule 10 (Real)
+
+
+State 13
+
+   11 Real: sub Float •
+
+    $default  reduce using rule 11 (Real)
+
+
+State 14
+
+    0 $accept: slist $end •
+
+    $default  accept
+
+
+State 15
+
+    2 slist: C_E scol • $@1 slist
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 20
+
+
+State 16
+
+   13 Img: Real I •
+
+    $default  reduce using rule 13 (Img)
+
+
+State 17
+
+    7 C_E: Real add • Img
+
+    Int    shift, and go to state 2
+    Float  shift, and go to state 3
+    I      shift, and go to state 4
+    sub    shift, and go to state 5
+
+    Real  go to state 21
+    Img   go to state 22
+
+
+State 18
+
+    8 C_E: Real sub • Img
+
+    Int    shift, and go to state 2
+    Float  shift, and go to state 3
+    I      shift, and go to state 4
+    sub    shift, and go to state 5
+
+    Real  go to state 21
+    Img   go to state 23
+
+
+State 19
+
+    4 slist: error $@2 scol • slist
+
+    error  shift, and go to state 1
+    Int    shift, and go to state 2
+    Float  shift, and go to state 3
+    I      shift, and go to state 4
+    sub    shift, and go to state 5
+
+    $end  reduce using rule 5 (slist)
+
+    slist  go to state 24
+    C_E    go to state 7
+    Real   go to state 8
+    Img    go to state 9
+
+
+State 20
+
+    2 slist: C_E scol $@1 • slist
+
+    error  shift, and go to state 1
+    Int    shift, and go to state 2
+    Float  shift, and go to state 3
+    I      shift, and go to state 4
+    sub    shift, and go to state 5
+
+    $end  reduce using rule 5 (slist)
+
+    slist  go to state 25
+    C_E    go to state 7
+    Real   go to state 8
+    Img    go to state 9
+
+
+State 21
+
+   13 Img: Real • I
+
+    I  shift, and go to state 16
+
+
+State 22
+
+    7 C_E: Real add Img •
+
+    $default  reduce using rule 7 (C_E)
+
+
+State 23
+
+    8 C_E: Real sub Img •
+
+    $default  reduce using rule 8 (C_E)
+
+
+State 24
+
+    4 slist: error $@2 scol slist •
+
+    $default  reduce using rule 4 (slist)
+
+
+State 25
+
+    2 slist: C_E scol $@1 slist •
+
+    $default  reduce using rule 2 (slist)

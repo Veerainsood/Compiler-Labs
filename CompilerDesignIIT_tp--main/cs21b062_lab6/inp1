@@ -1,0 +1,16 @@
+result = (p * p) + (q * q) - (r * r);
+result = x++ * ++x;
+result = ++y;
+result = a++ * 5.4;
+result = --b;
+result = value - (2 * -3);
+result = -(a + b);
+c=(-b+45)/(c--);
+b++;
+--b;
+b=-c;
+4+5;
+_v99 = 7++;
+b = ++c - --d;
+v=(9+c-d/78*(b+d))+89;
+++5;

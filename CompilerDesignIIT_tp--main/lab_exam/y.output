@@ -1,0 +1,147 @@
+Grammar
+
+    0 $accept: Slist $end
+
+    1 $@1: ε
+
+    2 Slist: Stmt $@1 Slist
+
+    3 $@2: ε
+
+    4 Slist: error $@2 Slist
+    5      | ε
+
+    6 Stmt: day month year
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256) 4
+    day <dd> (258) 6
+    month <mm> (259) 6
+    year <yyyy> (260) 6
+
+
+Nonterminals, with rules where they appear
+
+    $accept (6)
+        on left: 0
+    Slist <node> (7)
+        on left: 2 4 5
+        on right: 0 2 4
+    $@1 (8)
+        on left: 1
+        on right: 2
+    $@2 (9)
+        on left: 3
+        on right: 4
+    Stmt <node> (10)
+        on left: 6
+        on right: 2
+
+
+State 0
+
+    0 $accept: • Slist $end
+
+    error  shift, and go to state 1
+    day    shift, and go to state 2
+
+    $end  reduce using rule 5 (Slist)
+
+    Slist  go to state 3
+    Stmt   go to state 4
+
+
+State 1
+
+    4 Slist: error • $@2 Slist
+
+    $default  reduce using rule 3 ($@2)
+
+    $@2  go to state 5
+
+
+State 2
+
+    6 Stmt: day • month year
+
+    month  shift, and go to state 6
+
+
+State 3
+
+    0 $accept: Slist • $end
+
+    $end  shift, and go to state 7
+
+
+State 4
+
+    2 Slist: Stmt • $@1 Slist
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 8
+
+
+State 5
+
+    4 Slist: error $@2 • Slist
+
+    error  shift, and go to state 1
+    day    shift, and go to state 2
+
+    $end  reduce using rule 5 (Slist)
+
+    Slist  go to state 9
+    Stmt   go to state 4
+
+
+State 6
+
+    6 Stmt: day month • year
+
+    year  shift, and go to state 10
+
+
+State 7
+
+    0 $accept: Slist $end •
+
+    $default  accept
+
+
+State 8
+
+    2 Slist: Stmt $@1 • Slist
+
+    error  shift, and go to state 1
+    day    shift, and go to state 2
+
+    $end  reduce using rule 5 (Slist)
+
+    Slist  go to state 11
+    Stmt   go to state 4
+
+
+State 9
+
+    4 Slist: error $@2 Slist •
+
+    $default  reduce using rule 4 (Slist)
+
+
+State 10
+
+    6 Stmt: day month year •
+
+    $default  reduce using rule 6 (Stmt)
+
+
+State 11
+
+    2 Slist: Stmt $@1 Slist •
+
+    $default  reduce using rule 2 (Slist)

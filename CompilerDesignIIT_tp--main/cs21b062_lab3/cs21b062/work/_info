@@ -1,0 +1,283 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/cloud/Desktop/cs21b062
+vand_nor
+!s110 1649723086
+!i10b 1
+!s100 9?kmZB98S_iVlUBIzj`0i3
+I<JhhobD6:XG@:eHnb4;5m0
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1649723083
+8/home/cloud/Desktop/cs21b062/and_nor.v
+F/home/cloud/Desktop/cs21b062/and_nor.v
+L0 1
+Z2 OV;L;10.5b;63
+r1
+!s85 0
+31
+!s108 1649723086.000000
+!s107 /home/cloud/Desktop/cs21b062/and_nor.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/and_nor.v|
+!i113 1
+Z3 o-work work
+Z4 tCvgOpt 0
+vfour_input_nand_quest3
+!s110 1649726229
+!i10b 1
+!s100 43^ejWD08JiZVCa@`X8U@2
+I6k`AmV@37SXCbY=RI4Ynj0
+R1
+R0
+w1649726221
+8/home/cloud/Desktop/cs21b062/four_input_nand_quest3.v
+F/home/cloud/Desktop/cs21b062/four_input_nand_quest3.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649726229.000000
+!s107 /home/cloud/Desktop/cs21b062/four_input_nand_quest3.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/four_input_nand_quest3.v|
+!i113 1
+R3
+R4
+vmyand
+!s110 1649718620
+!i10b 1
+!s100 `Zo=zU=7BRWm]1GGHDL0a1
+IZldCYWj5aNE4@Fig7Y@UE3
+R1
+R0
+w1649718175
+8/home/cloud/Desktop/cs21b062/andgate.v
+F/home/cloud/Desktop/cs21b062/andgate.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649718620.000000
+!s107 /home/cloud/Desktop/cs21b062/andgate.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/andgate.v|
+!i113 1
+R3
+R4
+vmynot
+!s110 1649727294
+!i10b 1
+!s100 mzQNO`a_fCFFXL6kVbZza0
+I7>9]Y5TjC<16i3jRkKT493
+R1
+R0
+w1649719025
+Z5 8/home/cloud/Desktop/cs21b062/notgate.v
+Z6 F/home/cloud/Desktop/cs21b062/notgate.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649727294.000000
+Z7 !s107 /home/cloud/Desktop/cs21b062/notgate.v|
+Z8 !s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/notgate.v|
+!i113 1
+R3
+R4
+vnotgate
+!s110 1649727363
+!i10b 1
+!s100 b9z8?<77YDngXLafi:@Tm1
+ImgM[][CON[K>]FO?WDM4H0
+R1
+R0
+w1649727348
+R5
+R6
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649727363.000000
+R7
+R8
+!i113 1
+R3
+R4
+vor_nand
+!s110 1649721608
+!i10b 1
+!s100 <>C>X^M6W`YQY;hYl20OW2
+I5d>@=Z9bX[D_AiH>@AJ]_0
+R1
+R0
+w1649721606
+8/home/cloud/Desktop/cs21b062/or_nand.v
+F/home/cloud/Desktop/cs21b062/or_nand.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649721608.000000
+!s107 /home/cloud/Desktop/cs21b062/or_nand.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/or_nand.v|
+!i113 1
+R3
+R4
+vorgate
+!s110 1649720339
+!i10b 1
+!s100 `M^]EJK=9G`K<1H091O6S1
+IQP`^X2kE9K7U=_zYWP[;I2
+R1
+R0
+w1649719373
+8/home/cloud/Desktop/cs21b062/orgate.v
+F/home/cloud/Desktop/cs21b062/orgate.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649720339.000000
+!s107 /home/cloud/Desktop/cs21b062/orgate.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/orgate.v|
+!i113 1
+R3
+R4
+vquest6_a
+!s110 1649727372
+!i10b 1
+!s100 5RiBk?I47Q:X=b@Zm=EK`1
+IV8<FjiXIK5:7@CWN0W8ih2
+R1
+R0
+w1649727200
+8/home/cloud/Desktop/cs21b062/quest6_a.v
+F/home/cloud/Desktop/cs21b062/quest6_a.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649727372.000000
+!s107 /home/cloud/Desktop/cs21b062/quest6_a.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/quest6_a.v|
+!i113 1
+R3
+R4
+vtb_andgate
+!s110 1649718859
+!i10b 1
+!s100 K95_Q_g4HS;Na@=bLz5S51
+IWN2<zhBeYXHkfY?W3nDbZ2
+R1
+R0
+w1649718854
+8/home/cloud/Desktop/cs21b062/tb_andgate.v
+F/home/cloud/Desktop/cs21b062/tb_andgate.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649718859.000000
+!s107 /home/cloud/Desktop/cs21b062/tb_andgate.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/tb_andgate.v|
+!i113 1
+R3
+R4
+vtb_norgate
+!s110 1649720150
+!i10b 1
+!s100 d;QXJX2JX<@EbR:IGnMAi1
+Io>:WDDG0dg]WSY^?<46zd3
+R1
+R0
+w1649720139
+8/home/cloud/Desktop/cs21b062/tb_norgate.v
+F/home/cloud/Desktop/cs21b062/tb_norgate.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649720150.000000
+!s107 /home/cloud/Desktop/cs21b062/tb_norgate.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/tb_norgate.v|
+!i113 1
+R3
+R4
+vtb_orgate
+!s110 1649720323
+!i10b 1
+!s100 MKfA@<<lA?XE=hUi@C6XX2
+I9gM64Ve2njC?;YCFhh?][1
+R1
+R0
+w1649719482
+8/home/cloud/Desktop/cs21b062/tb_orgate.v
+F/home/cloud/Desktop/cs21b062/tb_orgate.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649720323.000000
+!s107 /home/cloud/Desktop/cs21b062/tb_orgate.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/tb_orgate.v|
+!i113 1
+R3
+R4
+vtb_quest2
+!s110 1649723103
+!i10b 1
+!s100 0]j5cAg>Fm?d;OcSWBz040
+I;]Jo?Q8?9OQ9LOb87De503
+R1
+R0
+w1649722763
+8/home/cloud/Desktop/cs21b062/tb_quest2.v
+F/home/cloud/Desktop/cs21b062/tb_quest2.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649723103.000000
+!s107 /home/cloud/Desktop/cs21b062/tb_quest2.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/tb_quest2.v|
+!i113 1
+R3
+R4
+vxor_nand
+!s110 1649724572
+!i10b 1
+!s100 6U15=ZhlCRY=3lGIli3LJ1
+IPgKhKO05ci?gB2CoHIRf51
+R1
+R0
+w1649723748
+8/home/cloud/Desktop/cs21b062/xor_nand.v
+F/home/cloud/Desktop/cs21b062/xor_nand.v
+L0 1
+R2
+r1
+!s85 0
+31
+!s108 1649724572.000000
+!s107 /home/cloud/Desktop/cs21b062/xor_nand.v|
+!s90 -reportprogress|300|-work|work|/home/cloud/Desktop/cs21b062/xor_nand.v|
+!i113 1
+R3
+R4

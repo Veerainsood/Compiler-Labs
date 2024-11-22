@@ -1,0 +1,1313 @@
+
+Grammar
+rule 1    StatementList -> Statement SEMICOLON StatementList
+rule 2    @1 ->		/* empty */
+rule 3    @2 ->		/* empty */
+rule 4    @3 ->		/* empty */
+rule 5    StatementList -> IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt @3 StatementList
+rule 6    StatementList ->		/* empty */
+rule 7    ElseStmt -> ELSE LCURL StatementList RCURL
+rule 8    ElseStmt -> elif
+rule 9    ElseStmt ->		/* empty */
+rule 10   @4 ->		/* empty */
+rule 11   @5 ->		/* empty */
+rule 12   elif -> ELSE IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 StatementList @5 RCURL ElseStmt
+rule 13   dummyLabels ->		/* empty */
+rule 14   Statement -> VAR EQ Statement
+rule 15   Statement -> Term
+rule 16   PreRelexp -> PreRelexp AND Relexp
+rule 17   PreRelexp -> PreRelexp OR Relexp
+rule 18   PreRelexp -> Relexp
+rule 19   Relexp -> Term LT Term
+rule 20   Relexp -> Term LTE Term
+rule 21   Relexp -> Term GT Term
+rule 22   Relexp -> Term GTE Term
+rule 23   Relexp -> Term EQ EQ Term
+rule 24   Relexp -> Term NOT EQ Term
+rule 25   Relexp -> LPAREN Relexp RPAREN
+rule 26   Relexp -> NOT Relexp
+rule 27   Relexp ->		/* empty */
+rule 28   Term -> Term ADD Factor
+rule 29   Term -> Term SUB Factor
+rule 30   Term -> Factor
+rule 31   Factor -> Factor MUL SIGNVal
+rule 32   Factor -> Factor DIV SIGNVal
+rule 33   Factor -> SIGNVal
+rule 34   SIGNVal -> ADD Val
+rule 35   SIGNVal -> SUB Val
+rule 36   SIGNVal -> Val
+rule 37   Val -> VAR
+rule 38   Val -> NUMBER
+rule 39   Val -> PREPOSTADD VAR
+rule 40   Val -> PREPOSTSUB VAR
+rule 41   Val -> VAR PREPOSTADD
+rule 42   Val -> VAR PREPOSTSUB
+rule 43   Val -> LPAREN Term RPAREN
+
+Terminals, with rules where they appear
+
+$ (-1)
+error (256)
+IF (258) 5 12
+ELSE (259) 7 12
+ADD (260) 28 34
+SUB (261) 29 35
+MUL (262) 31
+DIV (263) 32
+EQ (264) 14 23 24
+LT (265) 19
+LTE (266) 20
+GT (267) 21
+GTE (268) 22
+NOT (269) 24 26
+AND (270) 16
+OR (271) 17
+PREPOSTADD (272) 39 41
+PREPOSTSUB (273) 40 42
+LPAREN (274) 5 12 25 43
+RPAREN (275) 5 12 25 43
+LCURL (276) 5 7 12
+RCURL (277) 5 7 12
+SEMICOLON (278) 1
+NUMBER (279) 38
+VAR (280) 14 37 39 40 41 42
+
+Nonterminals, with rules where they appear
+
+StatementList (26)
+    on left: 1 5 6, on right: 1 5 7 12
+@1 (27)
+    on left: 2, on right: 5
+@2 (28)
+    on left: 3, on right: 5
+@3 (29)
+    on left: 4, on right: 5
+ElseStmt (30)
+    on left: 7 8 9, on right: 5 12
+elif (31)
+    on left: 12, on right: 8
+@4 (32)
+    on left: 10, on right: 12
+@5 (33)
+    on left: 11, on right: 12
+dummyLabels (34)
+    on left: 13, on right: 5 12
+Statement (35)
+    on left: 14 15, on right: 1 14
+PreRelexp (36)
+    on left: 16 17 18, on right: 5 12 16 17
+Relexp (37)
+    on left: 19 20 21 22 23 24 25 26 27, on right: 16 17 18 25 26
+Term (38)
+    on left: 28 29 30, on right: 15 19 20 21 22 23 24 28 29 43
+Factor (39)
+    on left: 31 32 33, on right: 28 29 30 31 32
+SIGNVal (40)
+    on left: 34 35 36, on right: 31 32 33
+Val (41)
+    on left: 37 38 39 40 41 42 43, on right: 34 35 36
+
+
+state 0
+
+    IF  	shift, and go to state 1
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 8
+
+    $default	reduce using rule 6 (StatementList)
+
+    StatementList	go to state 91
+    Statement	go to state 9
+    Term	go to state 10
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 1
+
+    StatementList  ->  IF . LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt @3 StatementList   (rule 5)
+
+    LPAREN	shift, and go to state 14
+
+
+
+state 2
+
+    SIGNVal  ->  ADD . Val   (rule 34)
+
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Val 	go to state 16
+
+
+
+state 3
+
+    SIGNVal  ->  SUB . Val   (rule 35)
+
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Val 	go to state 17
+
+
+
+state 4
+
+    Val  ->  PREPOSTADD . VAR   (rule 39)
+
+    VAR 	shift, and go to state 18
+
+
+
+state 5
+
+    Val  ->  PREPOSTSUB . VAR   (rule 40)
+
+    VAR 	shift, and go to state 19
+
+
+
+state 6
+
+    Val  ->  LPAREN . Term RPAREN   (rule 43)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Term	go to state 20
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 7
+
+    Val  ->  NUMBER .   (rule 38)
+
+    $default	reduce using rule 38 (Val)
+
+
+
+state 8
+
+    Statement  ->  VAR . EQ Statement   (rule 14)
+    Val  ->  VAR .   (rule 37)
+    Val  ->  VAR . PREPOSTADD   (rule 41)
+    Val  ->  VAR . PREPOSTSUB   (rule 42)
+
+    EQ  	shift, and go to state 21
+    PREPOSTADD	shift, and go to state 22
+    PREPOSTSUB	shift, and go to state 23
+
+    $default	reduce using rule 37 (Val)
+
+
+
+state 9
+
+    StatementList  ->  Statement . SEMICOLON StatementList   (rule 1)
+
+    SEMICOLON	shift, and go to state 24
+
+
+
+state 10
+
+    Statement  ->  Term .   (rule 15)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+
+    $default	reduce using rule 15 (Statement)
+
+
+
+state 11
+
+    Term  ->  Factor .   (rule 30)
+    Factor  ->  Factor . MUL SIGNVal   (rule 31)
+    Factor  ->  Factor . DIV SIGNVal   (rule 32)
+
+    MUL 	shift, and go to state 27
+    DIV 	shift, and go to state 28
+
+    $default	reduce using rule 30 (Term)
+
+
+
+state 12
+
+    Factor  ->  SIGNVal .   (rule 33)
+
+    $default	reduce using rule 33 (Factor)
+
+
+
+state 13
+
+    SIGNVal  ->  Val .   (rule 36)
+
+    $default	reduce using rule 36 (SIGNVal)
+
+
+
+state 14
+
+    StatementList  ->  IF LPAREN . PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt @3 StatementList   (rule 5)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    NOT 	shift, and go to state 29
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 30
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    $default	reduce using rule 27 (Relexp)
+
+    PreRelexp	go to state 31
+    Relexp	go to state 32
+    Term	go to state 33
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 15
+
+    Val  ->  VAR .   (rule 37)
+    Val  ->  VAR . PREPOSTADD   (rule 41)
+    Val  ->  VAR . PREPOSTSUB   (rule 42)
+
+    PREPOSTADD	shift, and go to state 22
+    PREPOSTSUB	shift, and go to state 23
+
+    $default	reduce using rule 37 (Val)
+
+
+
+state 16
+
+    SIGNVal  ->  ADD Val .   (rule 34)
+
+    $default	reduce using rule 34 (SIGNVal)
+
+
+
+state 17
+
+    SIGNVal  ->  SUB Val .   (rule 35)
+
+    $default	reduce using rule 35 (SIGNVal)
+
+
+
+state 18
+
+    Val  ->  PREPOSTADD VAR .   (rule 39)
+
+    $default	reduce using rule 39 (Val)
+
+
+
+state 19
+
+    Val  ->  PREPOSTSUB VAR .   (rule 40)
+
+    $default	reduce using rule 40 (Val)
+
+
+
+state 20
+
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+    Val  ->  LPAREN Term . RPAREN   (rule 43)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+    RPAREN	shift, and go to state 34
+
+
+
+state 21
+
+    Statement  ->  VAR EQ . Statement   (rule 14)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 8
+
+    Statement	go to state 35
+    Term	go to state 10
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 22
+
+    Val  ->  VAR PREPOSTADD .   (rule 41)
+
+    $default	reduce using rule 41 (Val)
+
+
+
+state 23
+
+    Val  ->  VAR PREPOSTSUB .   (rule 42)
+
+    $default	reduce using rule 42 (Val)
+
+
+
+state 24
+
+    StatementList  ->  Statement SEMICOLON . StatementList   (rule 1)
+
+    IF  	shift, and go to state 1
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 8
+
+    $default	reduce using rule 6 (StatementList)
+
+    StatementList	go to state 36
+    Statement	go to state 9
+    Term	go to state 10
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 25
+
+    Term  ->  Term ADD . Factor   (rule 28)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Factor	go to state 37
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 26
+
+    Term  ->  Term SUB . Factor   (rule 29)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Factor	go to state 38
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 27
+
+    Factor  ->  Factor MUL . SIGNVal   (rule 31)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    SIGNVal	go to state 39
+    Val 	go to state 13
+
+
+
+state 28
+
+    Factor  ->  Factor DIV . SIGNVal   (rule 32)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    SIGNVal	go to state 40
+    Val 	go to state 13
+
+
+
+state 29
+
+    Relexp  ->  NOT . Relexp   (rule 26)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    NOT 	shift, and go to state 29
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 30
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    $default	reduce using rule 27 (Relexp)
+
+    Relexp	go to state 41
+    Term	go to state 33
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 30
+
+    Relexp  ->  LPAREN . Relexp RPAREN   (rule 25)
+    Val  ->  LPAREN . Term RPAREN   (rule 43)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    NOT 	shift, and go to state 29
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 30
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    $default	reduce using rule 27 (Relexp)
+
+    Relexp	go to state 42
+    Term	go to state 43
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 31
+
+    StatementList  ->  IF LPAREN PreRelexp . RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt @3 StatementList   (rule 5)
+    PreRelexp  ->  PreRelexp . AND Relexp   (rule 16)
+    PreRelexp  ->  PreRelexp . OR Relexp   (rule 17)
+
+    AND 	shift, and go to state 44
+    OR  	shift, and go to state 45
+    RPAREN	shift, and go to state 46
+
+
+
+state 32
+
+    PreRelexp  ->  Relexp .   (rule 18)
+
+    $default	reduce using rule 18 (PreRelexp)
+
+
+
+state 33
+
+    Relexp  ->  Term . LT Term   (rule 19)
+    Relexp  ->  Term . LTE Term   (rule 20)
+    Relexp  ->  Term . GT Term   (rule 21)
+    Relexp  ->  Term . GTE Term   (rule 22)
+    Relexp  ->  Term . EQ EQ Term   (rule 23)
+    Relexp  ->  Term . NOT EQ Term   (rule 24)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+    EQ  	shift, and go to state 47
+    LT  	shift, and go to state 48
+    LTE 	shift, and go to state 49
+    GT  	shift, and go to state 50
+    GTE 	shift, and go to state 51
+    NOT 	shift, and go to state 52
+
+
+
+state 34
+
+    Val  ->  LPAREN Term RPAREN .   (rule 43)
+
+    $default	reduce using rule 43 (Val)
+
+
+
+state 35
+
+    Statement  ->  VAR EQ Statement .   (rule 14)
+
+    $default	reduce using rule 14 (Statement)
+
+
+
+state 36
+
+    StatementList  ->  Statement SEMICOLON StatementList .   (rule 1)
+
+    $default	reduce using rule 1 (StatementList)
+
+
+
+state 37
+
+    Term  ->  Term ADD Factor .   (rule 28)
+    Factor  ->  Factor . MUL SIGNVal   (rule 31)
+    Factor  ->  Factor . DIV SIGNVal   (rule 32)
+
+    MUL 	shift, and go to state 27
+    DIV 	shift, and go to state 28
+
+    $default	reduce using rule 28 (Term)
+
+
+
+state 38
+
+    Term  ->  Term SUB Factor .   (rule 29)
+    Factor  ->  Factor . MUL SIGNVal   (rule 31)
+    Factor  ->  Factor . DIV SIGNVal   (rule 32)
+
+    MUL 	shift, and go to state 27
+    DIV 	shift, and go to state 28
+
+    $default	reduce using rule 29 (Term)
+
+
+
+state 39
+
+    Factor  ->  Factor MUL SIGNVal .   (rule 31)
+
+    $default	reduce using rule 31 (Factor)
+
+
+
+state 40
+
+    Factor  ->  Factor DIV SIGNVal .   (rule 32)
+
+    $default	reduce using rule 32 (Factor)
+
+
+
+state 41
+
+    Relexp  ->  NOT Relexp .   (rule 26)
+
+    $default	reduce using rule 26 (Relexp)
+
+
+
+state 42
+
+    Relexp  ->  LPAREN Relexp . RPAREN   (rule 25)
+
+    RPAREN	shift, and go to state 53
+
+
+
+state 43
+
+    Relexp  ->  Term . LT Term   (rule 19)
+    Relexp  ->  Term . LTE Term   (rule 20)
+    Relexp  ->  Term . GT Term   (rule 21)
+    Relexp  ->  Term . GTE Term   (rule 22)
+    Relexp  ->  Term . EQ EQ Term   (rule 23)
+    Relexp  ->  Term . NOT EQ Term   (rule 24)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+    Val  ->  LPAREN Term . RPAREN   (rule 43)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+    EQ  	shift, and go to state 47
+    LT  	shift, and go to state 48
+    LTE 	shift, and go to state 49
+    GT  	shift, and go to state 50
+    GTE 	shift, and go to state 51
+    NOT 	shift, and go to state 52
+    RPAREN	shift, and go to state 34
+
+
+
+state 44
+
+    PreRelexp  ->  PreRelexp AND . Relexp   (rule 16)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    NOT 	shift, and go to state 29
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 30
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    $default	reduce using rule 27 (Relexp)
+
+    Relexp	go to state 54
+    Term	go to state 33
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 45
+
+    PreRelexp  ->  PreRelexp OR . Relexp   (rule 17)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    NOT 	shift, and go to state 29
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 30
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    $default	reduce using rule 27 (Relexp)
+
+    Relexp	go to state 55
+    Term	go to state 33
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 46
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN . LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt @3 StatementList   (rule 5)
+
+    LCURL	shift, and go to state 56
+
+
+
+state 47
+
+    Relexp  ->  Term EQ . EQ Term   (rule 23)
+
+    EQ  	shift, and go to state 57
+
+
+
+state 48
+
+    Relexp  ->  Term LT . Term   (rule 19)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Term	go to state 58
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 49
+
+    Relexp  ->  Term LTE . Term   (rule 20)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Term	go to state 59
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 50
+
+    Relexp  ->  Term GT . Term   (rule 21)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Term	go to state 60
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 51
+
+    Relexp  ->  Term GTE . Term   (rule 22)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Term	go to state 61
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 52
+
+    Relexp  ->  Term NOT . EQ Term   (rule 24)
+
+    EQ  	shift, and go to state 62
+
+
+
+state 53
+
+    Relexp  ->  LPAREN Relexp RPAREN .   (rule 25)
+
+    $default	reduce using rule 25 (Relexp)
+
+
+
+state 54
+
+    PreRelexp  ->  PreRelexp AND Relexp .   (rule 16)
+
+    $default	reduce using rule 16 (PreRelexp)
+
+
+
+state 55
+
+    PreRelexp  ->  PreRelexp OR Relexp .   (rule 17)
+
+    $default	reduce using rule 17 (PreRelexp)
+
+
+
+state 56
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL . dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt @3 StatementList   (rule 5)
+
+    $default	reduce using rule 13 (dummyLabels)
+
+    dummyLabels	go to state 63
+
+
+
+state 57
+
+    Relexp  ->  Term EQ EQ . Term   (rule 23)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Term	go to state 64
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 58
+
+    Relexp  ->  Term LT Term .   (rule 19)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+
+    $default	reduce using rule 19 (Relexp)
+
+
+
+state 59
+
+    Relexp  ->  Term LTE Term .   (rule 20)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+
+    $default	reduce using rule 20 (Relexp)
+
+
+
+state 60
+
+    Relexp  ->  Term GT Term .   (rule 21)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+
+    $default	reduce using rule 21 (Relexp)
+
+
+
+state 61
+
+    Relexp  ->  Term GTE Term .   (rule 22)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+
+    $default	reduce using rule 22 (Relexp)
+
+
+
+state 62
+
+    Relexp  ->  Term NOT EQ . Term   (rule 24)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    Term	go to state 65
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 63
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels . dummyLabels @1 StatementList @2 RCURL ElseStmt @3 StatementList   (rule 5)
+
+    $default	reduce using rule 13 (dummyLabels)
+
+    dummyLabels	go to state 66
+
+
+
+state 64
+
+    Relexp  ->  Term EQ EQ Term .   (rule 23)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+
+    $default	reduce using rule 23 (Relexp)
+
+
+
+state 65
+
+    Relexp  ->  Term NOT EQ Term .   (rule 24)
+    Term  ->  Term . ADD Factor   (rule 28)
+    Term  ->  Term . SUB Factor   (rule 29)
+
+    ADD 	shift, and go to state 25
+    SUB 	shift, and go to state 26
+
+    $default	reduce using rule 24 (Relexp)
+
+
+
+state 66
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels . @1 StatementList @2 RCURL ElseStmt @3 StatementList   (rule 5)
+
+    $default	reduce using rule 2 (@1)
+
+    @1  	go to state 67
+
+
+
+state 67
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 . StatementList @2 RCURL ElseStmt @3 StatementList   (rule 5)
+
+    IF  	shift, and go to state 1
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 8
+
+    $default	reduce using rule 6 (StatementList)
+
+    StatementList	go to state 68
+    Statement	go to state 9
+    Term	go to state 10
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 68
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList . @2 RCURL ElseStmt @3 StatementList   (rule 5)
+
+    $default	reduce using rule 3 (@2)
+
+    @2  	go to state 69
+
+
+
+state 69
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 . RCURL ElseStmt @3 StatementList   (rule 5)
+
+    RCURL	shift, and go to state 70
+
+
+
+state 70
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL . ElseStmt @3 StatementList   (rule 5)
+
+    ELSE	shift, and go to state 71
+
+    $default	reduce using rule 9 (ElseStmt)
+
+    ElseStmt	go to state 72
+    elif	go to state 73
+
+
+
+state 71
+
+    ElseStmt  ->  ELSE . LCURL StatementList RCURL   (rule 7)
+    elif  ->  ELSE . IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 StatementList @5 RCURL ElseStmt   (rule 12)
+
+    IF  	shift, and go to state 74
+    LCURL	shift, and go to state 75
+
+
+
+state 72
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt . @3 StatementList   (rule 5)
+
+    $default	reduce using rule 4 (@3)
+
+    @3  	go to state 76
+
+
+
+state 73
+
+    ElseStmt  ->  elif .   (rule 8)
+
+    $default	reduce using rule 8 (ElseStmt)
+
+
+
+state 74
+
+    elif  ->  ELSE IF . LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 StatementList @5 RCURL ElseStmt   (rule 12)
+
+    LPAREN	shift, and go to state 77
+
+
+
+state 75
+
+    ElseStmt  ->  ELSE LCURL . StatementList RCURL   (rule 7)
+
+    IF  	shift, and go to state 1
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 8
+
+    $default	reduce using rule 6 (StatementList)
+
+    StatementList	go to state 78
+    Statement	go to state 9
+    Term	go to state 10
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 76
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt @3 . StatementList   (rule 5)
+
+    IF  	shift, and go to state 1
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 8
+
+    $default	reduce using rule 6 (StatementList)
+
+    StatementList	go to state 79
+    Statement	go to state 9
+    Term	go to state 10
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 77
+
+    elif  ->  ELSE IF LPAREN . PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 StatementList @5 RCURL ElseStmt   (rule 12)
+
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    NOT 	shift, and go to state 29
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 30
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 15
+
+    $default	reduce using rule 27 (Relexp)
+
+    PreRelexp	go to state 80
+    Relexp	go to state 32
+    Term	go to state 33
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 78
+
+    ElseStmt  ->  ELSE LCURL StatementList . RCURL   (rule 7)
+
+    RCURL	shift, and go to state 81
+
+
+
+state 79
+
+    StatementList  ->  IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @1 StatementList @2 RCURL ElseStmt @3 StatementList .   (rule 5)
+
+    $default	reduce using rule 5 (StatementList)
+
+
+
+state 80
+
+    elif  ->  ELSE IF LPAREN PreRelexp . RPAREN LCURL dummyLabels dummyLabels @4 StatementList @5 RCURL ElseStmt   (rule 12)
+    PreRelexp  ->  PreRelexp . AND Relexp   (rule 16)
+    PreRelexp  ->  PreRelexp . OR Relexp   (rule 17)
+
+    AND 	shift, and go to state 44
+    OR  	shift, and go to state 45
+    RPAREN	shift, and go to state 82
+
+
+
+state 81
+
+    ElseStmt  ->  ELSE LCURL StatementList RCURL .   (rule 7)
+
+    $default	reduce using rule 7 (ElseStmt)
+
+
+
+state 82
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN . LCURL dummyLabels dummyLabels @4 StatementList @5 RCURL ElseStmt   (rule 12)
+
+    LCURL	shift, and go to state 83
+
+
+
+state 83
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN LCURL . dummyLabels dummyLabels @4 StatementList @5 RCURL ElseStmt   (rule 12)
+
+    $default	reduce using rule 13 (dummyLabels)
+
+    dummyLabels	go to state 84
+
+
+
+state 84
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN LCURL dummyLabels . dummyLabels @4 StatementList @5 RCURL ElseStmt   (rule 12)
+
+    $default	reduce using rule 13 (dummyLabels)
+
+    dummyLabels	go to state 85
+
+
+
+state 85
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels . @4 StatementList @5 RCURL ElseStmt   (rule 12)
+
+    $default	reduce using rule 10 (@4)
+
+    @4  	go to state 86
+
+
+
+state 86
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 . StatementList @5 RCURL ElseStmt   (rule 12)
+
+    IF  	shift, and go to state 1
+    ADD 	shift, and go to state 2
+    SUB 	shift, and go to state 3
+    PREPOSTADD	shift, and go to state 4
+    PREPOSTSUB	shift, and go to state 5
+    LPAREN	shift, and go to state 6
+    NUMBER	shift, and go to state 7
+    VAR 	shift, and go to state 8
+
+    $default	reduce using rule 6 (StatementList)
+
+    StatementList	go to state 87
+    Statement	go to state 9
+    Term	go to state 10
+    Factor	go to state 11
+    SIGNVal	go to state 12
+    Val 	go to state 13
+
+
+
+state 87
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 StatementList . @5 RCURL ElseStmt   (rule 12)
+
+    $default	reduce using rule 11 (@5)
+
+    @5  	go to state 88
+
+
+
+state 88
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 StatementList @5 . RCURL ElseStmt   (rule 12)
+
+    RCURL	shift, and go to state 89
+
+
+
+state 89
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 StatementList @5 RCURL . ElseStmt   (rule 12)
+
+    ELSE	shift, and go to state 71
+
+    $default	reduce using rule 9 (ElseStmt)
+
+    ElseStmt	go to state 90
+    elif	go to state 73
+
+
+
+state 90
+
+    elif  ->  ELSE IF LPAREN PreRelexp RPAREN LCURL dummyLabels dummyLabels @4 StatementList @5 RCURL ElseStmt .   (rule 12)
+
+    $default	reduce using rule 12 (elif)
+
+
+
+state 91
+
+    $   	go to state 92
+
+
+
+state 92
+
+    $   	go to state 93
+
+
+
+state 93
+
+    $default	accept

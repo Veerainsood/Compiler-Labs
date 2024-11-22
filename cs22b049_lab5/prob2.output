@@ -1,0 +1,295 @@
+Terminals unused in grammar
+
+    FLOATs
+    MOD
+    OPENBRACK
+    CLOSEBRACK
+    UMINUS
+    MUL
+
+
+Grammar
+
+    0 $accept: Exp $end
+
+    1 Exp: AssignExpr ';'
+    2    | ArithExpr ';'
+
+    3 AssignExpr: ArithExpr ASSIGN ArithExpr
+
+    4 ArithExpr: TERM ADD ArithExpr
+    5          | TERM SUB ArithExpr
+    6          | TERM
+
+    7 TERM: FACTOR MULT TERM
+    8     | FACTOR DIV TERM
+    9     | FACTOR
+
+   10 FACTOR: INTs
+   11       | VAR
+   12       | '(' ArithExpr ')'
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 12
+    ')' (41) 12
+    ';' (59) 1 2
+    error (256)
+    INTs <INT> (258) 10
+    VAR <variable> (259) 11
+    FLOATs <FLOAT> (260)
+    DIV <Oprtr> (261) 8
+    MULT <Oprtr> (262) 7
+    MOD <Oprtr> (263)
+    ADD <Oprtr> (264) 4
+    SUB <Oprtr> (265) 5
+    OPENBRACK <Oprtr> (266)
+    CLOSEBRACK <Oprtr> (267)
+    ASSIGN <Oprtr> (268) 3
+    UMINUS <Oprtr> (269)
+    MUL (270)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (19)
+        on left: 0
+    Exp (20)
+        on left: 1 2
+        on right: 0
+    AssignExpr (21)
+        on left: 3
+        on right: 1
+    ArithExpr (22)
+        on left: 4 5 6
+        on right: 2 3 4 5 12
+    TERM (23)
+        on left: 7 8 9
+        on right: 4 5 6 7 8
+    FACTOR (24)
+        on left: 10 11 12
+        on right: 7 8 9
+
+
+State 0
+
+    0 $accept: • Exp $end
+
+    INTs  shift, and go to state 1
+    VAR   shift, and go to state 2
+    '('   shift, and go to state 3
+
+    Exp         go to state 4
+    AssignExpr  go to state 5
+    ArithExpr   go to state 6
+    TERM        go to state 7
+    FACTOR      go to state 8
+
+
+State 1
+
+   10 FACTOR: INTs •
+
+    $default  reduce using rule 10 (FACTOR)
+
+
+State 2
+
+   11 FACTOR: VAR •
+
+    $default  reduce using rule 11 (FACTOR)
+
+
+State 3
+
+   12 FACTOR: '(' • ArithExpr ')'
+
+    INTs  shift, and go to state 1
+    VAR   shift, and go to state 2
+    '('   shift, and go to state 3
+
+    ArithExpr  go to state 9
+    TERM       go to state 7
+    FACTOR     go to state 8
+
+
+State 4
+
+    0 $accept: Exp • $end
+
+    $end  shift, and go to state 10
+
+
+State 5
+
+    1 Exp: AssignExpr • ';'
+
+    ';'  shift, and go to state 11
+
+
+State 6
+
+    2 Exp: ArithExpr • ';'
+    3 AssignExpr: ArithExpr • ASSIGN ArithExpr
+
+    ASSIGN  shift, and go to state 12
+    ';'     shift, and go to state 13
+
+
+State 7
+
+    4 ArithExpr: TERM • ADD ArithExpr
+    5          | TERM • SUB ArithExpr
+    6          | TERM •
+
+    ADD  shift, and go to state 14
+    SUB  shift, and go to state 15
+
+    $default  reduce using rule 6 (ArithExpr)
+
+
+State 8
+
+    7 TERM: FACTOR • MULT TERM
+    8     | FACTOR • DIV TERM
+    9     | FACTOR •
+
+    DIV   shift, and go to state 16
+    MULT  shift, and go to state 17
+
+    $default  reduce using rule 9 (TERM)
+
+
+State 9
+
+   12 FACTOR: '(' ArithExpr • ')'
+
+    ')'  shift, and go to state 18
+
+
+State 10
+
+    0 $accept: Exp $end •
+
+    $default  accept
+
+
+State 11
+
+    1 Exp: AssignExpr ';' •
+
+    $default  reduce using rule 1 (Exp)
+
+
+State 12
+
+    3 AssignExpr: ArithExpr ASSIGN • ArithExpr
+
+    INTs  shift, and go to state 1
+    VAR   shift, and go to state 2
+    '('   shift, and go to state 3
+
+    ArithExpr  go to state 19
+    TERM       go to state 7
+    FACTOR     go to state 8
+
+
+State 13
+
+    2 Exp: ArithExpr ';' •
+
+    $default  reduce using rule 2 (Exp)
+
+
+State 14
+
+    4 ArithExpr: TERM ADD • ArithExpr
+
+    INTs  shift, and go to state 1
+    VAR   shift, and go to state 2
+    '('   shift, and go to state 3
+
+    ArithExpr  go to state 20
+    TERM       go to state 7
+    FACTOR     go to state 8
+
+
+State 15
+
+    5 ArithExpr: TERM SUB • ArithExpr
+
+    INTs  shift, and go to state 1
+    VAR   shift, and go to state 2
+    '('   shift, and go to state 3
+
+    ArithExpr  go to state 21
+    TERM       go to state 7
+    FACTOR     go to state 8
+
+
+State 16
+
+    8 TERM: FACTOR DIV • TERM
+
+    INTs  shift, and go to state 1
+    VAR   shift, and go to state 2
+    '('   shift, and go to state 3
+
+    TERM    go to state 22
+    FACTOR  go to state 8
+
+
+State 17
+
+    7 TERM: FACTOR MULT • TERM
+
+    INTs  shift, and go to state 1
+    VAR   shift, and go to state 2
+    '('   shift, and go to state 3
+
+    TERM    go to state 23
+    FACTOR  go to state 8
+
+
+State 18
+
+   12 FACTOR: '(' ArithExpr ')' •
+
+    $default  reduce using rule 12 (FACTOR)
+
+
+State 19
+
+    3 AssignExpr: ArithExpr ASSIGN ArithExpr •
+
+    $default  reduce using rule 3 (AssignExpr)
+
+
+State 20
+
+    4 ArithExpr: TERM ADD ArithExpr •
+
+    $default  reduce using rule 4 (ArithExpr)
+
+
+State 21
+
+    5 ArithExpr: TERM SUB ArithExpr •
+
+    $default  reduce using rule 5 (ArithExpr)
+
+
+State 22
+
+    8 TERM: FACTOR DIV TERM •
+
+    $default  reduce using rule 8 (TERM)
+
+
+State 23
+
+    7 TERM: FACTOR MULT TERM •
+
+    $default  reduce using rule 7 (TERM)

@@ -1,0 +1,59 @@
+include	basic: Identifier
+<	Operator
+stdio	basic: Identifier
+h	basic: Identifier
+>	pointer operator
+int	Keyword: int
+main	basic: Identifier
+(	Seperator :list
+)	Seperator :list
+{	Seperator :list
+int	Keyword: int
+number1	basic: Identifier
+,	Seperator :list
+number2	basic: Identifier
+,	Seperator :list
+sum	basic: Identifier
+;	Seperator :list
+printf	Keyword: printf
+(	Seperator :list
+Enter	basic: Identifier
+two	basic: Identifier
+integers	basic: Identifier
+:	Relational Operator
+scanf	Keyword: scanf
+(	Seperator :list
+%	Operator
+d	basic: Identifier
+%	Operator
+d	basic: Identifier
+,	Seperator :list
+&	Relational Operator
+number1	basic: Identifier
+,	Seperator :list
+&	Relational Operator
+number2	basic: Identifier
+sum	basic: Identifier
+=	Operator
+number1	basic: Identifier
++	Operator
+number2	basic: Identifier
+;	Seperator :list
+printf	Keyword: printf
+(	Seperator :list
+%	Operator
+d	basic: Identifier
++	Operator
+%	Operator
+d	basic: Identifier
+=	Operator
+%	Operator
+d	basic: Identifier
+,	Seperator :list
+number1	basic: Identifier
+,	Seperator :list
+number2	basic: Identifier
+,	Seperator :list
+sum	basic: Identifier
+return	Keyword: return
+}	Seperator :list

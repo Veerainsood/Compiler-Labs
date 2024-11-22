@@ -1,0 +1,29 @@
+int a , b , d, m = 10 ;
+int c , k=0 ;  
+char ml = 20 ;
+if(a>0){
+    a++;
+}
+else if (d<k)
+{  
+
+    if (a>k || b<d)
+    {
+        a++;
+    }
+    else
+    {
+        a--;
+    }
+
+    b++;
+    }
+
+    m++;
+
+else{
+    
+    b--;
+}
+
+c++;

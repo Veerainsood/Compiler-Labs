@@ -1,0 +1,8 @@
+The String 01110 is not in lang
+the number of zeros is : 2
+The String 0011100 is in lang
+the number of zeros is : 4
+The String 010101100111 is not in lang
+the number of zeros is : 5
+The String 010111010 is in lang
+the number of zeros is : 4

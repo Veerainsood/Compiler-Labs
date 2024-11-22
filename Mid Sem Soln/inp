@@ -1,0 +1,16 @@
+result = a++ b;
+result = x++ + ++y;
+result = ++a + b--;
+result = --x - ++y;
+result = i++ + --j - k--;
+result = a++ + b++ * a;
+result = --x / --y;
+result = (++p * q--) + (--q - p++);
+result = 10++;
+result = a + ++b--;
+result = a + -++b;
+result = a + ++b-;
+result += a + ++b;
+result /= a/(b+c)/d/e+f;
+result /= a/(b+c)/(d/e+g)+f + (2.3) % 2;
+result = a + ++b;

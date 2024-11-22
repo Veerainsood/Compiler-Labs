@@ -1,0 +1,747 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001
+vand_nand
+!s110 1663240079
+!i10b 1
+!s100 ]65PCH]jJE^zQX`<F1U9m0
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+Ik?JMD4@Qikl9SA0XVn2?A1
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z3 w1663239995
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/and_nand.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/and_nand.v
+!i122 1
+Z4 L0 1 19
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+!s108 1663240078.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/and_nand.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/and_nand.v|
+!i113 1
+Z6 o-work work
+Z7 tCvgOpt 0
+vand_nor
+!s110 1663240090
+!i10b 1
+!s100 WE2kfPT1l`6_cmf@ijX^F3
+R1
+IdXcSjbnnE`63^92BAW;eO1
+R2
+R0
+Z8 w1663239996
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/and_nor.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/and_nor.v
+!i122 29
+L0 1 13
+R5
+r1
+!s85 0
+31
+Z9 !s108 1663240090.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/and_nor.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/and_nor.v|
+!i113 1
+R6
+R7
+vandgate
+Z10 !s110 1663240091
+!i10b 1
+!s100 nUzj?Q1ZZ[R2;:9_W`mZ30
+R1
+I@zN0iYGJG:;8DPAFk;]SY1
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/andgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/andgate.v
+!i122 30
+Z11 L0 1 5
+R5
+r1
+!s85 0
+31
+R9
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/andgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/andgate.v|
+!i113 1
+R6
+R7
+veight_input_xor_quest5
+R10
+!i10b 1
+!s100 JY^J140??56CUWK_z26Ii2
+R1
+I4:lPga28EVJXIK>5EnLzI2
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/eight_input_xor_quest5.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/eight_input_xor_quest5.v
+!i122 31
+L0 1 49
+R5
+r1
+!s85 0
+31
+Z12 !s108 1663240091.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/eight_input_xor_quest5.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/eight_input_xor_quest5.v|
+!i113 1
+R6
+R7
+vfour_input_nand_quest3
+R10
+!i10b 1
+!s100 ?Q3I12SeBeaFok8K`ZnS_3
+R1
+I_ohTk;4=ePZl06YQ@FSE_1
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/four_input_nand_quest3.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/four_input_nand_quest3.v
+!i122 32
+L0 1 45
+R5
+r1
+!s85 0
+31
+R12
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/four_input_nand_quest3.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/four_input_nand_quest3.v|
+!i113 1
+R6
+R7
+vfour_input_nand_quest4
+!s110 1663240474
+!i10b 1
+!s100 0;j:YA9Lcz>Z0j:i<BgWS0
+R1
+I^AIQFcJ`QIfoadIMe:SPj2
+R2
+R0
+w1663240453
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/four_input_nand_quest4.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/four_input_nand_quest4.v
+!i122 59
+L0 1 44
+R5
+r1
+!s85 0
+31
+!s108 1663240474.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/four_input_nand_quest4.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/four_input_nand_quest4.v|
+!i113 1
+R6
+R7
+vnandgate
+Z13 !s110 1663240092
+!i10b 1
+!s100 XBgG8R@M@fTVGNm;kJbKY3
+R1
+Iz4dGHeAFWcN`h:_]5Kco?1
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/nandgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/nandgate.v
+!i122 33
+R11
+R5
+r1
+!s85 0
+31
+Z14 !s108 1663240092.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/nandgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/nandgate.v|
+!i113 1
+R6
+R7
+vnorgate
+R13
+!i10b 1
+!s100 bmPfG[AjKS>ITSVD48Rf82
+R1
+IVNniT3aBc_7_BnAXV0=`22
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/norgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/norgate.v
+!i122 34
+R11
+R5
+r1
+!s85 0
+31
+R14
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/norgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/norgate.v|
+!i113 1
+R6
+R7
+vnot_nand
+Z15 !s110 1663240093
+!i10b 1
+!s100 [lF6UN6RCzm`b6cCIDHFz2
+R1
+IcfPcGFokRGYDX4K7DNcZH3
+R2
+R0
+Z16 w1663239997
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/not_nand.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/not_nand.v
+!i122 35
+Z17 L0 1 17
+R5
+r1
+!s85 0
+31
+R14
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/not_nand.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/not_nand.v|
+!i113 1
+R6
+R7
+vnot_nor
+R15
+!i10b 1
+!s100 z:NOZ6DfWj5ZX_j@1WH:10
+R1
+IT50ho2^1E`@5izM6nRKk^2
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/not_nor.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/not_nor.v
+!i122 36
+R17
+R5
+r1
+!s85 0
+31
+Z18 !s108 1663240093.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/not_nor.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/not_nor.v|
+!i113 1
+R6
+R7
+vnotgate
+R15
+!i10b 1
+!s100 6j<LYk?dl3jn1ZfVEUI511
+R1
+I;<?T@b42[_z?Im[BYTIUG2
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/notgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/notgate.v
+!i122 37
+R11
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/notgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/notgate.v|
+!i113 1
+R6
+R7
+vor_nand
+Z19 !s110 1663240094
+!i10b 1
+!s100 6Ce117g7]DLzV87N<L33k2
+R1
+IXagB`Rz80FQa_F_igb@fC0
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/or_nand.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/or_nand.v
+!i122 38
+R4
+R5
+r1
+!s85 0
+31
+R18
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/or_nand.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/or_nand.v|
+!i113 1
+R6
+R7
+vor_nor
+R19
+!i10b 1
+!s100 ;_iBO:SMWnkIc<D[OfS_[2
+R1
+I[?;Dc7B011aO:fQ:R^YmO2
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/or_nor.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/or_nor.v
+!i122 39
+R4
+R5
+r1
+!s85 0
+31
+Z20 !s108 1663240094.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/or_nor.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/or_nor.v|
+!i113 1
+R6
+R7
+vorgate
+!s110 1663240601
+!i10b 1
+!s100 =CV61LzK2k63baCzm_IJn1
+R1
+I;;VXJVQPV99kdk7ln^ooe3
+R2
+R0
+w1663240586
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/orgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/orgate.v
+!i122 60
+R11
+R5
+r1
+!s85 0
+31
+!s108 1663240600.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/orgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/orgate.v|
+!i113 1
+R6
+R7
+vquest6_a
+Z21 !s110 1663240095
+!i10b 1
+!s100 _AGhm]Je0OmM8JHCZ>YiW2
+R1
+I:T_V?i[28IMbc2E@jC<`S2
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_a.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_a.v
+!i122 41
+L0 1 36
+R5
+r1
+!s85 0
+31
+R20
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_a.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_a.v|
+!i113 1
+R6
+R7
+vquest6_b
+R21
+!i10b 1
+!s100 C9>T<T7G32nR[[XkMOT4N1
+R1
+IS2Y_>SWdELCc9k;D2DQY@2
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_b.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_b.v
+!i122 42
+Z22 L0 1 26
+R5
+r1
+!s85 0
+31
+!s108 1663240095.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_b.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_b.v|
+!i113 1
+R6
+R7
+vquest6_c
+!s110 1663241142
+!i10b 1
+!s100 [HXTIBE3k53eO3fXb04n@3
+R1
+I53CB`UUM?N^C2U[oL;Hl`3
+R2
+R0
+w1663241129
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_c.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_c.v
+!i122 62
+L0 1 32
+R5
+r1
+!s85 0
+31
+!s108 1663241142.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_c.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_c.v|
+!i113 1
+R6
+R7
+vquest6_d
+!s110 1663240964
+!i10b 1
+!s100 iahHW][[km3gR7:b[cK[I3
+R1
+IKP=I5diU5;EUd?=_kNJL`3
+R2
+R0
+w1663240941
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_d.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_d.v
+!i122 61
+L0 1 46
+R5
+r1
+!s85 0
+31
+!s108 1663240964.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_d.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/quest6_d.v|
+!i113 1
+R6
+R7
+vtb_andgate
+!s110 1663240096
+!i10b 1
+!s100 ^QdNbXTNNN`>8mTnhhk1S0
+R1
+IUSnfO@7z1?[:?]l[<H0M20
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_andgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_andgate.v
+!i122 44
+Z23 L0 1 29
+R5
+r1
+!s85 0
+31
+Z24 !s108 1663240096.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_andgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_andgate.v|
+!i113 1
+R6
+R7
+vtb_nandgate
+Z25 !s110 1663240097
+!i10b 1
+!s100 F[^^6QaU=[OH9NJV7H<Ye1
+R1
+IO9ocTkZh<]0<hAhO?MWdz1
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_nandgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_nandgate.v
+!i122 45
+R23
+R5
+r1
+!s85 0
+31
+R24
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_nandgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_nandgate.v|
+!i113 1
+R6
+R7
+vtb_norgate
+R25
+!i10b 1
+!s100 KC2JA42DzJmnh[XIKOoIg1
+R1
+I]WRgFAb1<[fldfLaclk781
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_norgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_norgate.v
+!i122 46
+R23
+R5
+r1
+!s85 0
+31
+Z26 !s108 1663240097.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_norgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_norgate.v|
+!i113 1
+R6
+R7
+vtb_notgate
+R25
+!i10b 1
+!s100 VQQE=>dEH8J^hFnW_0V=`1
+R1
+Ij:a:0EC26TI^m`bW:DiT<1
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_notgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_notgate.v
+!i122 47
+L0 1 21
+R5
+r1
+!s85 0
+31
+R26
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_notgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_notgate.v|
+!i113 1
+R6
+R7
+vtb_orgate
+Z27 !s110 1663240098
+!i10b 1
+!s100 G73HbYo;mMM48g5P:93922
+R1
+IMBAkO2PXkT^_WG]e@A0XN3
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_orgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_orgate.v
+!i122 48
+R23
+R5
+r1
+!s85 0
+31
+R26
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_orgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_orgate.v|
+!i113 1
+R6
+R7
+vtb_quest2
+R27
+!i10b 1
+!s100 mOh@5[=BeI^zEFi7mN6PY1
+R1
+IWAP68]DOPSYnLoXUEPLBD3
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_quest2.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_quest2.v
+!i122 49
+L0 1 31
+R5
+r1
+!s85 0
+31
+Z28 !s108 1663240098.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_quest2.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_quest2.v|
+!i113 1
+R6
+R7
+vtb_xnorgate
+R27
+!i10b 1
+!s100 =c:6?Lf]8]jaY=Vh8X1So0
+R1
+Ih8N;K8IcUc5abX5F<ji1b3
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_xnorgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_xnorgate.v
+!i122 50
+R23
+R5
+r1
+!s85 0
+31
+R28
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_xnorgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_xnorgate.v|
+!i113 1
+R6
+R7
+vtb_xorgate
+!s110 1663240377
+!i10b 1
+!s100 k[?GEhdUbLcH2D1h>0[8@3
+R1
+IPU0ne?7d`3Q07[1GfS2bB2
+R2
+R0
+w1663240329
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_xor.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_xor.v
+!i122 58
+R23
+R5
+r1
+!s85 0
+31
+!s108 1663240377.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_xor.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/tb_xor.v|
+!i113 1
+R6
+R7
+vxnor_nand
+Z29 !s110 1663240099
+!i10b 1
+!s100 Yz@m71R@=Tj]HXzVoYL6H1
+R1
+IYC5O?]aLe[>NIdb0H2i4i2
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnor_nand.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnor_nand.v
+!i122 51
+R22
+R5
+r1
+!s85 0
+31
+Z30 !s108 1663240099.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnor_nand.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnor_nand.v|
+!i113 1
+R6
+R7
+vxnor_nor
+R29
+!i10b 1
+!s100 0D6XSW6_Z[Q>oF_CTYISS2
+R1
+IHcI=NWHZ02bPFJ?]3<dhL2
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnor_nor.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnor_nor.v
+!i122 52
+Z31 L0 1 24
+R5
+r1
+!s85 0
+31
+R30
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnor_nor.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnor_nor.v|
+!i113 1
+R6
+R7
+vxnorgate
+!s110 1663240239
+!i10b 1
+!s100 :WMa[`0D9L<miiJ<<UYAJ2
+R1
+I0XiQj720_^2m_<@:QB;1l0
+R2
+R0
+w1663240232
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnorgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnorgate.v
+!i122 56
+R11
+R5
+r1
+!s85 0
+31
+!s108 1663240239.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnorgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xnorgate.v|
+!i113 1
+R6
+R7
+vxor_nand
+Z32 !s110 1663240100
+!i10b 1
+!s100 ;l7J=^CHazkn:R3`AW0C41
+R1
+Ig:mSi=]ffVeST@dOT@D^<1
+R2
+R0
+R8
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xor_nand.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xor_nand.v
+!i122 53
+R31
+R5
+r1
+!s85 0
+31
+Z33 !s108 1663240100.000000
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xor_nand.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xor_nand.v|
+!i113 1
+R6
+R7
+vxor_nor
+R32
+!i10b 1
+!s100 lAzFOEb6_PRFSQn9Y3==f3
+R1
+IJ1Y??P`G3nLZzZ8>OB<d^3
+R2
+R0
+R16
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xor_nor.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xor_nor.v
+!i122 54
+R22
+R5
+r1
+!s85 0
+31
+R33
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xor_nor.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xor_nor.v|
+!i113 1
+R6
+R7
+vxorgate
+!s110 1663240101
+!i10b 1
+!s100 :ig:hzKl4ZAo]g2zANU2h0
+R1
+I2lQzYIf_[Q5Z5V:^@;R_B2
+R2
+R0
+R3
+8C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xorgate.v
+FC:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xorgate.v
+!i122 55
+R11
+R5
+r1
+!s85 0
+31
+R33
+!s107 C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xorgate.v|
+!s90 -reportprogress|300|-work|work|C:/Users/91979/Downloads/cs21b062-20220915T110431Z-001/cs21b062/xorgate.v|
+!i113 1
+R6
+R7

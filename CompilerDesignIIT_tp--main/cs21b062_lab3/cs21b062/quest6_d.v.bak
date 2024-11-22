@@ -1,0 +1,45 @@
+module quest6_d;
+
+
+reg a1;
+reg b1;
+reg c1;
+
+
+
+wire w1;
+wire w2;
+wire w3;
+
+
+andgate ar(.z(w1), .x(a1),.y(b1));
+notgate r1(.z(w2),.x(a1));
+
+
+
+
+andgate  ar1(.z(w3),.x(c1), .y(w2));
+
+andgate  ar2(.z(w4),.x(c1), .y(b1));
+
+orgate  ar3(.z(w5),.x(w3), .y(w5));
+orgate ar5(.z(w6),.x(w6), .y(w4));
+
+andgate b(.z(a1),.x( b1), .y(a1));
+notgate br1(.z(w2),.x(a1));
+
+
+
+andgate  br1(.z(w3),.x(w2), .y(w3));
+  
+
+
+
+initial begin
+a1 = 1'b0; b1 = 1'b0; #20;
+a1 = 1'b0; b1 = 1'b1; #20;
+a1 = 1'b1; b1 = 1'b0; #20;
+a1 = 1'b1; b1 = 1'b1; 
+
+end 
+endmodule 

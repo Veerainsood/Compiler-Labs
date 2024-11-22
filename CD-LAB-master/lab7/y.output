@@ -1,0 +1,508 @@
+   0  $accept : expr_list $end
+
+   1  $$1 :
+
+   2  expr_list : assign_stmt SEMICOLON $$1 expr_list
+
+   3  $$2 :
+
+   4  expr_list : error SEMICOLON $$2 expr_list
+   5            |
+
+   6  assign_stmt : IDENTIFIER ASSIGN assign_stmt
+   7              | arithmetic_expression
+
+   8  arithmetic_expression : primary_exp
+   9                        | arithmetic_expression PLUS arithmetic_expression
+  10                        | arithmetic_expression MINUS arithmetic_expression
+  11                        | arithmetic_expression MUL arithmetic_expression
+  12                        | arithmetic_expression DIV arithmetic_expression
+  13                        | MINUS arithmetic_expression
+  14                        | PLUS arithmetic_expression
+
+  15  primary_exp : INT_CONST
+  16              | FLOAT_CONST
+  17              | IDENTIFIER
+  18              | LEFT_PAREN arithmetic_expression RIGHT_PAREN
+  19              | INC IDENTIFIER
+  20              | DEC IDENTIFIER
+  21              | IDENTIFIER INC
+  22              | IDENTIFIER DEC
+
+state 0
+	$accept : . expr_list $end  (0)
+	expr_list : .  (5)
+
+	error  shift 1
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 7
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	$end  reduce 5
+
+	expr_list  goto 10
+	assign_stmt  goto 11
+	arithmetic_expression  goto 12
+	primary_exp  goto 13
+
+
+state 1
+	expr_list : error . SEMICOLON $$2 expr_list  (4)
+
+	SEMICOLON  shift 14
+	.  error
+
+
+state 2
+	arithmetic_expression : PLUS . arithmetic_expression  (14)
+
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 15
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	.  error
+
+	arithmetic_expression  goto 16
+	primary_exp  goto 13
+
+
+state 3
+	arithmetic_expression : MINUS . arithmetic_expression  (13)
+
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 15
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	.  error
+
+	arithmetic_expression  goto 17
+	primary_exp  goto 13
+
+
+state 4
+	primary_exp : LEFT_PAREN . arithmetic_expression RIGHT_PAREN  (18)
+
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 15
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	.  error
+
+	arithmetic_expression  goto 18
+	primary_exp  goto 13
+
+
+state 5
+	primary_exp : INC . IDENTIFIER  (19)
+
+	IDENTIFIER  shift 19
+	.  error
+
+
+state 6
+	primary_exp : DEC . IDENTIFIER  (20)
+
+	IDENTIFIER  shift 20
+	.  error
+
+
+state 7
+	assign_stmt : IDENTIFIER . ASSIGN assign_stmt  (6)
+	primary_exp : IDENTIFIER .  (17)
+	primary_exp : IDENTIFIER . INC  (21)
+	primary_exp : IDENTIFIER . DEC  (22)
+
+	ASSIGN  shift 21
+	INC  shift 22
+	DEC  shift 23
+	SEMICOLON  reduce 17
+	PLUS  reduce 17
+	MINUS  reduce 17
+	MUL  reduce 17
+	DIV  reduce 17
+
+
+state 8
+	primary_exp : INT_CONST .  (15)
+
+	.  reduce 15
+
+
+state 9
+	primary_exp : FLOAT_CONST .  (16)
+
+	.  reduce 16
+
+
+state 10
+	$accept : expr_list . $end  (0)
+
+	$end  accept
+
+
+state 11
+	expr_list : assign_stmt . SEMICOLON $$1 expr_list  (2)
+
+	SEMICOLON  shift 24
+	.  error
+
+
+state 12
+	assign_stmt : arithmetic_expression .  (7)
+	arithmetic_expression : arithmetic_expression . PLUS arithmetic_expression  (9)
+	arithmetic_expression : arithmetic_expression . MINUS arithmetic_expression  (10)
+	arithmetic_expression : arithmetic_expression . MUL arithmetic_expression  (11)
+	arithmetic_expression : arithmetic_expression . DIV arithmetic_expression  (12)
+
+	PLUS  shift 25
+	MINUS  shift 26
+	MUL  shift 27
+	DIV  shift 28
+	SEMICOLON  reduce 7
+
+
+state 13
+	arithmetic_expression : primary_exp .  (8)
+
+	.  reduce 8
+
+
+state 14
+	expr_list : error SEMICOLON . $$2 expr_list  (4)
+	$$2 : .  (3)
+
+	.  reduce 3
+
+	$$2  goto 29
+
+
+state 15
+	primary_exp : IDENTIFIER .  (17)
+	primary_exp : IDENTIFIER . INC  (21)
+	primary_exp : IDENTIFIER . DEC  (22)
+
+	INC  shift 22
+	DEC  shift 23
+	SEMICOLON  reduce 17
+	PLUS  reduce 17
+	MINUS  reduce 17
+	MUL  reduce 17
+	DIV  reduce 17
+	RIGHT_PAREN  reduce 17
+
+
+state 16
+	arithmetic_expression : arithmetic_expression . PLUS arithmetic_expression  (9)
+	arithmetic_expression : arithmetic_expression . MINUS arithmetic_expression  (10)
+	arithmetic_expression : arithmetic_expression . MUL arithmetic_expression  (11)
+	arithmetic_expression : arithmetic_expression . DIV arithmetic_expression  (12)
+	arithmetic_expression : PLUS arithmetic_expression .  (14)
+
+	.  reduce 14
+
+
+state 17
+	arithmetic_expression : arithmetic_expression . PLUS arithmetic_expression  (9)
+	arithmetic_expression : arithmetic_expression . MINUS arithmetic_expression  (10)
+	arithmetic_expression : arithmetic_expression . MUL arithmetic_expression  (11)
+	arithmetic_expression : arithmetic_expression . DIV arithmetic_expression  (12)
+	arithmetic_expression : MINUS arithmetic_expression .  (13)
+
+	.  reduce 13
+
+
+state 18
+	arithmetic_expression : arithmetic_expression . PLUS arithmetic_expression  (9)
+	arithmetic_expression : arithmetic_expression . MINUS arithmetic_expression  (10)
+	arithmetic_expression : arithmetic_expression . MUL arithmetic_expression  (11)
+	arithmetic_expression : arithmetic_expression . DIV arithmetic_expression  (12)
+	primary_exp : LEFT_PAREN arithmetic_expression . RIGHT_PAREN  (18)
+
+	PLUS  shift 25
+	MINUS  shift 26
+	MUL  shift 27
+	DIV  shift 28
+	RIGHT_PAREN  shift 30
+	.  error
+
+
+state 19
+	primary_exp : INC IDENTIFIER .  (19)
+
+	.  reduce 19
+
+
+state 20
+	primary_exp : DEC IDENTIFIER .  (20)
+
+	.  reduce 20
+
+
+state 21
+	assign_stmt : IDENTIFIER ASSIGN . assign_stmt  (6)
+
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 7
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	.  error
+
+	assign_stmt  goto 31
+	arithmetic_expression  goto 12
+	primary_exp  goto 13
+
+
+state 22
+	primary_exp : IDENTIFIER INC .  (21)
+
+	.  reduce 21
+
+
+state 23
+	primary_exp : IDENTIFIER DEC .  (22)
+
+	.  reduce 22
+
+
+state 24
+	expr_list : assign_stmt SEMICOLON . $$1 expr_list  (2)
+	$$1 : .  (1)
+
+	.  reduce 1
+
+	$$1  goto 32
+
+
+state 25
+	arithmetic_expression : arithmetic_expression PLUS . arithmetic_expression  (9)
+
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 15
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	.  error
+
+	arithmetic_expression  goto 33
+	primary_exp  goto 13
+
+
+state 26
+	arithmetic_expression : arithmetic_expression MINUS . arithmetic_expression  (10)
+
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 15
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	.  error
+
+	arithmetic_expression  goto 34
+	primary_exp  goto 13
+
+
+state 27
+	arithmetic_expression : arithmetic_expression MUL . arithmetic_expression  (11)
+
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 15
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	.  error
+
+	arithmetic_expression  goto 35
+	primary_exp  goto 13
+
+
+state 28
+	arithmetic_expression : arithmetic_expression DIV . arithmetic_expression  (12)
+
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 15
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	.  error
+
+	arithmetic_expression  goto 36
+	primary_exp  goto 13
+
+
+state 29
+	expr_list : error SEMICOLON $$2 . expr_list  (4)
+	expr_list : .  (5)
+
+	error  shift 1
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 7
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	$end  reduce 5
+
+	expr_list  goto 37
+	assign_stmt  goto 11
+	arithmetic_expression  goto 12
+	primary_exp  goto 13
+
+
+state 30
+	primary_exp : LEFT_PAREN arithmetic_expression RIGHT_PAREN .  (18)
+
+	.  reduce 18
+
+
+state 31
+	assign_stmt : IDENTIFIER ASSIGN assign_stmt .  (6)
+
+	.  reduce 6
+
+
+state 32
+	expr_list : assign_stmt SEMICOLON $$1 . expr_list  (2)
+	expr_list : .  (5)
+
+	error  shift 1
+	PLUS  shift 2
+	MINUS  shift 3
+	LEFT_PAREN  shift 4
+	INC  shift 5
+	DEC  shift 6
+	IDENTIFIER  shift 7
+	INT_CONST  shift 8
+	FLOAT_CONST  shift 9
+	$end  reduce 5
+
+	expr_list  goto 38
+	assign_stmt  goto 11
+	arithmetic_expression  goto 12
+	primary_exp  goto 13
+
+
+state 33
+	arithmetic_expression : arithmetic_expression . PLUS arithmetic_expression  (9)
+	arithmetic_expression : arithmetic_expression PLUS arithmetic_expression .  (9)
+	arithmetic_expression : arithmetic_expression . MINUS arithmetic_expression  (10)
+	arithmetic_expression : arithmetic_expression . MUL arithmetic_expression  (11)
+	arithmetic_expression : arithmetic_expression . DIV arithmetic_expression  (12)
+
+	MUL  shift 27
+	DIV  shift 28
+	SEMICOLON  reduce 9
+	PLUS  reduce 9
+	MINUS  reduce 9
+	RIGHT_PAREN  reduce 9
+
+
+state 34
+	arithmetic_expression : arithmetic_expression . PLUS arithmetic_expression  (9)
+	arithmetic_expression : arithmetic_expression . MINUS arithmetic_expression  (10)
+	arithmetic_expression : arithmetic_expression MINUS arithmetic_expression .  (10)
+	arithmetic_expression : arithmetic_expression . MUL arithmetic_expression  (11)
+	arithmetic_expression : arithmetic_expression . DIV arithmetic_expression  (12)
+
+	MUL  shift 27
+	DIV  shift 28
+	SEMICOLON  reduce 10
+	PLUS  reduce 10
+	MINUS  reduce 10
+	RIGHT_PAREN  reduce 10
+
+
+state 35
+	arithmetic_expression : arithmetic_expression . PLUS arithmetic_expression  (9)
+	arithmetic_expression : arithmetic_expression . MINUS arithmetic_expression  (10)
+	arithmetic_expression : arithmetic_expression . MUL arithmetic_expression  (11)
+	arithmetic_expression : arithmetic_expression MUL arithmetic_expression .  (11)
+	arithmetic_expression : arithmetic_expression . DIV arithmetic_expression  (12)
+
+	.  reduce 11
+
+
+state 36
+	arithmetic_expression : arithmetic_expression . PLUS arithmetic_expression  (9)
+	arithmetic_expression : arithmetic_expression . MINUS arithmetic_expression  (10)
+	arithmetic_expression : arithmetic_expression . MUL arithmetic_expression  (11)
+	arithmetic_expression : arithmetic_expression . DIV arithmetic_expression  (12)
+	arithmetic_expression : arithmetic_expression DIV arithmetic_expression .  (12)
+
+	.  reduce 12
+
+
+state 37
+	expr_list : error SEMICOLON $$2 expr_list .  (4)
+
+	.  reduce 4
+
+
+state 38
+	expr_list : assign_stmt SEMICOLON $$1 expr_list .  (2)
+
+	.  reduce 2
+
+
+17 terminals, 7 nonterminals
+23 grammar rules, 39 states
+
+grammar parser grammar
+symbol# value# symbol
+     0      0  $end
+     1    256  error
+     2    257  SEMICOLON
+     3    258  PLUS
+     4    259  MINUS
+     5    260  MUL
+     6    261  DIV
+     7    262  ASSIGN
+     8    263  LEFT_PAREN
+     9    264  RIGHT_PAREN
+    10    265  INC
+    11    266  DEC
+    12    267  IDENTIFIER
+    13    268  INT_CONST
+    14    269  FLOAT_CONST
+    15    270  UMINUS
+    16    271  UPLUS
+    17    272  $accept
+    18    273  expr_list
+    19    274  assign_stmt
+    20    275  arithmetic_expression
+    21    276  primary_exp
+    22    277  $$1
+    23    278  $$2

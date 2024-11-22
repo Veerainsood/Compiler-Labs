@@ -1,0 +1,79 @@
+k = 0;
+
+while (k < n || n != 100) {
+
+    if (x < 100) {
+        a++;
+    }
+
+    else {
+        a--;
+    }
+
+    y = a;
+
+    k++;
+}
+
+k = m + n;
+
+while (k < n || n != 100 && i++ != 10) {
+
+    if ( (x+y-z*15) < 100 || (x+y-z*15) < 200 && (x+y-z*15) < 50) {
+        a++;
+    } else {
+        result = a + b;
+    }
+
+    y = a;
+
+    k++;
+}
+k = m + n;
+
+
+while (k < n || n != 100 && i++ != 10 {
+
+    if ( (x+y-z*15) < 100 || (x+y-z*15) < 200 && (x+y-z*15) < 50) {
+        a++;
+    } else {
+        result = a + b;
+    }
+
+    y = a;
+
+    k++;
+}
+
+if ( (x+y-z*15) < 100 ) {
+  
+    if ( d<20 ) {
+  
+        c = e + f;
+  
+    }
+  
+    else {
+  
+    result = a + b;
+  
+    }
+} 
+else {
+
+    result = a + b;
+
+}
+
+
+if ( abc < 100  {
+
+    result = a + b;
+
+} 
+
+if  baba < 100  {
+
+    result = a + b;
+
+}
